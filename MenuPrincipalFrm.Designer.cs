@@ -111,9 +111,9 @@
             // 
             // btnCadastro
             // 
-            btnCadastro.Location = new Point(323, 204);
+            btnCadastro.Location = new Point(237, 246);
             btnCadastro.Name = "btnCadastro";
-            btnCadastro.Size = new Size(162, 89);
+            btnCadastro.Size = new Size(162, 68);
             btnCadastro.TabIndex = 0;
             btnCadastro.Text = "Cadastro";
             btnCadastro.UseVisualStyleBackColor = true;
@@ -121,9 +121,9 @@
             // 
             // btnLogin
             // 
-            btnLogin.Location = new Point(323, 336);
+            btnLogin.Location = new Point(237, 379);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(162, 89);
+            btnLogin.Size = new Size(162, 67);
             btnLogin.TabIndex = 1;
             btnLogin.Text = "Login";
             btnLogin.UseVisualStyleBackColor = true;
@@ -134,7 +134,7 @@
             labelTitulo.AutoSize = true;
             labelTitulo.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTitulo.ForeColor = SystemColors.ActiveCaption;
-            labelTitulo.Location = new Point(259, 80);
+            labelTitulo.Location = new Point(173, 101);
             labelTitulo.Name = "labelTitulo";
             labelTitulo.Size = new Size(308, 65);
             labelTitulo.TabIndex = 2;
@@ -142,12 +142,13 @@
             // 
             // panelMenu
             // 
+            panelMenu.BorderStyle = BorderStyle.Fixed3D;
             panelMenu.Controls.Add(btnCadastro);
             panelMenu.Controls.Add(btnLogin);
             panelMenu.Controls.Add(labelTitulo);
-            panelMenu.Location = new Point(50, 35);
+            panelMenu.Location = new Point(169, 25);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(792, 585);
+            panelMenu.Size = new Size(624, 580);
             panelMenu.TabIndex = 1;
             panelMenu.Visible = false;
             panelMenu.Paint += panelMenu_Paint;
@@ -160,7 +161,10 @@
             Controls.Add(panelMenu);
             Controls.Add(panelLogin);
             Name = "MenuPrincipalFrm";
+            RightToLeft = RightToLeft.No;
+            StartPosition = FormStartPosition.Manual;
             Text = "RoutineSync";
+            WindowState = FormWindowState.Maximized;
             Load += MenuPrincipalFrm_Load;
             panelLogin.ResumeLayout(false);
             panelLogin.PerformLayout();

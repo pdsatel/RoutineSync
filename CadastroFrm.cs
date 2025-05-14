@@ -6,6 +6,12 @@ namespace Tcc
 {
     public partial class CadastroFrm : Form
     {
+
+        Color corPrimaria = ColorTranslator.FromHtml("#202E39");
+        Color corSecundaria = ColorTranslator.FromHtml("#FFFCF6");
+        Color corTexto = ColorTranslator.FromHtml("#333333");
+        Color corApoio = ColorTranslator.FromHtml("#4A90E2");
+        Color corSuporte = ColorTranslator.FromHtml("#7ED321");
         public CadastroFrm()
         {
             InitializeComponent();
@@ -76,7 +82,14 @@ namespace Tcc
             this.Close();
 
         }
+        private void Controle_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) {
+                e.SuppressKeyPress = true;
+                this.SelectNextControl((Control)sender, true, true, true, true);
+            }
 
+        }
         private void textBoxConfirmarsenha_TextChanged(object sender, EventArgs e)
         {
 
@@ -84,7 +97,34 @@ namespace Tcc
 
         private void CadastroFrm_Load(object sender, EventArgs e)
         {
+            this.BackColor = corPrimaria;
 
+            foreach (Control ctrl in this.Controls)
+            {
+                if (ctrl is Label lbl)
+                {
+                    lbl.ForeColor = corSecundaria;
+                }
+                if (ctrl is TextBox txt)
+                {
+                    txt.BackColor = corSecundaria;
+                    txt.ForeColor = corApoio;
+                    txt.BorderStyle = BorderStyle.FixedSingle;
+                }
+                if (ctrl is Button btn)
+                {
+                    btn.BackColor = corPrimaria;
+                    btn.ForeColor = Color.White;
+                }
+                if (ctrl is DateTimePicker dt)
+                {
+                    dt.CalendarMonthBackground = corSecundaria;
+                    dt.CalendarForeColor = corTexto;
+                    dt.BackColor = corSecundaria;
+                    dt.ForeColor = corTexto;
+                }
+            }
         }
+
     }
 }

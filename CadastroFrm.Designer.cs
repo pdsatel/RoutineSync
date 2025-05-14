@@ -54,7 +54,7 @@
             btnCadastrar.Location = new Point(431, 561);
             btnCadastrar.Name = "btnCadastrar";
             btnCadastrar.Size = new Size(153, 68);
-            btnCadastrar.TabIndex = 19;
+            btnCadastrar.TabIndex = 9;
             btnCadastrar.Text = "Cadastrar";
             btnCadastrar.UseVisualStyleBackColor = true;
             btnCadastrar.Click += btnCadastrar_Click;
@@ -66,7 +66,7 @@
             dateTimeHoraAcordar.Name = "dateTimeHoraAcordar";
             dateTimeHoraAcordar.ShowUpDown = true;
             dateTimeHoraAcordar.Size = new Size(133, 31);
-            dateTimeHoraAcordar.TabIndex = 18;
+            dateTimeHoraAcordar.TabIndex = 8;
             // 
             // dateTimeHoraDormir
             // 
@@ -75,21 +75,21 @@
             dateTimeHoraDormir.Name = "dateTimeHoraDormir";
             dateTimeHoraDormir.ShowUpDown = true;
             dateTimeHoraDormir.Size = new Size(133, 31);
-            dateTimeHoraDormir.TabIndex = 17;
+            dateTimeHoraDormir.TabIndex = 7;
             // 
             // textBoxAltura
             // 
             textBoxAltura.Location = new Point(387, 319);
             textBoxAltura.Name = "textBoxAltura";
             textBoxAltura.Size = new Size(243, 31);
-            textBoxAltura.TabIndex = 16;
+            textBoxAltura.TabIndex = 5;
             // 
             // textBoxConfirmarsenha
             // 
             textBoxConfirmarsenha.Location = new Point(387, 257);
             textBoxConfirmarsenha.Name = "textBoxConfirmarsenha";
             textBoxConfirmarsenha.Size = new Size(243, 31);
-            textBoxConfirmarsenha.TabIndex = 14;
+            textBoxConfirmarsenha.TabIndex = 4;
             textBoxConfirmarsenha.UseSystemPasswordChar = true;
             textBoxConfirmarsenha.TextChanged += textBoxConfirmarsenha_TextChanged;
             // 
@@ -98,7 +98,7 @@
             textBoxSenha.Location = new Point(387, 193);
             textBoxSenha.Name = "textBoxSenha";
             textBoxSenha.Size = new Size(243, 31);
-            textBoxSenha.TabIndex = 13;
+            textBoxSenha.TabIndex = 3;
             textBoxSenha.UseSystemPasswordChar = true;
             // 
             // label1
@@ -115,14 +115,14 @@
             textBoxNome.Location = new Point(387, 70);
             textBoxNome.Name = "textBoxNome";
             textBoxNome.Size = new Size(243, 31);
-            textBoxNome.TabIndex = 11;
+            textBoxNome.TabIndex = 1;
             // 
             // textBoxEmail
             // 
             textBoxEmail.Location = new Point(387, 132);
             textBoxEmail.Name = "textBoxEmail";
             textBoxEmail.Size = new Size(243, 31);
-            textBoxEmail.TabIndex = 10;
+            textBoxEmail.TabIndex = 2;
             // 
             // label2
             // 
@@ -192,7 +192,7 @@
             textBoxPeso.Location = new Point(387, 381);
             textBoxPeso.Name = "textBoxPeso";
             textBoxPeso.Size = new Size(243, 31);
-            textBoxPeso.TabIndex = 27;
+            textBoxPeso.TabIndex = 6;
             // 
             // label9
             // 
