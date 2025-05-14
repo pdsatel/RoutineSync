@@ -239,6 +239,7 @@
             Controls.Add(textBoxEmail);
             Name = "CadastroFrm";
             Text = " ";
+            Load += CadastroFrm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

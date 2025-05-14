@@ -53,7 +53,7 @@
             panelLogin.Controls.Add(textBoxSenha);
             panelLogin.Controls.Add(btnEntrar);
             panelLogin.Controls.Add(btnVoltarLogin);
-            panelLogin.Location = new Point(270, 230);
+            panelLogin.Location = new Point(235, 206);
             panelLogin.Name = "panelLogin";
             panelLogin.Size = new Size(500, 300);
             panelLogin.TabIndex = 0;
@@ -111,7 +111,7 @@
             // 
             // btnCadastro
             // 
-            btnCadastro.Location = new Point(419, 244);
+            btnCadastro.Location = new Point(323, 204);
             btnCadastro.Name = "btnCadastro";
             btnCadastro.Size = new Size(162, 89);
             btnCadastro.TabIndex = 0;
@@ -121,7 +121,7 @@
             // 
             // btnLogin
             // 
-            btnLogin.Location = new Point(419, 371);
+            btnLogin.Location = new Point(323, 336);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(162, 89);
             btnLogin.TabIndex = 1;
@@ -134,7 +134,7 @@
             labelTitulo.AutoSize = true;
             labelTitulo.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTitulo.ForeColor = SystemColors.ActiveCaption;
-            labelTitulo.Location = new Point(354, 137);
+            labelTitulo.Location = new Point(259, 80);
             labelTitulo.Name = "labelTitulo";
             labelTitulo.Size = new Size(308, 65);
             labelTitulo.TabIndex = 2;
@@ -142,13 +142,12 @@
             // 
             // panelMenu
             // 
-            panelMenu.Controls.Add(panelLogin);
             panelMenu.Controls.Add(btnCadastro);
             panelMenu.Controls.Add(btnLogin);
             panelMenu.Controls.Add(labelTitulo);
-            panelMenu.Location = new Point(1, 2);
+            panelMenu.Location = new Point(50, 35);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(841, 632);
+            panelMenu.Size = new Size(792, 585);
             panelMenu.TabIndex = 1;
             panelMenu.Visible = false;
             panelMenu.Paint += panelMenu_Paint;
@@ -157,8 +156,9 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(836, 632);
+            ClientSize = new Size(880, 632);
             Controls.Add(panelMenu);
+            Controls.Add(panelLogin);
             Name = "MenuPrincipalFrm";
             Text = "RoutineSync";
             Load += MenuPrincipalFrm_Load;

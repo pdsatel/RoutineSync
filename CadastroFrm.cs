@@ -81,5 +81,10 @@ namespace Tcc
         {
 
         }
+
+        private void CadastroFrm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
