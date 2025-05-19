@@ -21,8 +21,7 @@ namespace Tcc
             this.SizeChanged += new EventHandler(MenuPrincipalFrm_SizeChanged);
             btnLogin.Click += btnLogin_Click;
 
-            btnEntrar.Click += btnEntrar_Click;
-            btnCadastro.Click += btnAbrirCadastro_Click;
+            
 
             this.StartPosition = FormStartPosition.CenterParent;
 
@@ -32,16 +31,17 @@ namespace Tcc
 
         private void btnEntrar_Click(object sender, EventArgs e)
         {
-            string email = textBoxEmailcad.Text.Trim();
-            string senha = textBoxSenhacad.Text.Trim();
+            string email = textBoxEmail.Text.Trim();
+            string senha = textBoxSenha.Text.Trim();
 
             if (VerificarLogin(email, senha))
             {
 
-                MessageBox.Show("Login efetudado com sucesso");
-                panelLogin.Visible = false;
-                panelMenu.Visible = true;
-                panelCadastro.Visible = false; 
+                
+                DashboardFrm dashboard = new DashboardFrm();
+                dashboard.FormClosed += (s, args) => this.Close(); 
+                this.Hide(); // Esconde o MenuPrincipalFrm
+                dashboard.Show();
 
             }
             else
@@ -110,7 +110,7 @@ namespace Tcc
         private void MenuPrincipalFrm_Load(object sender, EventArgs e)
         {
 
-
+            panelCadastro.BackColor = ColorTranslator.FromHtml("#FFFCF6");
             panelLogin.Visible = false;
             panelMenu.Visible = true;
             panelCadastro.Visible = false;
@@ -119,6 +119,7 @@ namespace Tcc
             btnCadastro.Visible = true;
             labelTitulo.Visible = true;
 
+           
 
             textBoxEmail.KeyDown += Controle_KeyDown;
             textBoxSenha.KeyDown += Controle_KeyDown;
@@ -130,7 +131,6 @@ namespace Tcc
             this.BackColor = corPrimaria;
             panelMenu.BackColor = corSecundaria;
             panelLogin.BackColor = corSecundaria;
-            panelCadastro.BackColor = corSecundaria;
 
             labelTitulo.ForeColor = corTexto;
 
@@ -155,7 +155,10 @@ namespace Tcc
             {
 
 
-               
+                if (ctrl is Panel pnl)
+                {
+                    pnl.BackColor = corSecundaria;
+                }
 
                 if (ctrl is Label lbl)
                     lbl.ForeColor = corTexto;
@@ -198,14 +201,13 @@ namespace Tcc
             CentralizarPainel(panelMenu);
             CentralizarPainel(panelCadastro);
             CentralizarPainel(panelLogin);
-
+            Enter(panelCadastro);   
         }
         private void btnAbrirCadastro_Click(object sender, EventArgs e)
         {
-            panelCadastro.Visible = true;
             panelMenu.Visible = false;
+            panelCadastro.Visible = true;
             panelLogin.Visible = false;
-            labelCadastro.Visible = true;
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
@@ -249,8 +251,8 @@ namespace Tcc
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
             string nome = textBoxNomecad.Text;
-            string email = textBoxEmail.Text;
-            string senha = textBoxSenha.Text;
+            string email = textBoxEmailcad.Text;
+            string senha = textBoxSenhacad.Text;
             string confirmarsenha = textBoxConfirmarsenha.Text;
             string altura = textBoxAltura.Text;
             string peso = textBoxPeso.Text;
@@ -281,7 +283,7 @@ namespace Tcc
             {
                 using (var conn = Conexao.ObterConexao())
                 {
-                    string query = "INSERT INTO Usuarios (nome, email, senha, altura, peso, hora_dormir, hora_acordar) " +
+                    string query = "INSERT INTO usuarios (nome, email, senha, altura, peso, hora_dormir, hora_acordar) " +
                                    "VALUES (@nome, @email, @senha, @altura, @peso, @hora_dormir, @hora_acordar)";
 
                     using (var cmd = new MySqlCommand(query, conn))
@@ -302,8 +304,8 @@ namespace Tcc
 
                 // Limpar os campos
                 textBoxNomecad.Clear();
-                textBoxEmail.Clear();
-                textBoxSenha.Clear();
+                textBoxEmailcad.Clear();
+                textBoxSenhacad.Clear();
                 textBoxConfirmarsenha.Clear();
                 textBoxAltura.Clear();
                 textBoxPeso.Clear();
@@ -334,12 +336,21 @@ namespace Tcc
 
         }
 
-        private void panelCadastro_Paint_1(object sender, PaintEventArgs e)
+        private void textBoxNomecad_TextChanged(object sender, EventArgs e)
         {
 
         }
-        private void labellabelCadastro(object sender, EventArgs e)
+        private void Enter(Control parent)
         {
+            foreach (Control ctrl in parent.Controls)
+            {
+                if (ctrl is TextBox txt)
+                    txt.KeyDown += Controle_KeyDown;
+
+                if (ctrl.HasChildren)
+                    Enter(ctrl);
+            }
         }
+
     }
 }

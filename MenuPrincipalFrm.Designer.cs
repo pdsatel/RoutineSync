@@ -1,6 +1,4 @@
-﻿using System.Security.Authentication;
-
-namespace Tcc
+﻿namespace Tcc
 {
     partial class MenuPrincipalFrm
     {
@@ -34,17 +32,8 @@ namespace Tcc
         {
             panelLogin = new Panel();
             labelLogin = new Label();
-            labelEmail = new Label();
-            textBoxEmail = new TextBox();
-            labelSenha = new Label();
-            textBoxSenha = new TextBox();
-            btnEntrar = new Button();
-            btnVoltarLogin = new Button();
-            btnCadastro = new Button();
-            btnLogin = new Button();
-            panelMenu = new Panel();
-            labelTitulo = new Label();
             panelCadastro = new Panel();
+            labelCadastro = new Label();
             labelNome = new Label();
             textBoxNomecad = new TextBox();
             labelEmailcad = new Label();
@@ -63,9 +52,19 @@ namespace Tcc
             dateTimeHoraAcordar = new DateTimePicker();
             btnCadastrar = new Button();
             btnVoltarCad = new Button();
+            labelEmail = new Label();
+            textBoxEmail = new TextBox();
+            labelSenha = new Label();
+            textBoxSenha = new TextBox();
+            btnEntrar = new Button();
+            btnVoltarLogin = new Button();
+            btnCadastro = new Button();
+            btnLogin = new Button();
+            panelMenu = new Panel();
+            labelTitulo = new Label();
             panelLogin.SuspendLayout();
-            panelMenu.SuspendLayout();
             panelCadastro.SuspendLayout();
+            panelMenu.SuspendLayout();
             SuspendLayout();
             // 
             // panelLogin
@@ -77,10 +76,9 @@ namespace Tcc
             panelLogin.Controls.Add(textBoxSenha);
             panelLogin.Controls.Add(btnEntrar);
             panelLogin.Controls.Add(btnVoltarLogin);
-            panelLogin.Location = new Point(164, 46);
-            panelLogin.Margin = new Padding(2);
+            panelLogin.Location = new Point(228, 98);
             panelLogin.Name = "panelLogin";
-            panelLogin.Size = new Size(350, 258);
+            panelLogin.Size = new Size(535, 430);
             panelLogin.TabIndex = 0;
             panelLogin.Paint += panelLogin_Paint;
             // 
@@ -89,139 +87,15 @@ namespace Tcc
             labelLogin.AutoSize = true;
             labelLogin.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelLogin.ForeColor = SystemColors.ActiveCaption;
-            labelLogin.Location = new Point(120, 27);
-            labelLogin.Margin = new Padding(2, 0, 2, 0);
+            labelLogin.Location = new Point(171, 45);
             labelLogin.Name = "labelLogin";
-            labelLogin.Size = new Size(104, 45);
+            labelLogin.Size = new Size(155, 65);
             labelLogin.TabIndex = 6;
             labelLogin.Text = "Login";
             labelLogin.Click += label1_Click_1;
             // 
-            // labelEmail
-            // 
-            labelEmail.Location = new Point(18, 98);
-            labelEmail.Margin = new Padding(2, 0, 2, 0);
-            labelEmail.Name = "labelEmail";
-            labelEmail.Size = new Size(70, 18);
-            labelEmail.TabIndex = 0;
-            labelEmail.Text = "Email:";
-            // 
-            // textBoxEmail
-            // 
-            textBoxEmail.Location = new Point(102, 98);
-            textBoxEmail.Margin = new Padding(2);
-            textBoxEmail.Name = "textBoxEmail";
-            textBoxEmail.Size = new Size(211, 23);
-            textBoxEmail.TabIndex = 1;
-            // 
-            // labelSenha
-            // 
-            labelSenha.Location = new Point(18, 128);
-            labelSenha.Margin = new Padding(2, 0, 2, 0);
-            labelSenha.Name = "labelSenha";
-            labelSenha.Size = new Size(70, 18);
-            labelSenha.TabIndex = 2;
-            labelSenha.Text = "Senha:";
-            // 
-            // textBoxSenha
-            // 
-            textBoxSenha.Location = new Point(102, 128);
-            textBoxSenha.Margin = new Padding(2);
-            textBoxSenha.Name = "textBoxSenha";
-            textBoxSenha.PasswordChar = '*';
-            textBoxSenha.Size = new Size(211, 23);
-            textBoxSenha.TabIndex = 3;
-            // 
-            // btnEntrar
-            // 
-            btnEntrar.Location = new Point(137, 164);
-            btnEntrar.Margin = new Padding(2);
-            btnEntrar.Name = "btnEntrar";
-            btnEntrar.Size = new Size(70, 24);
-            btnEntrar.TabIndex = 4;
-            btnEntrar.Text = "Entrar";
-            btnEntrar.UseVisualStyleBackColor = true;
-            btnEntrar.Click += btnEntrar_Click;
-            // 
-            // btnVoltarLogin
-            // 
-            btnVoltarLogin.Location = new Point(137, 200);
-            btnVoltarLogin.Margin = new Padding(2);
-            btnVoltarLogin.Name = "btnVoltarLogin";
-            btnVoltarLogin.Size = new Size(70, 24);
-            btnVoltarLogin.TabIndex = 5;
-            btnVoltarLogin.Text = "Voltar";
-            btnVoltarLogin.UseVisualStyleBackColor = true;
-            btnVoltarLogin.Click += btnVoltarlogin_Click;
-            // 
-            // btnCadastro
-            // 
-            btnCadastro.Location = new Point(166, 166);
-            btnCadastro.Margin = new Padding(2);
-            btnCadastro.Name = "btnCadastro";
-            btnCadastro.Size = new Size(113, 40);
-            btnCadastro.TabIndex = 2;
-            btnCadastro.Text = "Cadastro";
-            btnCadastro.UseVisualStyleBackColor = true;
-            btnCadastro.Click += btnAbrirCadastro_Click;
-            // 
-            // btnLogin
-            // 
-            btnLogin.Location = new Point(166, 214);
-            btnLogin.Margin = new Padding(2);
-            btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(113, 40);
-            btnLogin.TabIndex = 1;
-            btnLogin.Text = "Login";
-            btnLogin.UseVisualStyleBackColor = true;
-            btnLogin.Click += btnLogin_Click;
-            // 
-            // panelMenu
-            // 
-            panelMenu.BorderStyle = BorderStyle.Fixed3D;
-            panelMenu.Controls.Add(btnCadastro);
-            panelMenu.Controls.Add(btnLogin);
-            panelMenu.Controls.Add(labelTitulo);
-            panelMenu.Location = new Point(118, 23);
-            panelMenu.Margin = new Padding(2);
-            panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(431, 346);
-            panelMenu.TabIndex = 1;
-            panelMenu.Paint += panelMenu_Paint;
-            // 
-            // labelTitulo
-            // 
-            labelTitulo.AutoSize = true;
-            labelTitulo.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelTitulo.ForeColor = SystemColors.ActiveCaption;
-            labelTitulo.Location = new Point(121, 61);
-            labelTitulo.Margin = new Padding(2, 0, 2, 0);
-            labelTitulo.Name = "labelTitulo";
-            labelTitulo.Size = new Size(204, 45);
-            labelTitulo.TabIndex = 2;
-            labelTitulo.Text = "RoutineSync";
-
-
-
-
-            // labelCadastro
-            labelCadastro = new Label();
-            labelCadastro.AutoSize = true;
-            labelCadastro.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            labelCadastro.ForeColor = SystemColors.ActiveCaption;
-            labelCadastro.Location = new Point(5, 10); // centralizado no topo
-            labelCadastro.Name = "labelCadastro";
-            labelCadastro.Size = new Size(180, 32);
-            labelCadastro.TabIndex = 99;
-            labelCadastro.Text = "Cadastro";
-
-
-
-
             // panelCadastro
-
-
-            panelCadastro.BackColor = Color.White;
+            // 
             panelCadastro.BorderStyle = BorderStyle.FixedSingle;
             panelCadastro.Controls.Add(labelCadastro);
             panelCadastro.Controls.Add(labelNome);
@@ -242,145 +116,155 @@ namespace Tcc
             panelCadastro.Controls.Add(dateTimeHoraAcordar);
             panelCadastro.Controls.Add(btnCadastrar);
             panelCadastro.Controls.Add(btnVoltarCad);
-            panelCadastro.Location = new Point(40, 21);
+            panelCadastro.Location = new Point(303, 98);
             panelCadastro.Name = "panelCadastro";
-            panelCadastro.Size = new Size(351, 360);
+            panelCadastro.Size = new Size(503, 550);
             panelCadastro.TabIndex = 0;
-            panelCadastro.Paint += panelCadastro_Paint_1;
-
-            
+            panelCadastro.Visible = false;
+            panelCadastro.Paint += panelCadastro_Paint;
+            // 
+            // labelCadastro
+            // 
+            labelCadastro.AutoSize = true;
+            labelCadastro.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            labelCadastro.ForeColor = SystemColors.ActiveCaption;
+            labelCadastro.Location = new Point(160, 10);
+            labelCadastro.Name = "labelCadastro";
+            labelCadastro.Size = new Size(168, 48);
+            labelCadastro.TabIndex = 99;
+            labelCadastro.Text = "Cadastro";
             // 
             // labelNome
             // 
-            labelNome.Location = new Point(36, 55);
+            labelNome.Location = new Point(52, 60);
             labelNome.Name = "labelNome";
-            labelNome.Size = new Size(70, 18);
+            labelNome.Size = new Size(100, 30);
             labelNome.TabIndex = 0;
             labelNome.Text = "Nome:";
             // 
             // textBoxNomecad
             // 
-            textBoxNomecad.Location = new Point(113, 55);
+            textBoxNomecad.Location = new Point(162, 60);
             textBoxNomecad.Name = "textBoxNomecad";
-            textBoxNomecad.Size = new Size(211, 23);
+            textBoxNomecad.Size = new Size(300, 31);
             textBoxNomecad.TabIndex = 1;
             // 
             // labelEmailcad
             // 
-            labelEmailcad.Location = new Point(36, 79);
+            labelEmailcad.Location = new Point(52, 110);
             labelEmailcad.Name = "labelEmailcad";
-            labelEmailcad.Size = new Size(70, 18);
+            labelEmailcad.Size = new Size(100, 30);
             labelEmailcad.TabIndex = 2;
             labelEmailcad.Text = "Email:";
             // 
             // textBoxEmailcad
             // 
-            textBoxEmailcad.Location = new Point(113, 79);
+            textBoxEmailcad.Location = new Point(162, 110);
             textBoxEmailcad.Name = "textBoxEmailcad";
-            textBoxEmailcad.Size = new Size(211, 23);
+            textBoxEmailcad.Size = new Size(300, 31);
             textBoxEmailcad.TabIndex = 3;
             // 
             // labelSenhacad
             // 
-            labelSenhacad.Location = new Point(36, 103);
+            labelSenhacad.Location = new Point(52, 160);
             labelSenhacad.Name = "labelSenhacad";
-            labelSenhacad.Size = new Size(70, 18);
+            labelSenhacad.Size = new Size(100, 30);
             labelSenhacad.TabIndex = 4;
             labelSenhacad.Text = "Senha:";
             // 
             // textBoxSenhacad
             // 
-            textBoxSenhacad.Location = new Point(113, 103);
+            textBoxSenhacad.Location = new Point(162, 160);
             textBoxSenhacad.Name = "textBoxSenhacad";
             textBoxSenhacad.PasswordChar = '*';
-            textBoxSenhacad.Size = new Size(211, 23);
+            textBoxSenhacad.Size = new Size(300, 31);
             textBoxSenhacad.TabIndex = 5;
             // 
             // labelSenha2cad
             // 
-            labelSenha2cad.Location = new Point(36, 127);
+            labelSenha2cad.Location = new Point(52, 210);
             labelSenha2cad.Name = "labelSenha2cad";
-            labelSenha2cad.Size = new Size(105, 18);
+            labelSenha2cad.Size = new Size(150, 30);
             labelSenha2cad.TabIndex = 6;
             labelSenha2cad.Text = "Confirmar Senha:";
             // 
             // textBoxConfirmarsenha
             // 
-            textBoxConfirmarsenha.Location = new Point(148, 127);
+            textBoxConfirmarsenha.Location = new Point(212, 210);
             textBoxConfirmarsenha.Name = "textBoxConfirmarsenha";
             textBoxConfirmarsenha.PasswordChar = '*';
-            textBoxConfirmarsenha.Size = new Size(176, 23);
+            textBoxConfirmarsenha.Size = new Size(250, 31);
             textBoxConfirmarsenha.TabIndex = 7;
             // 
             // labelAltura
             // 
-            labelAltura.Location = new Point(36, 151);
+            labelAltura.Location = new Point(52, 260);
             labelAltura.Name = "labelAltura";
-            labelAltura.Size = new Size(70, 18);
+            labelAltura.Size = new Size(100, 30);
             labelAltura.TabIndex = 8;
             labelAltura.Text = "Altura (cm):";
             // 
             // textBoxAltura
             // 
-            textBoxAltura.Location = new Point(113, 151);
+            textBoxAltura.Location = new Point(162, 260);
             textBoxAltura.Name = "textBoxAltura";
-            textBoxAltura.Size = new Size(71, 23);
+            textBoxAltura.Size = new Size(100, 31);
             textBoxAltura.TabIndex = 9;
             // 
             // labelPeso
             // 
-            labelPeso.Location = new Point(36, 175);
+            labelPeso.Location = new Point(52, 310);
             labelPeso.Name = "labelPeso";
-            labelPeso.Size = new Size(70, 18);
+            labelPeso.Size = new Size(100, 30);
             labelPeso.TabIndex = 10;
             labelPeso.Text = "Peso (kg):";
             // 
             // textBoxPeso
             // 
-            textBoxPeso.Location = new Point(113, 175);
+            textBoxPeso.Location = new Point(162, 310);
             textBoxPeso.Name = "textBoxPeso";
-            textBoxPeso.Size = new Size(71, 23);
+            textBoxPeso.Size = new Size(100, 31);
             textBoxPeso.TabIndex = 11;
             // 
             // labelHoraDormir
             // 
-            labelHoraDormir.Location = new Point(36, 199);
+            labelHoraDormir.Location = new Point(52, 360);
             labelHoraDormir.Name = "labelHoraDormir";
-            labelHoraDormir.Size = new Size(98, 18);
+            labelHoraDormir.Size = new Size(140, 30);
             labelHoraDormir.TabIndex = 12;
             labelHoraDormir.Text = "Hora de Dormir:";
             // 
             // dateTimeHoraDormir
             // 
             dateTimeHoraDormir.Format = DateTimePickerFormat.Time;
-            dateTimeHoraDormir.Location = new Point(148, 199);
+            dateTimeHoraDormir.Location = new Point(212, 360);
             dateTimeHoraDormir.Name = "dateTimeHoraDormir";
             dateTimeHoraDormir.ShowUpDown = true;
-            dateTimeHoraDormir.Size = new Size(106, 23);
+            dateTimeHoraDormir.Size = new Size(150, 31);
             dateTimeHoraDormir.TabIndex = 13;
             // 
             // labelHoraAcordar
             // 
-            labelHoraAcordar.Location = new Point(36, 223);
+            labelHoraAcordar.Location = new Point(52, 400);
             labelHoraAcordar.Name = "labelHoraAcordar";
-            labelHoraAcordar.Size = new Size(98, 18);
+            labelHoraAcordar.Size = new Size(140, 30);
             labelHoraAcordar.TabIndex = 14;
             labelHoraAcordar.Text = "Hora de Acordar:";
             // 
             // dateTimeHoraAcordar
             // 
             dateTimeHoraAcordar.Format = DateTimePickerFormat.Time;
-            dateTimeHoraAcordar.Location = new Point(148, 223);
+            dateTimeHoraAcordar.Location = new Point(212, 410);
             dateTimeHoraAcordar.Name = "dateTimeHoraAcordar";
             dateTimeHoraAcordar.ShowUpDown = true;
-            dateTimeHoraAcordar.Size = new Size(106, 23);
+            dateTimeHoraAcordar.Size = new Size(150, 31);
             dateTimeHoraAcordar.TabIndex = 15;
             // 
             // btnCadastrar
             // 
-            btnCadastrar.Location = new Point(113, 259);
+            btnCadastrar.Location = new Point(162, 460);
             btnCadastrar.Name = "btnCadastrar";
-            btnCadastrar.Size = new Size(70, 24);
+            btnCadastrar.Size = new Size(100, 40);
             btnCadastrar.TabIndex = 16;
             btnCadastrar.Text = "Cadastrar";
             btnCadastrar.UseVisualStyleBackColor = true;
@@ -388,35 +272,130 @@ namespace Tcc
             // 
             // btnVoltarCad
             // 
-            btnVoltarCad.Location = new Point(188, 259);
+            btnVoltarCad.Location = new Point(268, 460);
             btnVoltarCad.Name = "btnVoltarCad";
-            btnVoltarCad.Size = new Size(70, 24);
+            btnVoltarCad.Size = new Size(100, 40);
             btnVoltarCad.TabIndex = 17;
             btnVoltarCad.Text = "Voltar";
             btnVoltarCad.UseVisualStyleBackColor = true;
             btnVoltarCad.Click += btnVoltarCad_Click;
             // 
+            // labelEmail
+            // 
+            labelEmail.Location = new Point(26, 163);
+            labelEmail.Name = "labelEmail";
+            labelEmail.Size = new Size(100, 30);
+            labelEmail.TabIndex = 0;
+            labelEmail.Text = "Email:";
+            // 
+            // textBoxEmail
+            // 
+            textBoxEmail.Location = new Point(146, 163);
+            textBoxEmail.Name = "textBoxEmail";
+            textBoxEmail.Size = new Size(300, 31);
+            textBoxEmail.TabIndex = 1;
+            // 
+            // labelSenha
+            // 
+            labelSenha.Location = new Point(26, 213);
+            labelSenha.Name = "labelSenha";
+            labelSenha.Size = new Size(100, 30);
+            labelSenha.TabIndex = 2;
+            labelSenha.Text = "Senha:";
+            // 
+            // textBoxSenha
+            // 
+            textBoxSenha.Location = new Point(146, 213);
+            textBoxSenha.Name = "textBoxSenha";
+            textBoxSenha.PasswordChar = '*';
+            textBoxSenha.Size = new Size(300, 31);
+            textBoxSenha.TabIndex = 3;
+            // 
+            // btnEntrar
+            // 
+            btnEntrar.Location = new Point(196, 273);
+            btnEntrar.Name = "btnEntrar";
+            btnEntrar.Size = new Size(100, 40);
+            btnEntrar.TabIndex = 4;
+            btnEntrar.Text = "Entrar";
+            btnEntrar.UseVisualStyleBackColor = true;
+            btnEntrar.Click += btnEntrar_Click;
+            // 
+            // btnVoltarLogin
+            // 
+            btnVoltarLogin.Location = new Point(196, 333);
+            btnVoltarLogin.Name = "btnVoltarLogin";
+            btnVoltarLogin.Size = new Size(100, 40);
+            btnVoltarLogin.TabIndex = 5;
+            btnVoltarLogin.Text = "Voltar";
+            btnVoltarLogin.UseVisualStyleBackColor = true;
+            btnVoltarLogin.Click += btnVoltarlogin_Click;
+            // 
+            // btnCadastro
+            // 
+            btnCadastro.Location = new Point(237, 276);
+            btnCadastro.Name = "btnCadastro";
+            btnCadastro.Size = new Size(162, 67);
+            btnCadastro.TabIndex = 2;
+            btnCadastro.Text = "Cadastro";
+            btnCadastro.UseVisualStyleBackColor = true;
+            btnCadastro.Click += btnAbrirCadastro_Click;
+            // 
+            // btnLogin
+            // 
+            btnLogin.Location = new Point(237, 357);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Size = new Size(162, 67);
+            btnLogin.TabIndex = 1;
+            btnLogin.Text = "Login";
+            btnLogin.UseVisualStyleBackColor = true;
+            btnLogin.Click += btnLogin_Click;
+            // 
+            // panelMenu
+            // 
+            panelMenu.BorderStyle = BorderStyle.Fixed3D;
+            panelMenu.Controls.Add(btnCadastro);
+            panelMenu.Controls.Add(btnLogin);
+            panelMenu.Controls.Add(labelTitulo);
+            panelMenu.Location = new Point(231, 98);
+            panelMenu.Name = "panelMenu";
+            panelMenu.Size = new Size(656, 615);
+            panelMenu.TabIndex = 1;
+            panelMenu.Visible = false;
+            panelMenu.Paint += panelMenu_Paint;
+            // 
+            // labelTitulo
+            // 
+            labelTitulo.AutoSize = true;
+            labelTitulo.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelTitulo.ForeColor = SystemColors.ActiveCaption;
+            labelTitulo.Location = new Point(173, 101);
+            labelTitulo.Name = "labelTitulo";
+            labelTitulo.Size = new Size(308, 65);
+            labelTitulo.TabIndex = 2;
+            labelTitulo.Text = "RoutineSync";
+            // 
             // MenuPrincipalFrm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(957, 596);
-            Controls.Add(panelCadastro);
+            ClientSize = new Size(1207, 775);
             Controls.Add(panelMenu);
+            Controls.Add(panelCadastro);
             Controls.Add(panelLogin);
-            Margin = new Padding(2);
             Name = "MenuPrincipalFrm";
             RightToLeft = RightToLeft.No;
             StartPosition = FormStartPosition.Manual;
             Text = "RoutineSync";
+            WindowState = FormWindowState.Maximized;
             Load += MenuPrincipalFrm_Load;
             SizeChanged += MenuPrincipalFrm_SizeChanged;
             panelLogin.ResumeLayout(false);
             panelLogin.PerformLayout();
-            panelMenu.ResumeLayout(false);
-            panelMenu.PerformLayout();
             panelCadastro.ResumeLayout(false);
             panelCadastro.PerformLayout();
+            panelMenu.ResumeLayout(false);
+            panelMenu.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -429,6 +408,7 @@ namespace Tcc
 
         //Cadastro
         private Panel panelCadastro;
+        private Label labelCadastro;
         private Button btnCadastrar;
         private DateTimePicker dateTimeHoraAcordar;
         private DateTimePicker dateTimeHoraDormir;
@@ -447,7 +427,6 @@ namespace Tcc
         private Label labelPeso;
         private Label labelHoraDormir;
         private Label labelHoraAcordar;
-        private Label labelCadastro;
 
 
 
