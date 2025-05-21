@@ -32,6 +32,12 @@
         {
             panelLogin = new Panel();
             labelLogin = new Label();
+            labelEmail = new Label();
+            textBoxEmail = new TextBox();
+            labelSenha = new Label();
+            textBoxSenha = new TextBox();
+            btnEntrar = new Button();
+            btnVoltarLogin = new Button();
             panelCadastro = new Panel();
             labelCadastro = new Label();
             labelNome = new Label();
@@ -52,12 +58,6 @@
             dateTimeHoraAcordar = new DateTimePicker();
             btnCadastrar = new Button();
             btnVoltarCad = new Button();
-            labelEmail = new Label();
-            textBoxEmail = new TextBox();
-            labelSenha = new Label();
-            textBoxSenha = new TextBox();
-            btnEntrar = new Button();
-            btnVoltarLogin = new Button();
             btnCadastro = new Button();
             btnLogin = new Button();
             panelMenu = new Panel();
@@ -93,6 +93,57 @@
             labelLogin.TabIndex = 6;
             labelLogin.Text = "Login";
             labelLogin.Click += label1_Click_1;
+            // 
+            // labelEmail
+            // 
+            labelEmail.Location = new Point(26, 163);
+            labelEmail.Name = "labelEmail";
+            labelEmail.Size = new Size(100, 30);
+            labelEmail.TabIndex = 0;
+            labelEmail.Text = "Email:";
+            // 
+            // textBoxEmail
+            // 
+            textBoxEmail.Location = new Point(146, 163);
+            textBoxEmail.Name = "textBoxEmail";
+            textBoxEmail.Size = new Size(300, 31);
+            textBoxEmail.TabIndex = 1;
+            // 
+            // labelSenha
+            // 
+            labelSenha.Location = new Point(26, 213);
+            labelSenha.Name = "labelSenha";
+            labelSenha.Size = new Size(100, 30);
+            labelSenha.TabIndex = 2;
+            labelSenha.Text = "Senha:";
+            // 
+            // textBoxSenha
+            // 
+            textBoxSenha.Location = new Point(146, 213);
+            textBoxSenha.Name = "textBoxSenha";
+            textBoxSenha.PasswordChar = '*';
+            textBoxSenha.Size = new Size(300, 31);
+            textBoxSenha.TabIndex = 3;
+            // 
+            // btnEntrar
+            // 
+            btnEntrar.Location = new Point(196, 273);
+            btnEntrar.Name = "btnEntrar";
+            btnEntrar.Size = new Size(100, 40);
+            btnEntrar.TabIndex = 4;
+            btnEntrar.Text = "Entrar";
+            btnEntrar.UseVisualStyleBackColor = true;
+            btnEntrar.Click += btnEntrar_Click;
+            // 
+            // btnVoltarLogin
+            // 
+            btnVoltarLogin.Location = new Point(196, 333);
+            btnVoltarLogin.Name = "btnVoltarLogin";
+            btnVoltarLogin.Size = new Size(100, 40);
+            btnVoltarLogin.TabIndex = 5;
+            btnVoltarLogin.Text = "Voltar";
+            btnVoltarLogin.UseVisualStyleBackColor = true;
+            btnVoltarLogin.Click += btnVoltarlogin_Click;
             // 
             // panelCadastro
             // 
@@ -279,57 +330,6 @@
             btnVoltarCad.Text = "Voltar";
             btnVoltarCad.UseVisualStyleBackColor = true;
             btnVoltarCad.Click += btnVoltarCad_Click;
-            // 
-            // labelEmail
-            // 
-            labelEmail.Location = new Point(26, 163);
-            labelEmail.Name = "labelEmail";
-            labelEmail.Size = new Size(100, 30);
-            labelEmail.TabIndex = 0;
-            labelEmail.Text = "Email:";
-            // 
-            // textBoxEmail
-            // 
-            textBoxEmail.Location = new Point(146, 163);
-            textBoxEmail.Name = "textBoxEmail";
-            textBoxEmail.Size = new Size(300, 31);
-            textBoxEmail.TabIndex = 1;
-            // 
-            // labelSenha
-            // 
-            labelSenha.Location = new Point(26, 213);
-            labelSenha.Name = "labelSenha";
-            labelSenha.Size = new Size(100, 30);
-            labelSenha.TabIndex = 2;
-            labelSenha.Text = "Senha:";
-            // 
-            // textBoxSenha
-            // 
-            textBoxSenha.Location = new Point(146, 213);
-            textBoxSenha.Name = "textBoxSenha";
-            textBoxSenha.PasswordChar = '*';
-            textBoxSenha.Size = new Size(300, 31);
-            textBoxSenha.TabIndex = 3;
-            // 
-            // btnEntrar
-            // 
-            btnEntrar.Location = new Point(196, 273);
-            btnEntrar.Name = "btnEntrar";
-            btnEntrar.Size = new Size(100, 40);
-            btnEntrar.TabIndex = 4;
-            btnEntrar.Text = "Entrar";
-            btnEntrar.UseVisualStyleBackColor = true;
-            btnEntrar.Click += btnEntrar_Click;
-            // 
-            // btnVoltarLogin
-            // 
-            btnVoltarLogin.Location = new Point(196, 333);
-            btnVoltarLogin.Name = "btnVoltarLogin";
-            btnVoltarLogin.Size = new Size(100, 40);
-            btnVoltarLogin.TabIndex = 5;
-            btnVoltarLogin.Text = "Voltar";
-            btnVoltarLogin.UseVisualStyleBackColor = true;
-            btnVoltarLogin.Click += btnVoltarlogin_Click;
             // 
             // btnCadastro
             // 
