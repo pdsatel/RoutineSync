@@ -97,14 +97,14 @@ namespace Tcc
             {
                 using (MySqlConnection conn = Conexao.ObterConexao())
                 {
-                    string sql = @"INSERT INTO Tarefas (usuario_id, titulo, descricao, data, status, prioridade)
-                                   VALUES (@usuarioId, @titulo, @descricao, @data, @status, @prioridade)";
+                    string sql = @"INSERT INTO Tarefas (usuario_id, titulo, descricao, data_entrega, status, prioridade)
+                                   VALUES (@usuarioId, @titulo, @descricao, @data_entrega, @status, @prioridade)";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@usuarioId", usuarioID);
                     cmd.Parameters.AddWithValue("@titulo", titulo);
                     cmd.Parameters.AddWithValue("@descricao", descricao);
-                    cmd.Parameters.AddWithValue("@data", dataEntrega.Date);
+                    cmd.Parameters.AddWithValue("@data_entrega", dataEntrega.Date);
                     cmd.Parameters.AddWithValue("@status", status.ToLower());
                     cmd.Parameters.AddWithValue("@prioridade", prioridade);
                     cmd.ExecuteNonQuery();
@@ -122,6 +122,15 @@ namespace Tcc
             {
                 MessageBox.Show("Erro ao salvar tarefa: " + ex.Message);
             }
+        }
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TarefasUserControl_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

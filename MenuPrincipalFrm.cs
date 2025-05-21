@@ -1,4 +1,5 @@
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 using System.Drawing.Drawing2D;
 
 
@@ -12,6 +13,7 @@ namespace Tcc
         Color corTexto = ColorTranslator.FromHtml("#333333");
         Color corApoio = ColorTranslator.FromHtml("#4A90E2");
         Color corSuporte = ColorTranslator.FromHtml("#7ED321");
+
 
 
         public MenuPrincipalFrm()
@@ -34,45 +36,55 @@ namespace Tcc
             string email = textBoxEmail.Text.Trim();
             string senha = textBoxSenha.Text.Trim();
 
-            if (VerificarLogin(email, senha))
+            int idUsuario = ObterIdUsuario(email, senha);
+
+            if (idUsuario > 0)
             {
+                Sessao.UsuarioId = idUsuario;
 
-                
                 DashboardFrm dashboard = new DashboardFrm();
-                dashboard.FormClosed += (s, args) => this.Close(); 
-                this.Hide(); // Esconde o MenuPrincipalFrm
+                dashboard.FormClosed += (s, args) => this.Close();
+                this.Hide();
                 dashboard.Show();
-
             }
             else
             {
-                MessageBox.Show("Email ou senha invalidos");
+                MessageBox.Show("Email ou senha inválidos");
             }
         }
-        private bool VerificarLogin(string email, string senha)
+
+        private int ObterIdUsuario(string email, string senha)
         {
             try
             {
                 using (var conn = Conexao.ObterConexao())
                 {
-                    string query = "SELECT COUNT(*) FROM usuarios WHERE email = @Email AND senha = @Senha";
+                    string query = "SELECT id FROM usuarios WHERE email = @Email AND senha = @Senha";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Email", email);
                         cmd.Parameters.AddWithValue("@Senha", senha);
-                        int count = Convert.ToInt32(cmd.ExecuteScalar());
 
-                        return count > 0;
+                        object result = cmd.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            return Convert.ToInt32(result); // ID do usuário
+                        }
+                        else
+                        {
+                            return 0; // Login inválido
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao verificar login: " + ex.Message);
-                return false;
-
+                return 0;
             }
         }
+
 
 
         private void ArredondarBotao(Button btn, int raio)

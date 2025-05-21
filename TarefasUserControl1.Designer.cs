@@ -28,15 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            SuspendLayout();
             // 
             // TarefasUserControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "TarefasUserControl";
-            this.Size = new System.Drawing.Size(900, 450);
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Name = "TarefasUserControl";
+            Size = new Size(900, 450);
+            Load += TarefasUserControl_Load;
+            ResumeLayout(false);
         }
 
         #endregion
