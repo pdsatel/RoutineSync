@@ -353,6 +353,7 @@
             // 
             // panelMenu
             // 
+            panelMenu.BackColor = Color.Transparent;
             panelMenu.BorderStyle = BorderStyle.Fixed3D;
             panelMenu.Controls.Add(btnCadastro);
             panelMenu.Controls.Add(btnLogin);

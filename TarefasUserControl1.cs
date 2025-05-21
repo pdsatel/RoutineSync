@@ -108,6 +108,7 @@ namespace Tcc
                     cmd.Parameters.AddWithValue("@status", status.ToLower());
                     cmd.Parameters.AddWithValue("@prioridade", prioridade);
                     cmd.ExecuteNonQuery();
+                    long tarefaId = cmd.LastInsertedId;
                 }
 
                 var item = new ListViewItem(titulo);
@@ -115,6 +116,7 @@ namespace Tcc
                 item.SubItems.Add(status);
                 item.SubItems.Add(prioridade);
                 listViewTarefas.Items.Add(item);
+
 
                 MessageBox.Show("Tarefa salva com sucesso!");
             }
