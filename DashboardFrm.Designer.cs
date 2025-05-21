@@ -46,7 +46,7 @@
             panelTopo.Controls.Add(labelTitulo);
             panelTopo.Dock = DockStyle.Top;
             panelTopo.Location = new Point(0, 0);
-            panelTopo.Margin = new Padding(4, 4, 4, 4);
+            panelTopo.Margin = new Padding(4);
             panelTopo.Name = "panelTopo";
             panelTopo.Size = new Size(1250, 95);
             panelTopo.TabIndex = 2;
@@ -74,7 +74,7 @@
             panelMenu.Controls.Add(btnSair);
             panelMenu.Dock = DockStyle.Left;
             panelMenu.Location = new Point(0, 95);
-            panelMenu.Margin = new Padding(4, 4, 4, 4);
+            panelMenu.Margin = new Padding(4);
             panelMenu.Name = "panelMenu";
             panelMenu.Size = new Size(225, 655);
             panelMenu.TabIndex = 1;
@@ -87,7 +87,7 @@
             btnIA.FlatStyle = FlatStyle.Flat;
             btnIA.ForeColor = Color.White;
             btnIA.Location = new Point(0, 307);
-            btnIA.Margin = new Padding(4, 4, 4, 4);
+            btnIA.Margin = new Padding(4);
             btnIA.Name = "btnIA";
             btnIA.Size = new Size(225, 77);
             btnIA.TabIndex = 0;
@@ -103,7 +103,7 @@
             btnRelatorios.FlatStyle = FlatStyle.Flat;
             btnRelatorios.ForeColor = Color.White;
             btnRelatorios.Location = new Point(0, 224);
-            btnRelatorios.Margin = new Padding(4, 4, 4, 4);
+            btnRelatorios.Margin = new Padding(4);
             btnRelatorios.Name = "btnRelatorios";
             btnRelatorios.Size = new Size(225, 83);
             btnRelatorios.TabIndex = 1;
@@ -119,7 +119,7 @@
             btnSaude.FlatStyle = FlatStyle.Flat;
             btnSaude.ForeColor = Color.White;
             btnSaude.Location = new Point(0, 149);
-            btnSaude.Margin = new Padding(4, 4, 4, 4);
+            btnSaude.Margin = new Padding(4);
             btnSaude.Name = "btnSaude";
             btnSaude.Size = new Size(225, 75);
             btnSaude.TabIndex = 2;
@@ -135,7 +135,7 @@
             btnRotina.FlatStyle = FlatStyle.Flat;
             btnRotina.ForeColor = Color.White;
             btnRotina.Location = new Point(0, 77);
-            btnRotina.Margin = new Padding(4, 4, 4, 4);
+            btnRotina.Margin = new Padding(4);
             btnRotina.Name = "btnRotina";
             btnRotina.Size = new Size(225, 72);
             btnRotina.TabIndex = 3;
@@ -151,7 +151,7 @@
             btnTarefas.FlatStyle = FlatStyle.Flat;
             btnTarefas.ForeColor = Color.White;
             btnTarefas.Location = new Point(0, 0);
-            btnTarefas.Margin = new Padding(4, 4, 4, 4);
+            btnTarefas.Margin = new Padding(4);
             btnTarefas.Name = "btnTarefas";
             btnTarefas.Size = new Size(225, 77);
             btnTarefas.TabIndex = 4;
@@ -167,7 +167,7 @@
             btnSair.FlatStyle = FlatStyle.Flat;
             btnSair.ForeColor = Color.White;
             btnSair.Location = new Point(0, 593);
-            btnSair.Margin = new Padding(4, 4, 4, 4);
+            btnSair.Margin = new Padding(4);
             btnSair.Name = "btnSair";
             btnSair.Size = new Size(225, 62);
             btnSair.TabIndex = 5;
@@ -180,10 +180,11 @@
             panelConteudo.BackColor = Color.White;
             panelConteudo.Dock = DockStyle.Fill;
             panelConteudo.Location = new Point(225, 95);
-            panelConteudo.Margin = new Padding(4, 4, 4, 4);
+            panelConteudo.Margin = new Padding(4);
             panelConteudo.Name = "panelConteudo";
             panelConteudo.Size = new Size(1025, 655);
             panelConteudo.TabIndex = 0;
+            panelConteudo.Paint += panelConteudo_Paint;
             // 
             // DashboardFrm
             // 
@@ -193,7 +194,7 @@
             Controls.Add(panelConteudo);
             Controls.Add(panelMenu);
             Controls.Add(panelTopo);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "DashboardFrm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Dashboard";
