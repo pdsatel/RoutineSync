@@ -42,7 +42,8 @@ namespace Tcc
             {
                 Sessao.UsuarioId = idUsuario;
 
-                DashboardFrm dashboard = new DashboardFrm();
+                
+                DashboardFrm dashboard = new DashboardFrm(idUsuario);
                 dashboard.FormClosed += (s, args) => this.Close();
                 this.Hide();
                 dashboard.Show();

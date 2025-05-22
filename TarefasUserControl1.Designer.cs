@@ -35,7 +35,7 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             Name = "TarefasUserControl";
-            Size = new Size(900, 450);
+            Size = new Size(1205, 707);
             Load += TarefasUserControl_Load;
             ResumeLayout(false);
         }

@@ -4,24 +4,31 @@ using System.Windows.Forms;
 namespace Tcc
 {
     public partial class DashboardFrm : Form
+
+
     {
-        public DashboardFrm()
-        {
+        private int usuarioId;
+        public DashboardFrm(int idUsuario)
+        {   
             InitializeComponent();
+            this.usuarioId = idUsuario;
+
+           
         }
 
         private void DashboardFrm_Load(object sender, EventArgs e)
         {
+            
             // Pode carregar painel inicial aqui, se quiser
         }
 
         private void btnTarefas_Click(object sender, EventArgs e)
         {
-            panelConteudo.Controls.Clear();
-            TarefasUserControl tarefasControl = new TarefasUserControl();
-            tarefasControl.Dock = DockStyle.Fill;
-            panelConteudo.Controls.Add(tarefasControl);
-        }
+           panelConteudo.Controls.Clear();
+           TarefasUserControl tarefasControl = new TarefasUserControl(usuarioId);
+           tarefasControl.Dock = DockStyle.Fill;
+           panelConteudo.Controls.Add(tarefasControl);
+            }
 
         private void btnRotina_Click(object sender, EventArgs e)
         {

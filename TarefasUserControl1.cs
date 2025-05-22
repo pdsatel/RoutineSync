@@ -15,15 +15,20 @@ namespace Tcc
         private ComboBox cmbPrioridade;
         private Button btnSalvar;
         private Button btnExcluir;
+        private int usuarioId;
+       
 
-        public TarefasUserControl()
+        public TarefasUserControl(int idUsuario)
         {
             InitializeComponent();
             InicializarComponentesPersonalizados();
+            usuarioId = idUsuario;  
         }
 
         private void InicializarComponentesPersonalizados()
         {
+            this.Load += TarefasUserControl_Load;
+
             // ListView
             listViewTarefas = new ListView
             {
@@ -31,7 +36,7 @@ namespace Tcc
                 FullRowSelect = true,
                 GridLines = true,
                 Location = new Point(10, 10),
-                Size = new Size(600, 400)
+                Size = new Size(800, 600)
             };
             listViewTarefas.Columns.Add("Título", 200);
             listViewTarefas.Columns.Add("Data Entrega", 120);
@@ -39,48 +44,190 @@ namespace Tcc
             listViewTarefas.Columns.Add("Prioridade", 100);
             Controls.Add(listViewTarefas);
 
+            // Posição inicial para os componentes ao lado direito
+            int startX = 830;
+            int currentY = 10;
+            int espacamentoVertical = 30;
+
             // Título
-            var lblTitulo = new Label() { Text = "Título", Location = new Point(620, 10), AutoSize = true };
+            var lblTitulo = new Label()
+            {
+                Text = "Título",
+                Location = new Point(startX, currentY),
+                AutoSize = true,
+                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+            };
             Controls.Add(lblTitulo);
-            txtTitulo = new TextBox() { Location = new Point(620, 30), Width = 250 };
+
+            currentY += espacamentoVertical;
+            txtTitulo = new TextBox()
+            {
+                Location = new Point(startX, currentY),
+                Width = 350,
+                Font = new Font("Segoe UI", 11)
+            };
             Controls.Add(txtTitulo);
 
+            currentY += espacamentoVertical + 10;
+
             // Descrição
-            var lblDescricao = new Label() { Text = "Descrição", Location = new Point(620, 60), AutoSize = true };
+            var lblDescricao = new Label()
+            {
+                Text = "Descrição",
+                Location = new Point(startX, currentY),
+                AutoSize = true,
+                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+            };
             Controls.Add(lblDescricao);
-            txtDescricao = new TextBox() { Location = new Point(620, 80), Width = 250, Height = 80, Multiline = true };
+
+            currentY += espacamentoVertical;
+            txtDescricao = new TextBox()
+            {
+                Location = new Point(startX, currentY),
+                Width = 350,
+                Height = 140,
+                Multiline = true,
+                Font = new Font("Segoe UI", 11)
+            };
             Controls.Add(txtDescricao);
 
+            currentY += txtDescricao.Height + 10;
+
             // Data de Entrega
-            var lblDataEntrega = new Label() { Text = "Data de Entrega", Location = new Point(620, 170), AutoSize = true };
+            var lblDataEntrega = new Label()
+            {
+                Text = "Data de Entrega",
+                Location = new Point(startX, currentY),
+                AutoSize = true,
+                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+            };
             Controls.Add(lblDataEntrega);
-            dtpDataEntrega = new DateTimePicker() { Location = new Point(620, 190) };
+
+            currentY += espacamentoVertical;
+            dtpDataEntrega = new DateTimePicker()
+            {
+                Location = new Point(startX, currentY),
+                Font = new Font("Segoe UI", 11),
+                Width = 200
+            };
             Controls.Add(dtpDataEntrega);
 
+            currentY += espacamentoVertical + 10;
+
             // Status
-            var lblStatus = new Label() { Text = "Status", Location = new Point(620, 220), AutoSize = true };
+            var lblStatus = new Label()
+            {
+                Text = "Status",
+                Location = new Point(startX, currentY),
+                AutoSize = true,
+                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+            };
             Controls.Add(lblStatus);
-            cmbStatus = new ComboBox() { Location = new Point(620, 240), Width = 150, DropDownStyle = ComboBoxStyle.DropDownList };
+
+            currentY += espacamentoVertical;
+            cmbStatus = new ComboBox()
+            {
+                Location = new Point(startX, currentY),
+                Width = 200,
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Font = new Font("Segoe UI", 11)
+            };
             cmbStatus.Items.AddRange(new string[] { "Pendente", "Em andamento", "Concluído" });
             cmbStatus.SelectedIndex = 0;
             Controls.Add(cmbStatus);
 
+            currentY += espacamentoVertical + 10;
+
             // Prioridade
-            var lblPrioridade = new Label() { Text = "Prioridade", Location = new Point(620, 270), AutoSize = true };
+            var lblPrioridade = new Label()
+            {
+                Text = "Prioridade",
+                Location = new Point(startX, currentY),
+                AutoSize = true,
+                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+            };
             Controls.Add(lblPrioridade);
-            cmbPrioridade = new ComboBox() { Location = new Point(620, 290), Width = 150, DropDownStyle = ComboBoxStyle.DropDownList };
+
+            currentY += espacamentoVertical;
+            cmbPrioridade = new ComboBox()
+            {
+                Location = new Point(startX, currentY),
+                Width = 200,
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Font = new Font("Segoe UI", 11)
+            };
             cmbPrioridade.Items.AddRange(new string[] { "Baixa", "Média", "Alta" });
             cmbPrioridade.SelectedIndex = 1;
             Controls.Add(cmbPrioridade);
 
+            currentY += espacamentoVertical + 20;
+
             // Botões
-            btnSalvar = new Button() { Text = "Salvar", Location = new Point(620, 340), Width = 100 };
+            btnSalvar = new Button()
+            {
+                Text = "Salvar",
+                Location = new Point(startX, currentY),
+                Width = 140,
+                Height = 45,
+                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+            };
             btnSalvar.Click += BtnSalvar_Click;
             Controls.Add(btnSalvar);
 
-            btnExcluir = new Button() { Text = "Excluir", Location = new Point(740, 340), Width = 100 };
-            // Você pode adicionar o evento de exclusão depois
+            btnExcluir = new Button()
+            {
+                Text = "Excluir",
+                Location = new Point(startX + 160, currentY),
+                Width = 140,
+                Height = 45,
+                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+            };
+            btnExcluir.Click += btnExcluir_Click;
             Controls.Add(btnExcluir);
+        }
+
+
+
+
+        private void CarregarTarefas() 
+        {
+            listViewTarefas.Items.Clear();
+
+            try
+            {
+                using (MySqlConnection conn = Conexao.ObterConexao())
+                {
+                    string sql = "SELECT id, titulo, data_entrega, status, prioridade FROM Tarefas WHERE usuario_id = @usuarioId";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@usuarioId", usuarioId);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            long tarefaId = reader.GetInt64("id");
+                            string titulo = reader.GetString("titulo");
+                            DateTime dataEntrega = reader.GetDateTime("data_entrega");
+                            string status = reader.GetString("status");
+                            string prioridade = reader.GetString("prioridade");
+
+                            var item = new ListViewItem(titulo);
+                            item.SubItems.Add(dataEntrega.ToShortDateString());
+                            item.SubItems.Add(status);
+                            item.SubItems.Add(prioridade);
+                            item.Tag = tarefaId;
+                            listViewTarefas.Items.Add(item);
+                        }
+                    }
+
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar tarefas: " + ex.Message);
+            }
         }
 
         private void BtnSalvar_Click(object sender, EventArgs e)
@@ -91,7 +238,13 @@ namespace Tcc
             string status = cmbStatus.SelectedItem.ToString();
             string prioridade = cmbPrioridade.SelectedItem.ToString();
 
-            int usuarioID = 1; // Id fixo para teste, ajuste conforme necessidade
+            if (string.IsNullOrEmpty(titulo))
+            {
+                MessageBox.Show("O Titulo da tarefa não pode estar vazio.");
+                return;
+            }
+           
+           
 
             try
             {
@@ -101,7 +254,7 @@ namespace Tcc
                                    VALUES (@usuarioId, @titulo, @descricao, @data_entrega, @status, @prioridade)";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@usuarioId", usuarioID);
+                    cmd.Parameters.AddWithValue("@usuarioId", usuarioId);
                     cmd.Parameters.AddWithValue("@titulo", titulo);
                     cmd.Parameters.AddWithValue("@descricao", descricao);
                     cmd.Parameters.AddWithValue("@data_entrega", dataEntrega.Date);
@@ -109,13 +262,28 @@ namespace Tcc
                     cmd.Parameters.AddWithValue("@prioridade", prioridade);
                     cmd.ExecuteNonQuery();
                     long tarefaId = cmd.LastInsertedId;
+
+
+
+
+                    var item = new ListViewItem(titulo);
+                    item.SubItems.Add(dataEntrega.ToShortDateString());
+                    item.SubItems.Add(status);
+                    item.SubItems.Add(prioridade);
+                    item.Tag = tarefaId;
+                    listViewTarefas.Items.Add(item);
                 }
 
-                var item = new ListViewItem(titulo);
-                item.SubItems.Add(dataEntrega.ToShortDateString());
-                item.SubItems.Add(status);
-                item.SubItems.Add(prioridade);
-                listViewTarefas.Items.Add(item);
+                
+
+
+                txtTitulo.Clear();
+                txtDescricao.Clear();
+                dtpDataEntrega.Value = DateTime.Now;
+                cmbStatus.SelectedIndex = 0;
+                cmbPrioridade.SelectedIndex = 1;
+
+                
 
 
                 MessageBox.Show("Tarefa salva com sucesso!");
@@ -126,12 +294,57 @@ namespace Tcc
             }
         }
         private void btnExcluir_Click(object sender, EventArgs e)
-        {
+        {   
+            if(listViewTarefas.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Selecione uma tarefa para excluir.");
+                return;
+            }
+
+            var itemSelecionado = listViewTarefas.SelectedItems[0];
+            long tarefaId = (long)itemSelecionado.Tag;
+
+            var resultado = MessageBox.Show("Tem certeza que deseja excluir esta tarefa?", "Confirmação", MessageBoxButtons.YesNo);
+
+            if (resultado == DialogResult.Yes)
+            {
+                try
+                {
+                    using (MySqlConnection conn = Conexao.ObterConexao())
+                    {
+                        string sql = "DELETE FROM Tarefas WHERE id = @tarefaId";
+                        MySqlCommand cmd = new MySqlCommand(sql, conn);
+                        cmd.Parameters.AddWithValue("@tarefaId", tarefaId);
+                        cmd.Parameters.AddWithValue("@usuarioId", usuarioId);
+                        int linhasAfetadas = cmd.ExecuteNonQuery();
+                        
+
+                        if(linhasAfetadas == 0)
+                        {   
+                            listViewTarefas.Items.Remove(itemSelecionado);
+                            MessageBox.Show("Nenhuma tarefa encontrada com o ID especificado.");
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Tarefa excluída com sucesso!");
+                        }
+                    }
+
+                    listViewTarefas.Items.Remove(itemSelecionado);
+                    MessageBox.Show("Tarefa excluída com sucesso!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao excluir tarefa: " + ex.Message);
+                }
+            }
 
         }
 
         private void TarefasUserControl_Load(object sender, EventArgs e)
         {
+            CarregarTarefas();
 
         }
     }
