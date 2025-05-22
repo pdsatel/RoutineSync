@@ -16,18 +16,28 @@ namespace Tcc
         private Button btnSalvar;
         private Button btnExcluir;
         private int usuarioId;
-       
+        private ToolTip toolTipDescricao = new ToolTip();
+        private class TarefaInfo
+        {
+            public long Id { get; set; }
+            public string Descricao { get; set; }
+        }
+
+
 
         public TarefasUserControl(int idUsuario)
         {
             InitializeComponent();
             InicializarComponentesPersonalizados();
-            usuarioId = idUsuario;  
+
+            usuarioId = idUsuario;
         }
 
         private void InicializarComponentesPersonalizados()
         {
             this.Load += TarefasUserControl_Load;
+            
+
 
             // ListView
             listViewTarefas = new ListView
@@ -36,12 +46,13 @@ namespace Tcc
                 FullRowSelect = true,
                 GridLines = true,
                 Location = new Point(10, 10),
-                Size = new Size(800, 600)
+                Size = new Size(800, 850)
             };
             listViewTarefas.Columns.Add("Título", 200);
             listViewTarefas.Columns.Add("Data Entrega", 120);
             listViewTarefas.Columns.Add("Status", 100);
             listViewTarefas.Columns.Add("Prioridade", 100);
+            listViewTarefas.Columns.Add("Descrição", 250);
             Controls.Add(listViewTarefas);
 
             // Posição inicial para os componentes ao lado direito
@@ -184,12 +195,14 @@ namespace Tcc
             };
             btnExcluir.Click += btnExcluir_Click;
             Controls.Add(btnExcluir);
+
+
         }
 
 
 
 
-        private void CarregarTarefas() 
+        private void CarregarTarefas()
         {
             listViewTarefas.Items.Clear();
 
@@ -197,7 +210,7 @@ namespace Tcc
             {
                 using (MySqlConnection conn = Conexao.ObterConexao())
                 {
-                    string sql = "SELECT id, titulo, data_entrega, status, prioridade FROM Tarefas WHERE usuario_id = @usuarioId";
+                    string sql = "SELECT id, titulo,descricao, data_entrega, status, prioridade FROM Tarefas WHERE usuario_id = @usuarioId";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@usuarioId", usuarioId);
 
@@ -210,12 +223,14 @@ namespace Tcc
                             DateTime dataEntrega = reader.GetDateTime("data_entrega");
                             string status = reader.GetString("status");
                             string prioridade = reader.GetString("prioridade");
+                            string descricao = reader.GetString("descricao");
+                            string resumo = descricao.Length > 50 ? descricao.Substring(0, 50) + "..." : descricao;
 
                             var item = new ListViewItem(titulo);
                             item.SubItems.Add(dataEntrega.ToShortDateString());
                             item.SubItems.Add(status);
                             item.SubItems.Add(prioridade);
-                            item.Tag = tarefaId;
+                            item.Tag = new TarefaInfo { Id = tarefaId, Descricao = descricao };
                             listViewTarefas.Items.Add(item);
                         }
                     }
@@ -237,14 +252,15 @@ namespace Tcc
             DateTime dataEntrega = dtpDataEntrega.Value;
             string status = cmbStatus.SelectedItem.ToString();
             string prioridade = cmbPrioridade.SelectedItem.ToString();
+            string resumo = descricao.Length > 50 ? descricao.Substring(0, 50) + "..." : descricao;
 
             if (string.IsNullOrEmpty(titulo))
             {
                 MessageBox.Show("O Titulo da tarefa não pode estar vazio.");
                 return;
             }
-           
-           
+
+
 
             try
             {
@@ -270,11 +286,13 @@ namespace Tcc
                     item.SubItems.Add(dataEntrega.ToShortDateString());
                     item.SubItems.Add(status);
                     item.SubItems.Add(prioridade);
-                    item.Tag = tarefaId;
+                    item.SubItems.Add(resumo);
+                    item.Tag = new TarefaInfo { Id = tarefaId, Descricao = descricao };
+
                     listViewTarefas.Items.Add(item);
                 }
 
-                
+
 
 
                 txtTitulo.Clear();
@@ -283,7 +301,7 @@ namespace Tcc
                 cmbStatus.SelectedIndex = 0;
                 cmbPrioridade.SelectedIndex = 1;
 
-                
+
 
 
                 MessageBox.Show("Tarefa salva com sucesso!");
@@ -294,15 +312,16 @@ namespace Tcc
             }
         }
         private void btnExcluir_Click(object sender, EventArgs e)
-        {   
-            if(listViewTarefas.SelectedItems.Count == 0)
+        {
+            if (listViewTarefas.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Selecione uma tarefa para excluir.");
                 return;
             }
 
             var itemSelecionado = listViewTarefas.SelectedItems[0];
-            long tarefaId = (long)itemSelecionado.Tag;
+            TarefaInfo info = itemSelecionado.Tag as TarefaInfo;
+            long tarefaId = info.Id;
 
             var resultado = MessageBox.Show("Tem certeza que deseja excluir esta tarefa?", "Confirmação", MessageBoxButtons.YesNo);
 
@@ -317,10 +336,10 @@ namespace Tcc
                         cmd.Parameters.AddWithValue("@tarefaId", tarefaId);
                         cmd.Parameters.AddWithValue("@usuarioId", usuarioId);
                         int linhasAfetadas = cmd.ExecuteNonQuery();
-                        
 
-                        if(linhasAfetadas == 0)
-                        {   
+
+                        if (linhasAfetadas == 0)
+                        {
                             listViewTarefas.Items.Remove(itemSelecionado);
                             MessageBox.Show("Nenhuma tarefa encontrada com o ID especificado.");
                             return;
@@ -341,11 +360,36 @@ namespace Tcc
             }
 
         }
+        private void ListViewTarefas_MouseMove(object sender, MouseEventArgs e)
+        {
+            ListViewHitTestInfo info = listViewTarefas.HitTest(e.Location);
+
+            if (info.Item != null)
+            {
+                TarefaInfo tarefaInfo = info.Item.Tag as TarefaInfo;
+                if (tarefaInfo != null && !string.IsNullOrEmpty(tarefaInfo.Descricao))
+                {
+                    toolTipDescricao.SetToolTip(listViewTarefas, tarefaInfo.Descricao);
+                }
+                else
+                {
+                    toolTipDescricao.SetToolTip(listViewTarefas, null);
+                }
+            }
+            else
+            {
+                toolTipDescricao.SetToolTip(listViewTarefas, null);
+            }
+        }
+
+
 
         private void TarefasUserControl_Load(object sender, EventArgs e)
-        {
-            CarregarTarefas();
+            {
+                CarregarTarefas();
 
+
+            }
         }
     }
-}
+
