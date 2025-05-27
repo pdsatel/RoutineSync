@@ -37,9 +37,12 @@
             Name = "TarefasUserControl";
             Size = new Size(1205, 707);
             Load += TarefasUserControl_Load;
+            SizeChanged += TarefasUserControl_SizeChanged;
             ResumeLayout(false);
         }
 
         #endregion
+        private Button btnSalvar;
+        private Button btnExcluir;
     }
 }

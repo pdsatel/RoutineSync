@@ -32,8 +32,12 @@ namespace Tcc
 
         private void btnRotina_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Abroir painel de Rotina");
+            panelConteudo.Controls.Clear();
+            RotinaUserControl rotinaControl = new RotinaUserControl(usuarioId);
+            rotinaControl.Dock = DockStyle.Fill;
+            panelConteudo.Controls.Add(rotinaControl);
         }
+        
 
         private void btnSaude_Click(object sender, EventArgs e)
         {

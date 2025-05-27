@@ -13,8 +13,6 @@ namespace Tcc
         private DateTimePicker dtpDataEntrega;
         private ComboBox cmbStatus;
         private ComboBox cmbPrioridade;
-        private Button btnSalvar;
-        private Button btnExcluir;
         private int usuarioId;
         private ToolTip toolTipDescricao = new ToolTip();
         private class TarefaInfo
@@ -36,7 +34,7 @@ namespace Tcc
         private void InicializarComponentesPersonalizados()
         {
             this.Load += TarefasUserControl_Load;
-            
+
 
 
             // ListView
@@ -381,15 +379,78 @@ namespace Tcc
                 toolTipDescricao.SetToolTip(listViewTarefas, null);
             }
         }
+        private void CentralizarPainel(Control painel)
+        {
+            painel.Left = (this.ClientSize.Width - painel.Width) / 2;
+            painel.Top = (this.ClientSize.Height - painel.Height) / 2;
+        }
 
 
 
         private void TarefasUserControl_Load(object sender, EventArgs e)
+
+
+        {
+            this.SizeChanged += TarefasUserControl_SizeChanged;
+
+            CarregarTarefas();
+
+            // Centraliza o próprio UserControl
+            CentralizarPainel(this);
+
+            // Define cor de fundo geral
+            this.BackColor = ColorTranslator.FromHtml("#FFFCF6");
+
+            // Aplica fonte e cor aos controles existentes
+            // Estilo para os controles TextBox, ComboBox, DateTimePicker, ListView
+            foreach (Control ctrl in this.Controls)
             {
-                CarregarTarefas();
+                if (ctrl is TextBox txt)
+                {
+                    txt.BackColor = Color.White;
+                    txt.ForeColor = ColorTranslator.FromHtml("#333333");
+                    txt.BorderStyle = BorderStyle.FixedSingle;
+                }
 
+                if (ctrl is ComboBox cmb)
+                {
+                    cmb.BackColor = Color.White;
+                    cmb.ForeColor = ColorTranslator.FromHtml("#333333");
+                    cmb.FlatStyle = FlatStyle.Flat;
+                }
 
+                if (ctrl is DateTimePicker dtp)
+                {
+                    dtp.CalendarForeColor = Color.Black;
+                    dtp.CalendarMonthBackground = Color.White;
+                    dtp.CalendarTitleBackColor = ColorTranslator.FromHtml("#202E39");
+                    dtp.CalendarTitleForeColor = Color.White;
+                    dtp.BackColor = Color.White;
+                    dtp.ForeColor = ColorTranslator.FromHtml("#333333");
+                }
+
+                if (ctrl is ListView lv)
+                {
+                    lv.BackColor = Color.White;
+                    lv.ForeColor = ColorTranslator.FromHtml("#333333");
+                    lv.Font = new Font("Segoe UI", 10);
+                    lv.FullRowSelect = true;
+                }
             }
+
+        }
+
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TarefasUserControl_SizeChanged(object sender, EventArgs e)
+        {
+            
+
         }
     }
+}
 
