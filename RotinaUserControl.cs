@@ -54,39 +54,77 @@ namespace Tcc
         }
         private void RotinasUserControl_Load(object sender, EventArgs e)
         {
-            CentralizarPainel(panelInputs);
+            // Ajuste inicial do texto e itens
+            labelTitulo.Text = "Título:";
+            labelDescricao.Text = "Descrição:";
+            labelHorario.Text = "Horário:";
+            labelDiaSemana.Text = "Dia da Semana:";
 
-            // Estilização adicional (se desejar)
-            this.BackColor = ColorTranslator.FromHtml("#FFFCF6");
+            comboBoxDiaSemana.Items.Clear();
+            comboBoxDiaSemana.Items.AddRange(new object[] { "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado" });
 
-            foreach (Control ctrl in this.Controls)
-            {
-                ctrl.Font = new Font("Segoe UI", 11);
-                if (ctrl is Button btn)
-                {
-                    btn.BackColor = ColorTranslator.FromHtml("#202E39");
-                    btn.ForeColor = Color.White;
-                    btn.FlatStyle = FlatStyle.Flat;
-                    btn.FlatAppearance.BorderSize = 0;
-                }
-
-                if (ctrl is Label lbl)
-                    lbl.ForeColor = ColorTranslator.FromHtml("#333333");
-            }
+            OrganizarLayout();
         }
+
+        private void RotinaUserControl_SizeChanged(object sender, EventArgs e)
+        {
+            OrganizarLayout();
+        }
+
+        private void OrganizarLayout()
+        {
+            int margem = 20;
+            int larguraPainel = (this.ClientSize.Width / 3); // painel ocupa 1/3 da largura
+            int alturaPainel = this.ClientSize.Height - 3 * margem - btnSalvar.Height;
+
+            // Define tamanho e posição do painelInputs
+            panelInputs.SetBounds(margem, margem, larguraPainel, alturaPainel);
+
+            // Posiciona os controles dentro do painelInputs com margens internas
+            int padding = 10;
+            int labelAltura = 23;
+            int campoAltura = 31;
+            int larguraCampo = panelInputs.Width - 2 * padding;
+
+            labelTitulo.SetBounds(padding, padding, larguraCampo, labelAltura);
+            textBoxTitulo.SetBounds(padding, labelTitulo.Bottom + 2, larguraCampo, campoAltura);
+
+            labelDescricao.SetBounds(padding, textBoxTitulo.Bottom + 10, larguraCampo, labelAltura);
+            textBoxDescricao.SetBounds(padding, labelDescricao.Bottom + 2, larguraCampo, campoAltura);
+
+            labelHorario.SetBounds(padding, textBoxDescricao.Bottom + 10, larguraCampo, labelAltura);
+            dateTimePickerHorario.SetBounds(padding, labelHorario.Bottom + 2, larguraCampo, campoAltura);
+
+            labelDiaSemana.SetBounds(padding, dateTimePickerHorario.Bottom + 10, larguraCampo, labelAltura);
+            comboBoxDiaSemana.SetBounds(padding, labelDiaSemana.Bottom + 2, larguraCampo, campoAltura);
+
+            // ListBox ocupa o espaço restante do lado direito do painel
+            int larguraListBox = this.ClientSize.Width - panelInputs.Right - 2 * margem;
+            int alturaListBox = alturaPainel;
+            listBoxRotinas.SetBounds(panelInputs.Right + margem, margem, larguraListBox, alturaListBox);
+
+            // Botões alinhados abaixo do painelInputs, com espaçamento entre eles
+            int btnLargura = 100;
+            int btnAltura = 35;
+            int btnEspaco = 10;
+            int btnTop = panelInputs.Bottom + margem;
+
+            btnSalvar.SetBounds(panelInputs.Left, btnTop, btnLargura, btnAltura);
+            btnEditar.SetBounds(btnSalvar.Right + btnEspaco, btnTop, btnLargura, btnAltura);
+            btnExcluir.SetBounds(btnEditar.Right + btnEspaco, btnTop, btnLargura, btnAltura);
+            btnLimpar.SetBounds(btnExcluir.Right + btnEspaco, btnTop, btnLargura, btnAltura);
+        }
+
+
 
 
         private void CentralizarPainel(Control painel)
         {
             painel.Left = (this.ClientSize.Width - painel.Width) / 2;
-            painel.Top = 30; // distância do topo
+            painel.Top = 40; // distância do topo
         }
 
 
-        private void RotinaUserControl_SizeChanged(object sender, EventArgs e)
-        {
-            CentralizarPainel(Parent);
-
-        }
+        
     }
 }
