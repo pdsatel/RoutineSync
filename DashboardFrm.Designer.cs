@@ -77,6 +77,23 @@
             panelMenu.Margin = new Padding(4);
             panelMenu.Name = "panelMenu";
             panelMenu.Size = new Size(225, 655);
+            labelTitulo.Font = new Font("Poppins", 20F, FontStyle.Bold);
+            panelMenu.TabIndex = 1;
+            // 
+            // btnIA
+            // 
+            panelMenu.BackColor = Color.FromArgb(44, 62, 80);
+            panelMenu.Controls.Add(btnIA);
+            panelMenu.Controls.Add(btnRelatorios);
+            panelMenu.Controls.Add(btnSaude);
+            panelMenu.Controls.Add(btnRotina);
+            panelMenu.Controls.Add(btnTarefas);
+            panelMenu.Controls.Add(btnSair);
+            panelMenu.Dock = DockStyle.Left;
+            panelMenu.Location = new Point(0, 95);
+            panelMenu.Margin = new Padding(4);
+            panelMenu.Name = "panelMenu";
+            panelMenu.Size = new Size(225, 655);
             panelMenu.TabIndex = 1;
             // 
             // btnIA
@@ -93,6 +110,7 @@
             btnIA.TabIndex = 0;
             btnIA.Text = "Sugestões IA";
             btnIA.UseVisualStyleBackColor = false;
+            btnIA.Font = new Font("Poppins", 12F, FontStyle.Regular);
             btnIA.Click += btnIA_Click;
             // 
             // btnRelatorios
@@ -109,6 +127,7 @@
             btnRelatorios.TabIndex = 1;
             btnRelatorios.Text = "Relatórios";
             btnRelatorios.UseVisualStyleBackColor = false;
+            btnRelatorios.Font = new Font("Poppins", 12F, FontStyle.Regular);
             btnRelatorios.Click += btnRelatorios_Click;
             // 
             // btnSaude
@@ -125,6 +144,7 @@
             btnSaude.TabIndex = 2;
             btnSaude.Text = "Saúde";
             btnSaude.UseVisualStyleBackColor = false;
+            btnSaude.Font = new Font("Poppins", 12F, FontStyle.Regular);
             btnSaude.Click += btnSaude_Click;
             // 
             // btnRotina
@@ -141,6 +161,7 @@
             btnRotina.TabIndex = 3;
             btnRotina.Text = "Rotina";
             btnRotina.UseVisualStyleBackColor = false;
+            btnRotina.Font = new Font("Poppins", 12F, FontStyle.Regular);
             btnRotina.Click += btnRotina_Click;
             // 
             // btnTarefas
@@ -157,6 +178,7 @@
             btnTarefas.TabIndex = 4;
             btnTarefas.Text = "Tarefas";
             btnTarefas.UseVisualStyleBackColor = false;
+            btnTarefas.Font = new Font("Poppins", 12F, FontStyle.Regular);
             btnTarefas.Click += btnTarefas_Click;
             // 
             // btnSair
@@ -173,6 +195,7 @@
             btnSair.TabIndex = 5;
             btnSair.Text = "Sair";
             btnSair.UseVisualStyleBackColor = false;
+            btnSair.Font = new Font("Poppins", 12F, FontStyle.Regular);
             btnSair.Click += btnSair_Click;
             // 
             // panelConteudo
@@ -185,6 +208,9 @@
             panelConteudo.Size = new Size(1025, 655);
             panelConteudo.TabIndex = 0;
             panelConteudo.Paint += panelConteudo_Paint;
+            // Aqui você pode definir a fonte padrão para o conteúdo da interface, se houver textos:
+            panelConteudo.Font = new Font("Inter", 10F, FontStyle.Regular);
+
             // 
             // DashboardFrm
             // 
@@ -200,6 +226,7 @@
             Text = "Dashboard";
             WindowState = FormWindowState.Maximized;
             Load += DashboardFrm_Load;
+
             panelTopo.ResumeLayout(false);
             panelTopo.PerformLayout();
             panelMenu.ResumeLayout(false);

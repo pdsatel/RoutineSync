@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace Tcc
@@ -52,6 +53,62 @@ namespace Tcc
         {
             // Limpar todos os campos do formulário
         }
+        private void AplicarEstiloControles()
+        {
+            this.BackColor = ColorTranslator.FromHtml("#FFFCF6");
+
+            foreach (Control ctrl in this.Controls)
+            {
+                if (ctrl is TextBox txt)
+                {
+                    txt.BackColor = Color.White;
+                    txt.ForeColor = ColorTranslator.FromHtml("#333333");
+                    txt.BorderStyle = BorderStyle.FixedSingle;
+                }
+                else if (ctrl is ComboBox cmb)
+                {
+                    cmb.BackColor = Color.White;
+                    cmb.ForeColor = ColorTranslator.FromHtml("#333333");
+                    cmb.FlatStyle = FlatStyle.Flat;
+                }
+                else if (ctrl is DateTimePicker dtp)
+                {
+                    dtp.CalendarForeColor = Color.Black;
+                    dtp.CalendarMonthBackground = Color.White;
+                    dtp.CalendarTitleBackColor = ColorTranslator.FromHtml("#202E39");
+                    dtp.CalendarTitleForeColor = Color.White;
+                    dtp.BackColor = Color.White;
+                    dtp.ForeColor = ColorTranslator.FromHtml("#333333");
+                }
+                else if (ctrl is ListBox lb)
+                {
+                    lb.BackColor = Color.White;
+                    lb.ForeColor = ColorTranslator.FromHtml("#333333");
+                    lb.Font = new Font("Segoe UI", 10);
+                }
+            }
+
+            // Além disso, se você quiser, pode aplicar cores nos seus botões:
+            foreach (Control ctrl in this.Controls)
+            {
+                if (ctrl is Button btn)
+                {
+                    btn.BackColor = ColorTranslator.FromHtml("#202E39"); // azul suave
+                    btn.ForeColor = Color.White;
+                    btn.FlatStyle = FlatStyle.Flat;
+                    btn.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#4A90E2");
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
         private void RotinasUserControl_Load(object sender, EventArgs e)
         {
             // Ajuste inicial do texto e itens
@@ -61,9 +118,10 @@ namespace Tcc
             labelDiaSemana.Text = "Dia da Semana:";
 
             comboBoxDiaSemana.Items.Clear();
-            comboBoxDiaSemana.Items.AddRange(new object[] { "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado" });
+            comboBoxDiaSemana.Items.AddRange(new object[] { "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado" });   
 
             OrganizarLayout();
+            AplicarEstiloControles();
         }
 
         private void RotinaUserControl_SizeChanged(object sender, EventArgs e)
@@ -73,9 +131,12 @@ namespace Tcc
 
         private void OrganizarLayout()
         {
+
             int margem = 20;
             int larguraPainel = (this.ClientSize.Width / 3); // painel ocupa 1/3 da largura
             int alturaPainel = this.ClientSize.Height - 3 * margem - btnSalvar.Height;
+
+            
 
             // Define tamanho e posição do painelInputs
             panelInputs.SetBounds(margem, margem, larguraPainel, alturaPainel);
@@ -113,7 +174,27 @@ namespace Tcc
             btnEditar.SetBounds(btnSalvar.Right + btnEspaco, btnTop, btnLargura, btnAltura);
             btnExcluir.SetBounds(btnEditar.Right + btnEspaco, btnTop, btnLargura, btnAltura);
             btnLimpar.SetBounds(btnExcluir.Right + btnEspaco, btnTop, btnLargura, btnAltura);
+
+
+            ArredondarControle(panelInputs, 20);
+            ArredondarControle(listBoxRotinas, 20);
         }
+
+        private void ArredondarControle(Control controle, int raio)
+        {
+            GraphicsPath path = new GraphicsPath();
+            path.StartFigure();
+            path.AddArc(new Rectangle(0, 0, raio, raio), 180, 90);
+            path.AddArc(new Rectangle(controle.Width - raio, 0, raio, raio), 270, 90);
+            path.AddArc(new Rectangle(controle.Width - raio, controle.Height - raio, raio, raio), 0, 90);
+            path.AddArc(new Rectangle(0, controle.Height - raio, raio, raio), 90, 90);
+            path.CloseFigure();
+
+            controle.Region = new Region(path);
+        }
+
+
+       
 
 
 

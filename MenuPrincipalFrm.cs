@@ -160,6 +160,8 @@ namespace Tcc
 
             labelLogin.ForeColor = corTexto;
 
+            
+          
 
             //Cadastro
 
@@ -364,6 +366,20 @@ namespace Tcc
                     Enter(ctrl);
             }
         }
+
+        private void AplicarFonte(Control parent, Font fonte)
+        {
+            foreach (Control ctrl in parent.Controls)
+            {
+                ctrl.Font = fonte;
+
+                if (ctrl.HasChildren)
+                {
+                    AplicarFonte(ctrl, fonte);
+                }
+            }
+        }
+
 
     }
 }
