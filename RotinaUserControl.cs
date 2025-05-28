@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using CalendarNet;
 
 namespace Tcc
 {
@@ -176,8 +177,7 @@ namespace Tcc
             btnLimpar.SetBounds(btnExcluir.Right + btnEspaco, btnTop, btnLargura, btnAltura);
 
 
-            ArredondarControle(panelInputs, 20);
-            ArredondarControle(listBoxRotinas, 20);
+            
         }
 
         private void ArredondarControle(Control controle, int raio)
