@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-
+using CalendarNet;
 namespace Tcc
 {
     public partial class TarefasUserControl : UserControl
@@ -16,15 +16,16 @@ namespace Tcc
         private ComboBox cmbPrioridade;
         private int usuarioId;
         private ToolTip toolTipDescricao = new ToolTip();
-        
-        private class TarefaInfo
+
+        public class TarefaInfo
         {
             public long Id { get; set; }
+            public string Titulo { get; set; }
             public string Descricao { get; set; }
+            public DateTime DataEntrega { get; set; }
+            public string Status { get; set; }
+            public string Prioridade { get; set; }
         }
-
-
-
         public TarefasUserControl(int idUsuario)
         {
             InitializeComponent();
@@ -36,11 +37,6 @@ namespace Tcc
         private void InicializarComponentesPersonalizados()
         {
             this.Load += TarefasUserControl_Load;
-           
-
-            
-
-
 
             // ListView
             listViewTarefas = new ListView
@@ -156,9 +152,7 @@ namespace Tcc
             cmbStatus.Items.AddRange(new string[] { "Pendente", "Em andamento", "Concluído" });
             cmbStatus.SelectedIndex = 0;
             Controls.Add(cmbStatus);
-
             currentY += espacamentoVertical + 10;
-
             // Prioridade
             var lblPrioridade = new Label()
             {
@@ -209,14 +203,7 @@ namespace Tcc
             btnExcluir.Click += btnExcluir_Click;
             Controls.Add(btnExcluir);
             listViewTarefas.MouseMove += ListViewTarefas_MouseMove;
-
-
-
         }
-
-
-
-
         private void CarregarTarefas()
         {
             listViewTarefas.Items.Clear();
@@ -259,7 +246,6 @@ namespace Tcc
                 MessageBox.Show("Erro ao carregar tarefas: " + ex.Message);
             }
         }
-
         private void BtnSalvar_Click(object sender, EventArgs e)
         {
             string titulo = txtTitulo.Text.Trim();
@@ -269,13 +255,17 @@ namespace Tcc
             string prioridade = cmbPrioridade.SelectedItem.ToString();
             string resumo = descricao.Length > 50 ? descricao.Substring(0, 50) + "..." : descricao;
 
+
+
+
+
             if (string.IsNullOrEmpty(titulo))
             {
                 MessageBox.Show("O Titulo da tarefa não pode estar vazio.");
                 return;
             }
 
-
+            long tarefaId = 0;
 
             try
             {
@@ -292,11 +282,11 @@ namespace Tcc
                     cmd.Parameters.AddWithValue("@status", status.ToLower());
                     cmd.Parameters.AddWithValue("@prioridade", prioridade);
                     cmd.ExecuteNonQuery();
-                    long tarefaId = cmd.LastInsertedId;
 
+                  
+                   
 
-
-
+                    tarefaId = cmd.LastInsertedId;
                     var item = new ListViewItem(titulo);
                     item.SubItems.Add(dataEntrega.ToShortDateString());
                     item.SubItems.Add(status);
@@ -306,21 +296,20 @@ namespace Tcc
 
                     listViewTarefas.Items.Add(item);
                 }
-
-
-
-
                 txtTitulo.Clear();
                 txtDescricao.Clear();
                 dtpDataEntrega.Value = DateTime.Now;
                 cmbStatus.SelectedIndex = 0;
                 cmbPrioridade.SelectedIndex = 1;
 
-
-
-
                 MessageBox.Show("Tarefa salva com sucesso!");
+
+
+
+               
+
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao salvar tarefa: " + ex.Message);
@@ -333,7 +322,6 @@ namespace Tcc
                 MessageBox.Show("Selecione uma tarefa para excluir.");
                 return;
             }
-
             var itemSelecionado = listViewTarefas.SelectedItems[0];
             TarefaInfo info = itemSelecionado.Tag as TarefaInfo;
             long tarefaId = info.Id;
@@ -364,7 +352,6 @@ namespace Tcc
                             MessageBox.Show("Tarefa excluída com sucesso!");
                         }
                     }
-
                     
                 }
                 catch (Exception ex)
@@ -410,7 +397,6 @@ namespace Tcc
             path.CloseFigure();
             btn.Region = new Region(path);
         }
-
         private void ArredondarControle(Control controle, int raio)
         {
             GraphicsPath path = new GraphicsPath();
@@ -423,9 +409,6 @@ namespace Tcc
 
             controle.Region = new Region(path);
         }
-
-
-
         private void TarefasUserControl_Load(object sender, EventArgs e)
 
 
@@ -477,36 +460,24 @@ namespace Tcc
                     lv.FullRowSelect = true;
                 }
             }
-
             ArredondarBotao(btnSalvar, 10);
             ArredondarBotao(btnExcluir, 10);    
             ArredondarControle(txtTitulo, 10);
             ArredondarControle(txtDescricao, 10);   
             ArredondarControle(dtpDataEntrega, 10); 
             ArredondarControle(cmbStatus, 10);
-            ArredondarControle(cmbPrioridade, 10);
-
-           
+            ArredondarControle(cmbPrioridade, 10);  
             ArredondarControle(listViewTarefas, 10);
-
-
         }
-
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
-
         private void TarefasUserControl_SizeChanged(object sender, EventArgs e)
         {
             
 
         }
 
-
     }
-
-    
 }
 

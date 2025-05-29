@@ -92,7 +92,7 @@
             btnIA.Name = "btnIA";
             btnIA.Size = new Size(225, 77);
             btnIA.TabIndex = 0;
-            btnIA.Height = 90;
+            btnIA.Height = 110;
             btnIA.Text = "Sugestões IA";
             btnIA.UseVisualStyleBackColor = false;
             btnIA.Click += btnIA_Click;
@@ -110,7 +110,7 @@
             btnRelatorios.Name = "btnRelatorios";
             btnRelatorios.Size = new Size(225, 83);
             btnRelatorios.TabIndex = 1;
-            btnRelatorios.Height = 90;
+            btnRelatorios.Height = 110;
             btnRelatorios.Text = " Relatórios";
             btnRelatorios.UseVisualStyleBackColor = false;
             btnRelatorios.Click += btnRelatorios_Click;
@@ -128,7 +128,7 @@
             btnSaude.Name = "btnSaude";
             btnSaude.Size = new Size(225, 75);
             btnSaude.TabIndex = 2;
-            btnSaude.Height = 90;
+            btnSaude.Height = 110;
             btnSaude.Text = "Saúde";
             btnSaude.UseVisualStyleBackColor = false;
             btnSaude.Click += btnSaude_Click;
@@ -146,7 +146,7 @@
             btnRotina.Name = "btnRotina";
             btnRotina.Size = new Size(225, 72);
             btnRotina.TabIndex = 3;
-            btnRotina.Height = 90;
+            btnRotina.Height = 110;
             btnRotina.Text = "Rotina";
             btnRotina.UseVisualStyleBackColor = false;
             btnRotina.Click += btnRotina_Click;
@@ -164,7 +164,7 @@
             btnTarefas.Name = "btnTarefas";
             btnTarefas.Size = new Size(225, 77);
             btnTarefas.TabIndex = 4;
-            btnTarefas.Height = 90;
+            btnTarefas.Height = 110;
             btnTarefas.Text = "Tarefas";
             btnTarefas.UseVisualStyleBackColor = false;
             btnTarefas.Click += btnTarefas_Click;
@@ -182,7 +182,7 @@
             btnSair.Name = "btnSair";
             btnSair.Size = new Size(225, 62);
             btnSair.TabIndex = 5;
-            btnSair.Height = 90;
+            btnSair.Height = 110;
             btnSair.Text = "Sair";
             btnSair.UseVisualStyleBackColor = false;
             btnSair.Click += btnSair_Click;

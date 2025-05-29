@@ -139,34 +139,34 @@ namespace Tcc
             // 
             // btnSalvar
             // 
-            btnSalvar.Location = new Point(10, 358);
+            btnSalvar.Location = new Point(13, 358);
             btnSalvar.Name = "btnSalvar";
-            btnSalvar.Size = new Size(140, 23);
+            btnSalvar.Size = new Size(140, 42);
             btnSalvar.TabIndex = 9;
             btnSalvar.Text = "Salvar";
             btnSalvar.Click += btnSalvar_Click_1;
             // 
             // btnEditar
             // 
-            btnEditar.Location = new Point(150, 358);
+            btnEditar.Location = new Point(170, 361);
             btnEditar.Name = "btnEditar";
-            btnEditar.Size = new Size(140, 23);
+            btnEditar.Size = new Size(140, 42);
             btnEditar.TabIndex = 10;
             btnEditar.Text = "Editar";
             // 
             // btnExcluir
             // 
-            btnExcluir.Location = new Point(10, 381);
+            btnExcluir.Location = new Point(10, 419);
             btnExcluir.Name = "btnExcluir";
-            btnExcluir.Size = new Size(140, 23);
+            btnExcluir.Size = new Size(140, 34);
             btnExcluir.TabIndex = 11;
             btnExcluir.Text = "Excluir";
             // 
             // btnLimpar
             // 
-            btnLimpar.Location = new Point(150, 381);
+            btnLimpar.Location = new Point(170, 419);
             btnLimpar.Name = "btnLimpar";
-            btnLimpar.Size = new Size(140, 23);
+            btnLimpar.Size = new Size(140, 34);
             btnLimpar.TabIndex = 12;
             btnLimpar.Text = "Limpar";
             // 

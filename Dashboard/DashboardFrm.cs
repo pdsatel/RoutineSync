@@ -1,13 +1,23 @@
-﻿using System;
+﻿using
+    System;
+using System.Globalization;
 using System.Windows.Forms;
+using CalendarNet;
+
 
 namespace Tcc
 {
+
+
+   
+
     public partial class DashboardFrm : Form
 
 
     {
+        
         private int usuarioId;
+        private RotinaUserControl rotinaControl;
         public DashboardFrm(int idUsuario)
         {   
             InitializeComponent();
@@ -43,6 +53,10 @@ namespace Tcc
             btnSair.Image = Properties.Resources.Sair_png; 
             btnSair.ImageAlign = ContentAlignment.MiddleLeft;
             btnSair.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+
+            rotinaControl = new RotinaUserControl(usuarioId);
+            rotinaControl.Dock = DockStyle.Fill;
         }
 
 
@@ -52,16 +66,22 @@ namespace Tcc
            TarefasUserControl tarefasControl = new TarefasUserControl(usuarioId);
            tarefasControl.Dock = DockStyle.Fill;
            panelConteudo.Controls.Add(tarefasControl);
+           
+
+           
             }
 
         private void btnRotina_Click(object sender, EventArgs e)
         {
             panelConteudo.Controls.Clear();
-            RotinaUserControl rotinaControl = new RotinaUserControl(usuarioId);
-            rotinaControl.Dock = DockStyle.Fill;
             panelConteudo.Controls.Add(rotinaControl);
         }
-        
+
+        public delegate void TarefasAdicionaHandler(TarefaInfo tarefa);
+
+        public event TarefasAdicionaHandler OnTarefasAdiciona;
+
+
 
         private void btnSaude_Click(object sender, EventArgs e)
         {
