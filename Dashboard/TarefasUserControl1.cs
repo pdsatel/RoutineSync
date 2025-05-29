@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
@@ -15,6 +16,7 @@ namespace Tcc
         private ComboBox cmbPrioridade;
         private int usuarioId;
         private ToolTip toolTipDescricao = new ToolTip();
+        
         private class TarefaInfo
         {
             public long Id { get; set; }
@@ -34,6 +36,9 @@ namespace Tcc
         private void InicializarComponentesPersonalizados()
         {
             this.Load += TarefasUserControl_Load;
+           
+
+            
 
 
 
@@ -64,7 +69,8 @@ namespace Tcc
                 Text = "Título",
                 Location = new Point(startX, currentY),
                 AutoSize = true,
-                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                ForeColor = Color.White
             };
             Controls.Add(lblTitulo);
 
@@ -73,7 +79,8 @@ namespace Tcc
             {
                 Location = new Point(startX, currentY),
                 Width = 350,
-                Font = new Font("Segoe UI", 11)
+                Font = new Font("Segoe UI", 11),
+                ForeColor = Color.White
             };
             Controls.Add(txtTitulo);
 
@@ -85,7 +92,8 @@ namespace Tcc
                 Text = "Descrição",
                 Location = new Point(startX, currentY),
                 AutoSize = true,
-                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                ForeColor = Color.White
             };
             Controls.Add(lblDescricao);
 
@@ -96,7 +104,8 @@ namespace Tcc
                 Width = 350,
                 Height = 140,
                 Multiline = true,
-                Font = new Font("Segoe UI", 11)
+                Font = new Font("Segoe UI", 11),
+                ForeColor = Color.White
             };
             Controls.Add(txtDescricao);
 
@@ -108,7 +117,8 @@ namespace Tcc
                 Text = "Data de Entrega",
                 Location = new Point(startX, currentY),
                 AutoSize = true,
-                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                ForeColor = Color.White
             };
             Controls.Add(lblDataEntrega);
 
@@ -129,7 +139,9 @@ namespace Tcc
                 Text = "Status",
                 Location = new Point(startX, currentY),
                 AutoSize = true,
-                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                ForeColor = Color.White
+
             };
             Controls.Add(lblStatus);
 
@@ -153,7 +165,8 @@ namespace Tcc
                 Text = "Prioridade",
                 Location = new Point(startX, currentY),
                 AutoSize = true,
-                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                ForeColor = Color.White
             };
             Controls.Add(lblPrioridade);
 
@@ -178,7 +191,8 @@ namespace Tcc
                 Location = new Point(startX, currentY),
                 Width = 140,
                 Height = 45,
-                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                ForeColor = Color.White
             };
             btnSalvar.Click += BtnSalvar_Click;
             Controls.Add(btnSalvar);
@@ -189,10 +203,13 @@ namespace Tcc
                 Location = new Point(startX + 160, currentY),
                 Width = 140,
                 Height = 45,
-                Font = new Font("Segoe UI", 11, FontStyle.Bold)
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                ForeColor = Color.White
             };
             btnExcluir.Click += btnExcluir_Click;
             Controls.Add(btnExcluir);
+            listViewTarefas.MouseMove += ListViewTarefas_MouseMove;
+
 
 
         }
@@ -348,8 +365,7 @@ namespace Tcc
                         }
                     }
 
-                    listViewTarefas.Items.Remove(itemSelecionado);
-                    MessageBox.Show("Tarefa excluída com sucesso!");
+                    
                 }
                 catch (Exception ex)
                 {
@@ -384,6 +400,29 @@ namespace Tcc
             painel.Left = (this.ClientSize.Width - painel.Width) / 2;
             painel.Top = (this.ClientSize.Height - painel.Height) / 2;
         }
+        private void ArredondarBotao(Button btn, int raio)
+        {
+            GraphicsPath path = new GraphicsPath();
+            path.AddArc(0, 0, raio, raio, 180, 90);
+            path.AddArc(btn.Width - raio, 0, raio, raio, 270, 90);
+            path.AddArc(btn.Width - raio, btn.Height - raio, raio, raio, 0, 90);
+            path.AddArc(0, btn.Height - raio, raio, raio, 90, 90);
+            path.CloseFigure();
+            btn.Region = new Region(path);
+        }
+
+        private void ArredondarControle(Control controle, int raio)
+        {
+            GraphicsPath path = new GraphicsPath();
+            path.StartFigure();
+            path.AddArc(new Rectangle(0, 0, raio, raio), 180, 90);
+            path.AddArc(new Rectangle(controle.Width - raio, 0, raio, raio), 270, 90);
+            path.AddArc(new Rectangle(controle.Width - raio, controle.Height - raio, raio, raio), 0, 90);
+            path.AddArc(new Rectangle(0, controle.Height - raio, raio, raio), 90, 90);
+            path.CloseFigure();
+
+            controle.Region = new Region(path);
+        }
 
 
 
@@ -399,7 +438,7 @@ namespace Tcc
             CentralizarPainel(this);
 
             // Define cor de fundo geral
-            this.BackColor = ColorTranslator.FromHtml("#FFFCF6");
+            this.BackColor = ColorTranslator.FromHtml("#202E39");
 
             // Aplica fonte e cor aos controles existentes
             // Estilo para os controles TextBox, ComboBox, DateTimePicker, ListView
@@ -410,6 +449,7 @@ namespace Tcc
                     txt.BackColor = Color.White;
                     txt.ForeColor = ColorTranslator.FromHtml("#333333");
                     txt.BorderStyle = BorderStyle.FixedSingle;
+                    
                 }
 
                 if (ctrl is ComboBox cmb)
@@ -438,6 +478,18 @@ namespace Tcc
                 }
             }
 
+            ArredondarBotao(btnSalvar, 10);
+            ArredondarBotao(btnExcluir, 10);    
+            ArredondarControle(txtTitulo, 10);
+            ArredondarControle(txtDescricao, 10);   
+            ArredondarControle(dtpDataEntrega, 10); 
+            ArredondarControle(cmbStatus, 10);
+            ArredondarControle(cmbPrioridade, 10);
+
+           
+            ArredondarControle(listViewTarefas, 10);
+
+
         }
 
 
@@ -451,6 +503,10 @@ namespace Tcc
             
 
         }
+
+
     }
+
+    
 }
 

@@ -18,9 +18,33 @@ namespace Tcc
 
         private void DashboardFrm_Load(object sender, EventArgs e)
         {
-            
-            // Pode carregar painel inicial aqui, se quiser
+            // ÍCONES DOS BOTÕES DO MENU
+
+            btnTarefas.Image = Properties.Resources.Tarefas_png;
+            btnTarefas.ImageAlign = ContentAlignment.MiddleLeft;
+            btnTarefas.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnRotina.Image = Properties.Resources.Calendario_png;
+            btnRotina.ImageAlign = ContentAlignment.MiddleLeft;
+            btnRotina.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnSaude.Image = Properties.Resources.Coração_png;
+            btnSaude.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSaude.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnRelatorios.Image = Properties.Resources.Relatorio_png;
+            btnRelatorios.ImageAlign = ContentAlignment.MiddleLeft;
+            btnRelatorios.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnIA.Image = Properties.Resources.IA_png;
+            btnIA.ImageAlign = ContentAlignment.MiddleLeft;
+            btnIA.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnSair.Image = Properties.Resources.Sair_png; 
+            btnSair.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSair.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
+
 
         private void btnTarefas_Click(object sender, EventArgs e)
         {

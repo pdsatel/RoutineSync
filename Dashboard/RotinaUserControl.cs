@@ -119,7 +119,7 @@ namespace Tcc
             labelDiaSemana.Text = "Dia da Semana:";
 
             comboBoxDiaSemana.Items.Clear();
-            comboBoxDiaSemana.Items.AddRange(new object[] { "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado" });   
+            comboBoxDiaSemana.Items.AddRange(new object[] { "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado" });
 
             OrganizarLayout();
             AplicarEstiloControles();
@@ -137,7 +137,7 @@ namespace Tcc
             int larguraPainel = (this.ClientSize.Width / 3); // painel ocupa 1/3 da largura
             int alturaPainel = this.ClientSize.Height - 3 * margem - btnSalvar.Height;
 
-            
+
 
             // Define tamanho e posição do painelInputs
             panelInputs.SetBounds(margem, margem, larguraPainel, alturaPainel);
@@ -177,7 +177,7 @@ namespace Tcc
             btnLimpar.SetBounds(btnExcluir.Right + btnEspaco, btnTop, btnLargura, btnAltura);
 
 
-            
+
         }
 
         private void ArredondarControle(Control controle, int raio)
@@ -194,7 +194,7 @@ namespace Tcc
         }
 
 
-       
+
 
 
 
@@ -205,7 +205,9 @@ namespace Tcc
             painel.Top = 40; // distância do topo
         }
 
+        private void btnSalvar_Click_1(object sender, EventArgs e)
+        {
 
-        
+        }
     }
 }
