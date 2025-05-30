@@ -76,9 +76,10 @@
             panelLogin.Controls.Add(textBoxSenha);
             panelLogin.Controls.Add(btnEntrar);
             panelLogin.Controls.Add(btnVoltarLogin);
-            panelLogin.Location = new Point(228, 98);
+            panelLogin.Location = new Point(160, 59);
+            panelLogin.Margin = new Padding(2, 2, 2, 2);
             panelLogin.Name = "panelLogin";
-            panelLogin.Size = new Size(535, 430);
+            panelLogin.Size = new Size(374, 258);
             panelLogin.TabIndex = 0;
             panelLogin.Paint += panelLogin_Paint;
             // 
@@ -87,49 +88,55 @@
             labelLogin.AutoSize = true;
             labelLogin.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelLogin.ForeColor = SystemColors.ActiveCaption;
-            labelLogin.Location = new Point(171, 45);
+            labelLogin.Location = new Point(120, 27);
+            labelLogin.Margin = new Padding(2, 0, 2, 0);
             labelLogin.Name = "labelLogin";
-            labelLogin.Size = new Size(155, 65);
+            labelLogin.Size = new Size(104, 45);
             labelLogin.TabIndex = 6;
             labelLogin.Text = "Login";
             labelLogin.Click += label1_Click_1;
             // 
             // labelEmail
             // 
-            labelEmail.Location = new Point(26, 163);
+            labelEmail.Location = new Point(18, 98);
+            labelEmail.Margin = new Padding(2, 0, 2, 0);
             labelEmail.Name = "labelEmail";
-            labelEmail.Size = new Size(100, 30);
+            labelEmail.Size = new Size(70, 18);
             labelEmail.TabIndex = 0;
             labelEmail.Text = "Email:";
             // 
             // textBoxEmail
             // 
-            textBoxEmail.Location = new Point(146, 163);
+            textBoxEmail.Location = new Point(102, 98);
+            textBoxEmail.Margin = new Padding(2, 2, 2, 2);
             textBoxEmail.Name = "textBoxEmail";
-            textBoxEmail.Size = new Size(300, 31);
+            textBoxEmail.Size = new Size(211, 23);
             textBoxEmail.TabIndex = 1;
             // 
             // labelSenha
             // 
-            labelSenha.Location = new Point(26, 213);
+            labelSenha.Location = new Point(18, 128);
+            labelSenha.Margin = new Padding(2, 0, 2, 0);
             labelSenha.Name = "labelSenha";
-            labelSenha.Size = new Size(100, 30);
+            labelSenha.Size = new Size(70, 18);
             labelSenha.TabIndex = 2;
             labelSenha.Text = "Senha:";
             // 
             // textBoxSenha
             // 
-            textBoxSenha.Location = new Point(146, 213);
+            textBoxSenha.Location = new Point(102, 128);
+            textBoxSenha.Margin = new Padding(2, 2, 2, 2);
             textBoxSenha.Name = "textBoxSenha";
             textBoxSenha.PasswordChar = '*';
-            textBoxSenha.Size = new Size(300, 31);
+            textBoxSenha.Size = new Size(211, 23);
             textBoxSenha.TabIndex = 3;
             // 
             // btnEntrar
             // 
-            btnEntrar.Location = new Point(196, 273);
+            btnEntrar.Location = new Point(137, 164);
+            btnEntrar.Margin = new Padding(2, 2, 2, 2);
             btnEntrar.Name = "btnEntrar";
-            btnEntrar.Size = new Size(100, 40);
+            btnEntrar.Size = new Size(70, 24);
             btnEntrar.TabIndex = 4;
             btnEntrar.Text = "Entrar";
             btnEntrar.UseVisualStyleBackColor = true;
@@ -137,9 +144,10 @@
             // 
             // btnVoltarLogin
             // 
-            btnVoltarLogin.Location = new Point(196, 333);
+            btnVoltarLogin.Location = new Point(137, 200);
+            btnVoltarLogin.Margin = new Padding(2, 2, 2, 2);
             btnVoltarLogin.Name = "btnVoltarLogin";
-            btnVoltarLogin.Size = new Size(100, 40);
+            btnVoltarLogin.Size = new Size(70, 24);
             btnVoltarLogin.TabIndex = 5;
             btnVoltarLogin.Text = "Voltar";
             btnVoltarLogin.UseVisualStyleBackColor = true;
@@ -167,9 +175,10 @@
             panelCadastro.Controls.Add(dateTimeHoraAcordar);
             panelCadastro.Controls.Add(btnCadastrar);
             panelCadastro.Controls.Add(btnVoltarCad);
-            panelCadastro.Location = new Point(303, 98);
+            panelCadastro.Location = new Point(212, 59);
+            panelCadastro.Margin = new Padding(2, 2, 2, 2);
             panelCadastro.Name = "panelCadastro";
-            panelCadastro.Size = new Size(503, 550);
+            panelCadastro.Size = new Size(353, 331);
             panelCadastro.TabIndex = 0;
             panelCadastro.Visible = false;
             panelCadastro.Paint += panelCadastro_Paint;
@@ -179,143 +188,161 @@
             labelCadastro.AutoSize = true;
             labelCadastro.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             labelCadastro.ForeColor = SystemColors.ActiveCaption;
-            labelCadastro.Location = new Point(160, 10);
+            labelCadastro.Location = new Point(112, 6);
+            labelCadastro.Margin = new Padding(2, 0, 2, 0);
             labelCadastro.Name = "labelCadastro";
-            labelCadastro.Size = new Size(168, 48);
+            labelCadastro.Size = new Size(115, 32);
             labelCadastro.TabIndex = 99;
             labelCadastro.Text = "Cadastro";
             // 
             // labelNome
             // 
-            labelNome.Location = new Point(52, 60);
+            labelNome.Location = new Point(36, 36);
+            labelNome.Margin = new Padding(2, 0, 2, 0);
             labelNome.Name = "labelNome";
-            labelNome.Size = new Size(100, 30);
+            labelNome.Size = new Size(70, 18);
             labelNome.TabIndex = 0;
             labelNome.Text = "Nome:";
             // 
             // textBoxNomecad
             // 
-            textBoxNomecad.Location = new Point(162, 60);
+            textBoxNomecad.Location = new Point(113, 36);
+            textBoxNomecad.Margin = new Padding(2, 2, 2, 2);
             textBoxNomecad.Name = "textBoxNomecad";
-            textBoxNomecad.Size = new Size(300, 31);
+            textBoxNomecad.Size = new Size(211, 23);
             textBoxNomecad.TabIndex = 1;
             // 
             // labelEmailcad
             // 
-            labelEmailcad.Location = new Point(52, 110);
+            labelEmailcad.Location = new Point(36, 66);
+            labelEmailcad.Margin = new Padding(2, 0, 2, 0);
             labelEmailcad.Name = "labelEmailcad";
-            labelEmailcad.Size = new Size(100, 30);
+            labelEmailcad.Size = new Size(70, 18);
             labelEmailcad.TabIndex = 2;
             labelEmailcad.Text = "Email:";
             // 
             // textBoxEmailcad
             // 
-            textBoxEmailcad.Location = new Point(162, 110);
+            textBoxEmailcad.Location = new Point(113, 66);
+            textBoxEmailcad.Margin = new Padding(2, 2, 2, 2);
             textBoxEmailcad.Name = "textBoxEmailcad";
-            textBoxEmailcad.Size = new Size(300, 31);
+            textBoxEmailcad.Size = new Size(211, 23);
             textBoxEmailcad.TabIndex = 3;
             // 
             // labelSenhacad
             // 
-            labelSenhacad.Location = new Point(52, 160);
+            labelSenhacad.Location = new Point(36, 96);
+            labelSenhacad.Margin = new Padding(2, 0, 2, 0);
             labelSenhacad.Name = "labelSenhacad";
-            labelSenhacad.Size = new Size(100, 30);
+            labelSenhacad.Size = new Size(70, 18);
             labelSenhacad.TabIndex = 4;
             labelSenhacad.Text = "Senha:";
             // 
             // textBoxSenhacad
             // 
-            textBoxSenhacad.Location = new Point(162, 160);
+            textBoxSenhacad.Location = new Point(113, 96);
+            textBoxSenhacad.Margin = new Padding(2, 2, 2, 2);
             textBoxSenhacad.Name = "textBoxSenhacad";
             textBoxSenhacad.PasswordChar = '*';
-            textBoxSenhacad.Size = new Size(300, 31);
+            textBoxSenhacad.Size = new Size(211, 23);
             textBoxSenhacad.TabIndex = 5;
             // 
             // labelSenha2cad
             // 
-            labelSenha2cad.Location = new Point(52, 210);
+            labelSenha2cad.Location = new Point(36, 126);
+            labelSenha2cad.Margin = new Padding(2, 0, 2, 0);
             labelSenha2cad.Name = "labelSenha2cad";
-            labelSenha2cad.Size = new Size(150, 30);
+            labelSenha2cad.Size = new Size(105, 18);
             labelSenha2cad.TabIndex = 6;
             labelSenha2cad.Text = "Confirmar Senha:";
             // 
             // textBoxConfirmarsenha
             // 
-            textBoxConfirmarsenha.Location = new Point(212, 210);
+            textBoxConfirmarsenha.Location = new Point(148, 126);
+            textBoxConfirmarsenha.Margin = new Padding(2, 2, 2, 2);
             textBoxConfirmarsenha.Name = "textBoxConfirmarsenha";
             textBoxConfirmarsenha.PasswordChar = '*';
-            textBoxConfirmarsenha.Size = new Size(250, 31);
+            textBoxConfirmarsenha.Size = new Size(176, 23);
             textBoxConfirmarsenha.TabIndex = 7;
             // 
             // labelAltura
             // 
-            labelAltura.Location = new Point(52, 260);
+            labelAltura.Location = new Point(36, 156);
+            labelAltura.Margin = new Padding(2, 0, 2, 0);
             labelAltura.Name = "labelAltura";
-            labelAltura.Size = new Size(100, 30);
+            labelAltura.Size = new Size(70, 18);
             labelAltura.TabIndex = 8;
             labelAltura.Text = "Altura (cm):";
             // 
             // textBoxAltura
             // 
-            textBoxAltura.Location = new Point(162, 260);
+            textBoxAltura.Location = new Point(113, 156);
+            textBoxAltura.Margin = new Padding(2, 2, 2, 2);
             textBoxAltura.Name = "textBoxAltura";
-            textBoxAltura.Size = new Size(100, 31);
+            textBoxAltura.Size = new Size(71, 23);
             textBoxAltura.TabIndex = 9;
             // 
             // labelPeso
             // 
-            labelPeso.Location = new Point(52, 310);
+            labelPeso.Location = new Point(36, 186);
+            labelPeso.Margin = new Padding(2, 0, 2, 0);
             labelPeso.Name = "labelPeso";
-            labelPeso.Size = new Size(100, 30);
+            labelPeso.Size = new Size(70, 18);
             labelPeso.TabIndex = 10;
             labelPeso.Text = "Peso (kg):";
             // 
             // textBoxPeso
             // 
-            textBoxPeso.Location = new Point(162, 310);
+            textBoxPeso.Location = new Point(113, 186);
+            textBoxPeso.Margin = new Padding(2, 2, 2, 2);
             textBoxPeso.Name = "textBoxPeso";
-            textBoxPeso.Size = new Size(100, 31);
+            textBoxPeso.Size = new Size(71, 23);
             textBoxPeso.TabIndex = 11;
             // 
             // labelHoraDormir
             // 
-            labelHoraDormir.Location = new Point(52, 360);
+            labelHoraDormir.Location = new Point(36, 216);
+            labelHoraDormir.Margin = new Padding(2, 0, 2, 0);
             labelHoraDormir.Name = "labelHoraDormir";
-            labelHoraDormir.Size = new Size(140, 30);
+            labelHoraDormir.Size = new Size(98, 18);
             labelHoraDormir.TabIndex = 12;
             labelHoraDormir.Text = "Hora de Dormir:";
             // 
             // dateTimeHoraDormir
             // 
             dateTimeHoraDormir.Format = DateTimePickerFormat.Time;
-            dateTimeHoraDormir.Location = new Point(212, 360);
+            dateTimeHoraDormir.Location = new Point(148, 216);
+            dateTimeHoraDormir.Margin = new Padding(2, 2, 2, 2);
             dateTimeHoraDormir.Name = "dateTimeHoraDormir";
             dateTimeHoraDormir.ShowUpDown = true;
-            dateTimeHoraDormir.Size = new Size(150, 31);
+            dateTimeHoraDormir.Size = new Size(106, 23);
             dateTimeHoraDormir.TabIndex = 13;
             // 
             // labelHoraAcordar
             // 
-            labelHoraAcordar.Location = new Point(52, 400);
+            labelHoraAcordar.Location = new Point(36, 240);
+            labelHoraAcordar.Margin = new Padding(2, 0, 2, 0);
             labelHoraAcordar.Name = "labelHoraAcordar";
-            labelHoraAcordar.Size = new Size(140, 30);
+            labelHoraAcordar.Size = new Size(98, 18);
             labelHoraAcordar.TabIndex = 14;
             labelHoraAcordar.Text = "Hora de Acordar:";
             // 
             // dateTimeHoraAcordar
             // 
             dateTimeHoraAcordar.Format = DateTimePickerFormat.Time;
-            dateTimeHoraAcordar.Location = new Point(212, 410);
+            dateTimeHoraAcordar.Location = new Point(148, 246);
+            dateTimeHoraAcordar.Margin = new Padding(2, 2, 2, 2);
             dateTimeHoraAcordar.Name = "dateTimeHoraAcordar";
             dateTimeHoraAcordar.ShowUpDown = true;
-            dateTimeHoraAcordar.Size = new Size(150, 31);
+            dateTimeHoraAcordar.Size = new Size(106, 23);
             dateTimeHoraAcordar.TabIndex = 15;
             // 
             // btnCadastrar
             // 
-            btnCadastrar.Location = new Point(162, 460);
+            btnCadastrar.Location = new Point(113, 276);
+            btnCadastrar.Margin = new Padding(2, 2, 2, 2);
             btnCadastrar.Name = "btnCadastrar";
-            btnCadastrar.Size = new Size(100, 40);
+            btnCadastrar.Size = new Size(70, 24);
             btnCadastrar.TabIndex = 16;
             btnCadastrar.Text = "Cadastrar";
             btnCadastrar.UseVisualStyleBackColor = true;
@@ -323,9 +350,10 @@
             // 
             // btnVoltarCad
             // 
-            btnVoltarCad.Location = new Point(268, 460);
+            btnVoltarCad.Location = new Point(188, 276);
+            btnVoltarCad.Margin = new Padding(2, 2, 2, 2);
             btnVoltarCad.Name = "btnVoltarCad";
-            btnVoltarCad.Size = new Size(100, 40);
+            btnVoltarCad.Size = new Size(70, 24);
             btnVoltarCad.TabIndex = 17;
             btnVoltarCad.Text = "Voltar";
             btnVoltarCad.UseVisualStyleBackColor = true;
@@ -333,9 +361,10 @@
             // 
             // btnCadastro
             // 
-            btnCadastro.Location = new Point(237, 276);
+            btnCadastro.Location = new Point(166, 166);
+            btnCadastro.Margin = new Padding(2, 2, 2, 2);
             btnCadastro.Name = "btnCadastro";
-            btnCadastro.Size = new Size(162, 67);
+            btnCadastro.Size = new Size(113, 40);
             btnCadastro.TabIndex = 2;
             btnCadastro.Text = "Cadastro";
             btnCadastro.UseVisualStyleBackColor = true;
@@ -343,9 +372,10 @@
             // 
             // btnLogin
             // 
-            btnLogin.Location = new Point(237, 357);
+            btnLogin.Location = new Point(166, 214);
+            btnLogin.Margin = new Padding(2, 2, 2, 2);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(162, 67);
+            btnLogin.Size = new Size(113, 40);
             btnLogin.TabIndex = 1;
             btnLogin.Text = "Login";
             btnLogin.UseVisualStyleBackColor = true;
@@ -358,9 +388,10 @@
             panelMenu.Controls.Add(btnCadastro);
             panelMenu.Controls.Add(btnLogin);
             panelMenu.Controls.Add(labelTitulo);
-            panelMenu.Location = new Point(231, 98);
+            panelMenu.Location = new Point(162, 59);
+            panelMenu.Margin = new Padding(2, 2, 2, 2);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(656, 615);
+            panelMenu.Size = new Size(460, 371);
             panelMenu.TabIndex = 1;
             panelMenu.Visible = false;
             panelMenu.Paint += panelMenu_Paint;
@@ -370,20 +401,22 @@
             labelTitulo.AutoSize = true;
             labelTitulo.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelTitulo.ForeColor = SystemColors.ActiveCaption;
-            labelTitulo.Location = new Point(173, 101);
+            labelTitulo.Location = new Point(121, 61);
+            labelTitulo.Margin = new Padding(2, 0, 2, 0);
             labelTitulo.Name = "labelTitulo";
-            labelTitulo.Size = new Size(308, 65);
+            labelTitulo.Size = new Size(204, 45);
             labelTitulo.TabIndex = 2;
             labelTitulo.Text = "RoutineSync";
             // 
             // MenuPrincipalFrm
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1207, 775);
+            ClientSize = new Size(845, 465);
             Controls.Add(panelMenu);
             Controls.Add(panelCadastro);
             Controls.Add(panelLogin);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "MenuPrincipalFrm";
             RightToLeft = RightToLeft.No;
             StartPosition = FormStartPosition.Manual;

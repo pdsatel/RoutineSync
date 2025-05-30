@@ -77,9 +77,9 @@ namespace Tcc
             panelConteudo.Controls.Add(rotinaControl);
         }
 
-        public delegate void TarefasAdicionaHandler(TarefaInfo tarefa);
+       
 
-        public event TarefasAdicionaHandler OnTarefasAdiciona;
+        
 
 
 

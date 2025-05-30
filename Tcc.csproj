@@ -13,12 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="CalendarNet">
-      <HintPath>..\..\Calendar-Net\CalendarNet\bin\Debug\CalendarNet.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -35,6 +29,12 @@
 
   <ItemGroup>
     <Folder Include="Imagens\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CalendarNet">
+      <HintPath>..\Calendar-Net-master\CalendarNet\bin\Debug\CalendarNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
