@@ -144,7 +144,7 @@ namespace Tcc
             btnSalvar.Size = new Size(140, 42);
             btnSalvar.TabIndex = 9;
             btnSalvar.Text = "Salvar";
-            btnSalvar.Click += btnSalvar_Click_1;
+           
             // 
             // btnEditar
             // 
@@ -225,10 +225,18 @@ namespace Tcc
             Name = "RotinaUserControl";
             Size = new Size(1200, 767);
             Load += RotinasUserControl_Load;
-            SizeChanged += RotinaUserControl_SizeChanged;
+            
             panelInputs.ResumeLayout(false);
             panelInputs.PerformLayout();
             ResumeLayout(false);
+
+
+            btnSalvar.Click += btnSalvar_Click;
+            btnEditar.Click += btnEditar_Click;
+            btnExcluir.Click += btnExcluir_Click;
+            btnLimpar.Click += btnLimpar_Click;
+            listBoxRotinas.SelectedIndexChanged += listBoxRotinas_SelectedIndexChanged;
+            this.Load += RotinasUserControl_Load;
         }
 
 

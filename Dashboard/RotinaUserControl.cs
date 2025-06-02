@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using CalendarNet;
@@ -8,6 +10,9 @@ namespace Tcc
     public partial class RotinaUserControl : UserControl
     {
         private int usuarioId;
+        private List<Rotina> rotinas = new List<Rotina>();
+        private int proximoId = 1;
+        private Rotina rotinaSelecionada = null;
 
         public RotinaUserControl(int idUsuario)
         {
@@ -18,196 +23,155 @@ namespace Tcc
 
         private void InicializarComponentesPersonalizados()
         {
-            // Carregar rotinas do banco e popular a lista
+            // Inicialização extra
             CarregarRotinas();
+
         }
+
+        private void AtualizarEventosNoCalendario(List<Rotina> rotinas)
+        {
+            calendar.Events.Clear(); // limpa eventos antigos
+
+            foreach (var rotina in rotinas)
+            {
+                var evento = new CalendarNet.CalendarEvent
+                {
+                    Date = rotina.DataHora.Date,           // data do evento
+                    Text = rotina.Titulo,                   // título exibido
+                    EventColor = Color.Blue,                // cor do evento (pode personalizar)
+                    EnableTime = true,                      // habilita horário
+                    StartTime = rotina.DataHora.TimeOfDay  // horário do evento
+                };
+
+                calendar.Events.Add(evento);
+            }
+
+            calendar.Refresh(); // atualiza a interface do calendário
+        }
+
 
         private void CarregarRotinas()
         {
-            // Lógica para consultar o banco e exibir rotinas
-            // Exemplo fictício:
-            // var lista = RotinaDAO.ObterPorUsuario(usuarioId);
-            // listBoxRotinas.Items.Clear();
-            // foreach (var r in lista) listBoxRotinas.Items.Add(r);
+            // Exemplo: carregar rotinas do banco e popular a lista
+            // Por enquanto, lista em memória vazia
+            AtualizarListaRotinas();
+        }
+
+        private void AtualizarListaRotinas()
+        {
+            listBoxRotinas.Items.Clear();
+            foreach (var r in rotinas)
+            {
+                listBoxRotinas.Items.Add($"{r.DiaSemana} - {r.Titulo} às {r.Horario.ToShortTimeString()}");
+            }
         }
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            // Validar campos
-            // Salvar rotina no banco
-            // Atualizar lista
+            if (string.IsNullOrWhiteSpace(textBoxTitulo.Text))
+            {
+                MessageBox.Show("Preencha o título.");
+                return;
+            }
+            if (comboBoxDiaSemana.SelectedItem == null)
+            {
+                MessageBox.Show("Selecione o dia da semana.");
+                return;
+            }
+
+            Rotina novaRotina = new Rotina
+            {
+                Id = proximoId++,
+                Titulo = textBoxTitulo.Text,
+                Descricao = textBoxDescricao.Text,
+                Horario = dateTimePickerHorario.Value,
+                DiaSemana = comboBoxDiaSemana.SelectedItem.ToString()
+            };
+
+            rotinas.Add(novaRotina);
+            AtualizarListaRotinas();
+            LimparCampos();
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            // Carregar dados da rotina selecionada nos campos
+            if (rotinaSelecionada == null)
+            {
+                MessageBox.Show("Selecione uma rotina para editar.");
+                return;
+            }
+
+            rotinaSelecionada.Titulo = textBoxTitulo.Text;
+            rotinaSelecionada.Descricao = textBoxDescricao.Text;
+            rotinaSelecionada.Horario = dateTimePickerHorario.Value;
+            rotinaSelecionada.DiaSemana = comboBoxDiaSemana.SelectedItem?.ToString() ?? rotinaSelecionada.DiaSemana;
+
+            AtualizarListaRotinas();
+            LimparCampos();
         }
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
-            // Confirmar exclusão
-            // Deletar do banco
-            // Atualizar lista
+            if (rotinaSelecionada == null)
+            {
+                MessageBox.Show("Selecione uma rotina para excluir.");
+                return;
+            }
+
+            var result = MessageBox.Show($"Deseja excluir a rotina \"{rotinaSelecionada.Titulo}\"?", "Confirmação", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                rotinas.Remove(rotinaSelecionada);
+                AtualizarListaRotinas();
+                LimparCampos();
+            }
         }
 
         private void btnLimpar_Click(object sender, EventArgs e)
         {
-            // Limpar todos os campos do formulário
+            LimparCampos();
         }
-        private void AplicarEstiloControles()
+
+        private void LimparCampos()
         {
-            this.BackColor = ColorTranslator.FromHtml("#FFFCF6");
-
-            foreach (Control ctrl in this.Controls)
-            {
-                if (ctrl is TextBox txt)
-                {
-                    txt.BackColor = Color.White;
-                    txt.ForeColor = ColorTranslator.FromHtml("#333333");
-                    txt.BorderStyle = BorderStyle.FixedSingle;
-                }
-                else if (ctrl is ComboBox cmb)
-                {
-                    cmb.BackColor = Color.White;
-                    cmb.ForeColor = ColorTranslator.FromHtml("#333333");
-                    cmb.FlatStyle = FlatStyle.Flat;
-                }
-                else if (ctrl is DateTimePicker dtp)
-                {
-                    dtp.CalendarForeColor = Color.Black;
-                    dtp.CalendarMonthBackground = Color.White;
-                    dtp.CalendarTitleBackColor = ColorTranslator.FromHtml("#202E39");
-                    dtp.CalendarTitleForeColor = Color.White;
-                    dtp.BackColor = Color.White;
-                    dtp.ForeColor = ColorTranslator.FromHtml("#333333");
-                }
-                else if (ctrl is ListBox lb)
-                {
-                    lb.BackColor = Color.White;
-                    lb.ForeColor = ColorTranslator.FromHtml("#333333");
-                    lb.Font = new Font("Segoe UI", 10);
-                }
-            }
-
-            // Além disso, se você quiser, pode aplicar cores nos seus botões:
-            foreach (Control ctrl in this.Controls)
-            {
-                if (ctrl is Button btn)
-                {
-                    btn.BackColor = ColorTranslator.FromHtml("#202E39"); // azul suave
-                    btn.ForeColor = Color.White;
-                    btn.FlatStyle = FlatStyle.Flat;
-                    btn.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#4A90E2");
-                }
-            }
+            textBoxTitulo.Clear();
+            textBoxDescricao.Clear();
+            comboBoxDiaSemana.SelectedIndex = -1;
+            dateTimePickerHorario.Value = DateTime.Now;
+            rotinaSelecionada = null;
+            listBoxRotinas.ClearSelected();
         }
 
-
-
-
-
-
-
-
+        private void listBoxRotinas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idx = listBoxRotinas.SelectedIndex;
+            if (idx >= 0 && idx < rotinas.Count)
+            {
+                rotinaSelecionada = rotinas[idx];
+                textBoxTitulo.Text = rotinaSelecionada.Titulo;
+                textBoxDescricao.Text = rotinaSelecionada.Descricao;
+                dateTimePickerHorario.Value = rotinaSelecionada.Horario;
+                comboBoxDiaSemana.SelectedItem = rotinaSelecionada.DiaSemana;
+            }
+            else
+            {
+                rotinaSelecionada = null;
+            }
+        }
 
         private void RotinasUserControl_Load(object sender, EventArgs e)
         {
-            // Ajuste inicial do texto e itens
-            labelTitulo.Text = "Título:";
-            labelDescricao.Text = "Descrição:";
-            labelHorario.Text = "Horário:";
-            labelDiaSemana.Text = "Dia da Semana:";
-
             comboBoxDiaSemana.Items.Clear();
             comboBoxDiaSemana.Items.AddRange(new object[] { "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado" });
-
-            OrganizarLayout();
-            AplicarEstiloControles();
         }
+    }
 
-        private void RotinaUserControl_SizeChanged(object sender, EventArgs e)
-        {
-            OrganizarLayout();
-        }
-
-        private void OrganizarLayout()
-        {
-
-            int margem = 20;
-            int larguraPainel = (this.ClientSize.Width / 3); // painel ocupa 1/3 da largura
-            int alturaPainel = this.ClientSize.Height - 3 * margem - btnSalvar.Height;
-
-
-
-            // Define tamanho e posição do painelInputs
-            panelInputs.SetBounds(margem, margem, larguraPainel, alturaPainel);
-
-            // Posiciona os controles dentro do painelInputs com margens internas
-            int padding = 10;
-            int labelAltura = 23;
-            int campoAltura = 31;
-            int larguraCampo = panelInputs.Width - 2 * padding;
-
-            labelTitulo.SetBounds(padding, padding, larguraCampo, labelAltura);
-            textBoxTitulo.SetBounds(padding, labelTitulo.Bottom + 2, larguraCampo, campoAltura);
-
-            labelDescricao.SetBounds(padding, textBoxTitulo.Bottom + 10, larguraCampo, labelAltura);
-            textBoxDescricao.SetBounds(padding, labelDescricao.Bottom + 2, larguraCampo, campoAltura);
-
-            labelHorario.SetBounds(padding, textBoxDescricao.Bottom + 10, larguraCampo, labelAltura);
-            dateTimePickerHorario.SetBounds(padding, labelHorario.Bottom + 2, larguraCampo, campoAltura);
-
-            labelDiaSemana.SetBounds(padding, dateTimePickerHorario.Bottom + 10, larguraCampo, labelAltura);
-            comboBoxDiaSemana.SetBounds(padding, labelDiaSemana.Bottom + 2, larguraCampo, campoAltura);
-
-            // ListBox ocupa o espaço restante do lado direito do painel
-            int larguraListBox = this.ClientSize.Width - panelInputs.Right - 2 * margem;
-            int alturaListBox = alturaPainel;
-            listBoxRotinas.SetBounds(panelInputs.Right + margem, margem, larguraListBox, alturaListBox);
-
-            // Botões alinhados abaixo do painelInputs, com espaçamento entre eles
-            int btnLargura = 100;
-            int btnAltura = 35;
-            int btnEspaco = 10;
-            int btnTop = panelInputs.Bottom + margem;
-
-            btnSalvar.SetBounds(panelInputs.Left, btnTop, btnLargura, btnAltura);
-            btnEditar.SetBounds(btnSalvar.Right + btnEspaco, btnTop, btnLargura, btnAltura);
-            btnExcluir.SetBounds(btnEditar.Right + btnEspaco, btnTop, btnLargura, btnAltura);
-            btnLimpar.SetBounds(btnExcluir.Right + btnEspaco, btnTop, btnLargura, btnAltura);
-
-
-
-        }
-
-        private void ArredondarControle(Control controle, int raio)
-        {
-            GraphicsPath path = new GraphicsPath();
-            path.StartFigure();
-            path.AddArc(new Rectangle(0, 0, raio, raio), 180, 90);
-            path.AddArc(new Rectangle(controle.Width - raio, 0, raio, raio), 270, 90);
-            path.AddArc(new Rectangle(controle.Width - raio, controle.Height - raio, raio, raio), 0, 90);
-            path.AddArc(new Rectangle(0, controle.Height - raio, raio, raio), 90, 90);
-            path.CloseFigure();
-
-            controle.Region = new Region(path);
-        }
-
-
-
-
-
-
-
-        private void CentralizarPainel(Control painel)
-        {
-            painel.Left = (this.ClientSize.Width - painel.Width) / 2;
-            painel.Top = 40; // distância do topo
-        }
-
-        private void btnSalvar_Click_1(object sender, EventArgs e)
-        {
-
-        }
+    public class Rotina
+    {
+        public int Id { get; set; }
+        public string Titulo { get; set; }
+        public string Descricao { get; set; }
+        public DateTime Horario { get; set; }
+        public string DiaSemana { get; set; }
     }
 }

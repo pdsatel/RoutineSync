@@ -33,7 +33,7 @@
 
   <ItemGroup>
     <Reference Include="CalendarNet">
-      <HintPath>..\Calendar-Net-master\CalendarNet\bin\Debug\CalendarNet.dll</HintPath>
+      <HintPath>..\Calendar-Net\CalendarNet\bin\Debug\CalendarNet.dll</HintPath>
     </Reference>
   </ItemGroup>
 
