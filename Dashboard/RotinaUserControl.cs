@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using CalendarNet;
+using Syncfusion.Windows.Forms.Schedule;
+using Syncfusion.Schedule;
 
 namespace Tcc
 {
@@ -13,6 +14,7 @@ namespace Tcc
         private List<Rotina> rotinas = new List<Rotina>();
         private int proximoId = 1;
         private Rotina rotinaSelecionada = null;
+        
 
         public RotinaUserControl(int idUsuario)
         {
@@ -25,29 +27,14 @@ namespace Tcc
         {
             // Inicialização extra
             CarregarRotinas();
+            scheduler = new ScheduleControl();
+            scheduler.Dock = DockStyle.Fill;
+            Controls.Add(scheduler);
+
 
         }
 
-        private void AtualizarEventosNoCalendario(List<Rotina> rotinas)
-        {
-            calendar.Events.Clear(); // limpa eventos antigos
-
-            foreach (var rotina in rotinas)
-            {
-                var evento = new CalendarNet.CalendarEvent
-                {
-                    Date = rotina.DataHora.Date,           // data do evento
-                    Text = rotina.Titulo,                   // título exibido
-                    EventColor = Color.Blue,                // cor do evento (pode personalizar)
-                    EnableTime = true,                      // habilita horário
-                    StartTime = rotina.DataHora.TimeOfDay  // horário do evento
-                };
-
-                calendar.Events.Add(evento);
-            }
-
-            calendar.Refresh(); // atualiza a interface do calendário
-        }
+        
 
 
         private void CarregarRotinas()
