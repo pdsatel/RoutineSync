@@ -1,43 +1,92 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
+using static Tcc.TarefasUserControl;
 
 namespace Tcc
 {
     public partial class RotinasUserControl : UserControl
-    {
-        private int usuarioId;
 
+       
+    {
+        int usuarioId;
         public RotinasUserControl(int usuarioId)
         {
-            this.usuarioId = usuarioId;
             InitializeComponent();
+            this.usuarioId = usuarioId;
+            // Associe eventos aqui
+            btnAtualizar.Click += BtnAtualizar_Click;
+            btnExportar.Click += BtnExportar_Click;
+            btnMarcarTodasFeitas.Click += BtnMarcarTodasFeitas_Click;
+            listViewRotinas.ItemCheck += ListViewRotinas_ItemCheck;
+
+            // Carregue as rotinas iniciais (exemplo)
+           
         }
 
         public void CarregarRotinas(List<TarefasUserControl.TarefaInfo> tarefas)
         {
+            // Limpe o listViewRotinas
             listViewRotinas.Items.Clear();
+
             foreach (var tarefa in tarefas)
             {
-                var item = new ListViewItem();
-                item.Checked = tarefa.Status == "Concluído";
-                item.SubItems.Add(tarefa.Titulo);
+                var item = new ListViewItem(tarefa.Titulo);
                 item.SubItems.Add(tarefa.DataEntrega.ToShortDateString());
                 item.SubItems.Add(tarefa.Status);
                 item.SubItems.Add(tarefa.Prioridade);
+                item.SubItems.Add(tarefa.Descricao);
                 item.Tag = tarefa;
                 listViewRotinas.Items.Add(item);
             }
         }
 
-        private void listViewRotinas_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void BtnAtualizar_Click(object sender, EventArgs e)
         {
-            if (e.Index >= 0 && e.Index < listViewRotinas.Items.Count)
+            // Atualize a lista de rotinas
+            
+        }
+
+        private void BtnExportar_Click(object sender, EventArgs e)
+        {
+            // Exporte as rotinas (exemplo)
+            MessageBox.Show("Exportar rotinas - função ainda não implementada.");
+        }
+
+        private void BtnMarcarTodasFeitas_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in listViewRotinas.Items)
             {
-                var tarefa = (TarefasUserControl.TarefaInfo)listViewRotinas.Items[e.Index].Tag;
-                tarefa.Status = (e.NewValue == CheckState.Checked) ? "Concluído" : "Pendente";
-                // Se quiser, atualize o banco aqui
+                item.Checked = true;
+                // Aqui você pode incrementar o campo "Execuções/Mês"
+                int execucoes = int.Parse(item.SubItems[5].Text);
+                execucoes++;
+                item.SubItems[5].Text = execucoes.ToString();
             }
+            AtualizarResumoExecucoes();
+        }
+
+        private void ListViewRotinas_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            // Quando marca/desmarca uma rotina, atualize execuções/mês conforme necessário
+            if (e.NewValue == CheckState.Checked)
+            {
+                var item = listViewRotinas.Items[e.Index];
+                int execucoes = int.Parse(item.SubItems[5].Text);
+                execucoes++;
+                item.SubItems[5].Text = execucoes.ToString();
+                AtualizarResumoExecucoes();
+            }
+        }
+
+        private void AtualizarResumoExecucoes()
+        {
+            // Soma todas execuções do mês
+            int total = 0;
+            foreach (ListViewItem item in listViewRotinas.Items)
+            {
+                total += int.Parse(item.SubItems[5].Text);
+            }
+            lblResumoExecucoes.Text = $"Total de execuções este mês: {total}";
         }
     }
 }
