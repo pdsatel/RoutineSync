@@ -25,6 +25,7 @@ namespace Tcc
             public DateTime DataEntrega { get; set; }
             public string Status { get; set; }
             public string Prioridade { get; set; }
+            public int UsuarioId { get; set; }  
         }
         public TarefasUserControl(int idUsuario)
         {
@@ -476,6 +477,18 @@ namespace Tcc
         {
             
 
+        }
+        public List<TarefaInfo> ObterTarefas(int usuarioId)
+        {
+            var tarefas = new List<TarefaInfo>();
+            foreach (ListViewItem item in listViewTarefas.Items)
+            {
+                if (item.Tag is TarefaInfo info && info.UsuarioId == usuarioId)
+                {
+                    tarefas.Add(info);
+                }
+            }
+            return tarefas;
         }
 
     }

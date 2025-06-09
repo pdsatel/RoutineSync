@@ -1,164 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using Syncfusion.Windows.Forms.Schedule;
-using Syncfusion.Schedule;
 
 namespace Tcc
 {
-    public partial class RotinaUserControl : UserControl
+    public partial class RotinasUserControl : UserControl
     {
         private int usuarioId;
-        private List<Rotina> rotinas = new List<Rotina>();
-        private int proximoId = 1;
-        private Rotina rotinaSelecionada = null;
-        
 
-        public RotinaUserControl(int idUsuario)
+        public RotinasUserControl(int usuarioId)
         {
+            this.usuarioId = usuarioId;
             InitializeComponent();
-            usuarioId = idUsuario;
-            InicializarComponentesPersonalizados();
         }
 
-        private void InicializarComponentesPersonalizados()
+        public void CarregarRotinas(List<TarefasUserControl.TarefaInfo> tarefas)
         {
-            // Inicialização extra
-            CarregarRotinas();
-            scheduler = new ScheduleControl();
-            scheduler.Dock = DockStyle.Fill;
-            Controls.Add(scheduler);
-
-
-        }
-
-        
-
-
-        private void CarregarRotinas()
-        {
-            // Exemplo: carregar rotinas do banco e popular a lista
-            // Por enquanto, lista em memória vazia
-            AtualizarListaRotinas();
-        }
-
-        private void AtualizarListaRotinas()
-        {
-            listBoxRotinas.Items.Clear();
-            foreach (var r in rotinas)
+            listViewRotinas.Items.Clear();
+            foreach (var tarefa in tarefas)
             {
-                listBoxRotinas.Items.Add($"{r.DiaSemana} - {r.Titulo} às {r.Horario.ToShortTimeString()}");
+                var item = new ListViewItem();
+                item.Checked = tarefa.Status == "Concluído";
+                item.SubItems.Add(tarefa.Titulo);
+                item.SubItems.Add(tarefa.DataEntrega.ToShortDateString());
+                item.SubItems.Add(tarefa.Status);
+                item.SubItems.Add(tarefa.Prioridade);
+                item.Tag = tarefa;
+                listViewRotinas.Items.Add(item);
             }
         }
 
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private void listViewRotinas_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textBoxTitulo.Text))
+            if (e.Index >= 0 && e.Index < listViewRotinas.Items.Count)
             {
-                MessageBox.Show("Preencha o título.");
-                return;
-            }
-            if (comboBoxDiaSemana.SelectedItem == null)
-            {
-                MessageBox.Show("Selecione o dia da semana.");
-                return;
-            }
-
-            Rotina novaRotina = new Rotina
-            {
-                Id = proximoId++,
-                Titulo = textBoxTitulo.Text,
-                Descricao = textBoxDescricao.Text,
-                Horario = dateTimePickerHorario.Value,
-                DiaSemana = comboBoxDiaSemana.SelectedItem.ToString()
-            };
-
-            rotinas.Add(novaRotina);
-            AtualizarListaRotinas();
-            LimparCampos();
-        }
-
-        private void btnEditar_Click(object sender, EventArgs e)
-        {
-            if (rotinaSelecionada == null)
-            {
-                MessageBox.Show("Selecione uma rotina para editar.");
-                return;
-            }
-
-            rotinaSelecionada.Titulo = textBoxTitulo.Text;
-            rotinaSelecionada.Descricao = textBoxDescricao.Text;
-            rotinaSelecionada.Horario = dateTimePickerHorario.Value;
-            rotinaSelecionada.DiaSemana = comboBoxDiaSemana.SelectedItem?.ToString() ?? rotinaSelecionada.DiaSemana;
-
-            AtualizarListaRotinas();
-            LimparCampos();
-        }
-
-        private void btnExcluir_Click(object sender, EventArgs e)
-        {
-            if (rotinaSelecionada == null)
-            {
-                MessageBox.Show("Selecione uma rotina para excluir.");
-                return;
-            }
-
-            var result = MessageBox.Show($"Deseja excluir a rotina \"{rotinaSelecionada.Titulo}\"?", "Confirmação", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
-            {
-                rotinas.Remove(rotinaSelecionada);
-                AtualizarListaRotinas();
-                LimparCampos();
+                var tarefa = (TarefasUserControl.TarefaInfo)listViewRotinas.Items[e.Index].Tag;
+                tarefa.Status = (e.NewValue == CheckState.Checked) ? "Concluído" : "Pendente";
+                // Se quiser, atualize o banco aqui
             }
         }
-
-        private void btnLimpar_Click(object sender, EventArgs e)
-        {
-            LimparCampos();
-        }
-
-        private void LimparCampos()
-        {
-            textBoxTitulo.Clear();
-            textBoxDescricao.Clear();
-            comboBoxDiaSemana.SelectedIndex = -1;
-            dateTimePickerHorario.Value = DateTime.Now;
-            rotinaSelecionada = null;
-            listBoxRotinas.ClearSelected();
-        }
-
-        private void listBoxRotinas_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int idx = listBoxRotinas.SelectedIndex;
-            if (idx >= 0 && idx < rotinas.Count)
-            {
-                rotinaSelecionada = rotinas[idx];
-                textBoxTitulo.Text = rotinaSelecionada.Titulo;
-                textBoxDescricao.Text = rotinaSelecionada.Descricao;
-                dateTimePickerHorario.Value = rotinaSelecionada.Horario;
-                comboBoxDiaSemana.SelectedItem = rotinaSelecionada.DiaSemana;
-            }
-            else
-            {
-                rotinaSelecionada = null;
-            }
-        }
-
-        private void RotinasUserControl_Load(object sender, EventArgs e)
-        {
-            comboBoxDiaSemana.Items.Clear();
-            comboBoxDiaSemana.Items.AddRange(new object[] { "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado" });
-        }
-    }
-
-    public class Rotina
-    {
-        public int Id { get; set; }
-        public string Titulo { get; set; }
-        public string Descricao { get; set; }
-        public DateTime Horario { get; set; }
-        public string DiaSemana { get; set; }
     }
 }

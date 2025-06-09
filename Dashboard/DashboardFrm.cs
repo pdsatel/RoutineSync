@@ -17,13 +17,16 @@ namespace Tcc
     {
         
         private int usuarioId;
-        private RotinaUserControl rotinaControl;
+        private RotinasUserControl rotinaControl;
+        private TarefasUserControl tarefasControl;
         public DashboardFrm(int idUsuario)
         {   
             InitializeComponent();
             this.usuarioId = idUsuario;
+            tarefasControl = new TarefasUserControl(usuarioId); 
+            rotinaControl = new RotinasUserControl(usuarioId);
 
-           
+
         }
 
         private void DashboardFrm_Load(object sender, EventArgs e)
@@ -55,7 +58,7 @@ namespace Tcc
             btnSair.TextImageRelation = TextImageRelation.ImageBeforeText;
 
 
-            rotinaControl = new RotinaUserControl(usuarioId);
+            rotinaControl = new RotinasUserControl(usuarioId);
             rotinaControl.Dock = DockStyle.Fill;
         }
 
@@ -73,13 +76,14 @@ namespace Tcc
 
         private void btnRotina_Click(object sender, EventArgs e)
         {
+            var tarefas = tarefasControl.ObterTarefas(usuarioId); // Certifique-se que retorna só do usuário!
+            rotinaControl.CarregarRotinas(tarefas);
             panelConteudo.Controls.Clear();
             panelConteudo.Controls.Add(rotinaControl);
         }
 
-       
 
-        
+
 
 
 
