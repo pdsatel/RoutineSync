@@ -17,10 +17,12 @@ namespace Tcc
             btnAtualizar.Click += BtnAtualizar_Click;
             btnExportar.Click += BtnExportar_Click;
             btnMarcarTodasFeitas.Click += BtnMarcarTodasFeitas_Click;
-            listViewRotinas.ItemCheck += ListViewRotinas_ItemCheck;
+            listViewRotinas.ItemCheck += listViewRotinas_ItemCheck;
+            this.editarToolStripMenuItem.Click += editarToolStripMenuItem_Click;
+            this.excluirToolStripMenuItem.Click += excluirToolStripMenuItem_Click;
 
             // Carregue as rotinas iniciais (exemplo)
-           
+
         }
 
         public void CarregarRotinas(List<TarefasUserControl.TarefaInfo> tarefas)
@@ -28,16 +30,32 @@ namespace Tcc
             // Limpe o listViewRotinas
             listViewRotinas.Items.Clear();
 
+            listViewRotinas.Groups.Clear();
+            var gruposPorData = new Dictionary<string, ListViewGroup>();
+
             foreach (var tarefa in tarefas)
             {
-                var item = new ListViewItem(tarefa.Titulo);
-                item.SubItems.Add(tarefa.DataEntrega.ToShortDateString());
-                item.SubItems.Add(tarefa.Status);
-                item.SubItems.Add(tarefa.Prioridade);
-                item.SubItems.Add(tarefa.Descricao);
+                var data = tarefa.DataEntrega;
+                string datastr = tarefa.DataEntrega.ToShortDateString();
+
+                if (!gruposPorData.ContainsKey(datastr))
+                {
+                    var grupo = new ListViewGroup(datastr, datastr);
+                    listViewRotinas.Groups.Add(grupo);
+                    gruposPorData[datastr] = grupo;
+                }
+
+                var item = new ListViewItem(""); // Coluna "Feito" (checkbox)
+                item.SubItems.Add(tarefa.Titulo); // Coluna "Título"
+                item.SubItems.Add(tarefa.DataEntrega.ToShortDateString()); // Data
+                item.SubItems.Add(tarefa.Status); // Coluna "Status"
+                item.SubItems.Add(tarefa.Prioridade); // Coluna "Prioridade"
+                item.SubItems.Add("0"); // Ou tarefa.ExecucoesMes, se existir
                 item.Tag = tarefa;
+                item.Group = gruposPorData[datastr];
                 listViewRotinas.Items.Add(item);
             }
+            AtualizarResumoExecucoes();
         }
 
         private void BtnAtualizar_Click(object sender, EventArgs e)
@@ -65,18 +83,54 @@ namespace Tcc
             AtualizarResumoExecucoes();
         }
 
-        private void ListViewRotinas_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void listViewRotinas_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            // Quando marca/desmarca uma rotina, atualize execuções/mês conforme necessário
             if (e.NewValue == CheckState.Checked)
             {
-                var item = listViewRotinas.Items[e.Index];
-                int execucoes = int.Parse(item.SubItems[5].Text);
-                execucoes++;
-                item.SubItems[5].Text = execucoes.ToString();
-                AtualizarResumoExecucoes();
+                // Pergunta ao usuário
+                var result = MessageBox.Show("Tem certeza que deseja marcar esta tarefa como concluída?", "Confirmar conclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    // Aguarda o estado ser alterado, então remove
+                    this.BeginInvoke(new Action(() =>
+                    {
+                        var item = listViewRotinas.Items[e.Index];
+                        listViewRotinas.Items.Remove(item);
+                        // Aqui, se quiser, atualize o status no banco de dados também!
+                        AtualizarResumoExecucoes();
+                    }));
+                }
+                else
+                {
+                    // Cancela o check
+                    e.NewValue = CheckState.Unchecked;
+                }
             }
         }
+        private void editarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listViewRotinas.SelectedItems.Count > 0)
+            {
+                var item = listViewRotinas.SelectedItems[0];
+                var tarefa = (TarefasUserControl.TarefaInfo)item.Tag;
+                // Aqui você pode abrir um painel de edição, formulário, ou editar inline.
+                MessageBox.Show($"Editar tarefa: {tarefa.Titulo}");
+            }
+        }
+
+        private void excluirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listViewRotinas.SelectedItems.Count > 0)
+            {
+                var item = listViewRotinas.SelectedItems[0];
+                if (MessageBox.Show("Confirma exclusão desta tarefa?", "Excluir", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    listViewRotinas.Items.Remove(item);
+                    // Remova do banco também, se necessário
+                }
+            }
+        }
+
 
         private void AtualizarResumoExecucoes()
         {

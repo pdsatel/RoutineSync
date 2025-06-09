@@ -233,7 +233,16 @@ namespace Tcc
                             item.SubItems.Add(dataEntrega.ToShortDateString());
                             item.SubItems.Add(status);
                             item.SubItems.Add(prioridade);
-                            item.Tag = new TarefaInfo { Id = tarefaId, Descricao = descricao };
+                            item.Tag = new TarefaInfo
+                            {
+                                Id = tarefaId,
+                                Titulo = titulo,
+                                Descricao = descricao,
+                                DataEntrega = dataEntrega,
+                                Status = status,
+                                Prioridade = prioridade,
+                                UsuarioId = usuarioId
+                            };
                             listViewTarefas.Items.Add(item);
                         }
                     }

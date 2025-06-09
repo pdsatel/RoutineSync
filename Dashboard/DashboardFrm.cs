@@ -69,7 +69,7 @@
                panelConteudo.Controls.Clear();
                panelConteudo.Controls.Add(tarefasControl);  
                tarefasControl.Dock = DockStyle.Fill;
-               panelConteudo.Controls.Add(tarefasControl);
+               
            
 
            
@@ -78,6 +78,7 @@
             private void btnRotina_Click(object sender, EventArgs e)
             {
                 var tarefas = tarefasControl.ObterTarefas(usuarioId); // pega as tarefas do usuário
+            MessageBox.Show($"Tarefas: {tarefas.Count}");
                 rotinasControl.CarregarRotinas(tarefas); // passa para o outro controle
                 panelConteudo.Controls.Clear();
                 panelConteudo.Controls.Add(rotinasControl);

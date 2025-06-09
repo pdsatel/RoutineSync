@@ -20,6 +20,9 @@ namespace Tcc
         private System.Windows.Forms.Button btnExportar;
         private System.Windows.Forms.Button btnMarcarTodasFeitas;
         private System.Windows.Forms.Label lblResumoExecucoes;
+        private System.Windows.Forms.ContextMenuStrip contextMenuRotinas;
+        private System.Windows.Forms.ToolStripMenuItem editarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem excluirToolStripMenuItem;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -38,94 +41,126 @@ namespace Tcc
 
         private void InitializeComponent()
         {
-            this.lblTitulo = new System.Windows.Forms.Label();
-            this.listViewRotinas = new System.Windows.Forms.ListView();
-            this.btnAtualizar = new System.Windows.Forms.Button();
-            this.btnExportar = new System.Windows.Forms.Button();
-            this.btnMarcarTodasFeitas = new System.Windows.Forms.Button();
-            this.lblResumoExecucoes = new System.Windows.Forms.Label();
-
+            lblTitulo = new Label();
+            listViewRotinas = new ListView();
+            btnAtualizar = new Button();
+            btnExportar = new Button();
+            btnMarcarTodasFeitas = new Button();
+            lblResumoExecucoes = new Label();
+            SuspendLayout();
             // 
             // lblTitulo
             // 
-            this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblTitulo.Location = new System.Drawing.Point(30, 20);
-            this.lblTitulo.ForeColor = System.Drawing.ColorTranslator.FromHtml("#202E39");
-            this.lblTitulo.Text = "Minhas Rotinas";
+            lblTitulo.AutoSize = true;
+            lblTitulo.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            lblTitulo.ForeColor = Color.FromArgb(32, 46, 57);
+            lblTitulo.Location = new Point(30, 20);
+            lblTitulo.Name = "lblTitulo";
+            lblTitulo.Size = new Size(343, 60);
+            lblTitulo.TabIndex = 0;
+            lblTitulo.Text = "Minhas Rotinas";
             // 
             // listViewRotinas
             // 
-            this.listViewRotinas.CheckBoxes = true;
-            this.listViewRotinas.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.listViewRotinas.FullRowSelect = true;
-            this.listViewRotinas.GridLines = false;
-            this.listViewRotinas.Location = new System.Drawing.Point(30, 70);
-            this.listViewRotinas.Name = "listViewRotinas";
-            this.listViewRotinas.Size = new System.Drawing.Size(790, 390);
-            this.listViewRotinas.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFCF6");
-            this.listViewRotinas.ForeColor = System.Drawing.ColorTranslator.FromHtml("#333333");
-            this.listViewRotinas.View = System.Windows.Forms.View.Details;
-            this.listViewRotinas.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.listViewRotinas.Columns.Add("Feito", 60);
-            this.listViewRotinas.Columns.Add("Título", 180);
-            this.listViewRotinas.Columns.Add("Frequência", 120);
-            this.listViewRotinas.Columns.Add("Status", 100);
-            this.listViewRotinas.Columns.Add("Prioridade", 100);
-            this.listViewRotinas.Columns.Add("Execuções/Mês", 120);
+            listViewRotinas.BackColor = Color.FromArgb(255, 252, 246);
+            listViewRotinas.CheckBoxes = true;
+            listViewRotinas.Font = new Font("Segoe UI", 11F);
+            listViewRotinas.ForeColor = Color.FromArgb(51, 51, 51);
+            listViewRotinas.FullRowSelect = true;
+            listViewRotinas.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listViewRotinas.Location = new Point(30, 70);
+            listViewRotinas.Name = "listViewRotinas";
+            listViewRotinas.Size = new Size(790, 390);
+            listViewRotinas.TabIndex = 1;
+            listViewRotinas.UseCompatibleStateImageBehavior = false;
+            listViewRotinas.View = View.Details;
 
+
+            // Adiciona as colunas ao ListView
+            listViewRotinas.Columns.Add("Feito", 60);         // 0 - Checkbox (visual)
+            listViewRotinas.Columns.Add("Título", 180);       // 1
+            listViewRotinas.Columns.Add("Data", 100);         // 2
+            listViewRotinas.Columns.Add("Status", 100);       // 3
+            listViewRotinas.Columns.Add("Prioridade", 100);   // 4
+            listViewRotinas.Columns.Add("Execuções/Mês", 120);// 5
             // 
             // btnAtualizar
             // 
-            this.btnAtualizar.BackColor = System.Drawing.ColorTranslator.FromHtml("#202E39");
-            this.btnAtualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAtualizar.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnAtualizar.ForeColor = System.Drawing.Color.White;
-            this.btnAtualizar.Location = new System.Drawing.Point(30, 480);
-            this.btnAtualizar.Size = new System.Drawing.Size(120, 40);
-            this.btnAtualizar.Text = "Atualizar";
+            btnAtualizar.BackColor = Color.FromArgb(32, 46, 57);
+            btnAtualizar.FlatStyle = FlatStyle.Flat;
+            btnAtualizar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnAtualizar.ForeColor = Color.White;
+            btnAtualizar.Location = new Point(30, 480);
+            btnAtualizar.Name = "btnAtualizar";
+            btnAtualizar.Size = new Size(120, 40);
+            btnAtualizar.TabIndex = 2;
+            btnAtualizar.Text = "Atualizar";
+            btnAtualizar.UseVisualStyleBackColor = false;
             // 
             // btnExportar
             // 
-            this.btnExportar.BackColor = System.Drawing.ColorTranslator.FromHtml("#4A90E2");
-            this.btnExportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExportar.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnExportar.ForeColor = System.Drawing.Color.White;
-            this.btnExportar.Location = new System.Drawing.Point(170, 480);
-            this.btnExportar.Size = new System.Drawing.Size(120, 40);
-            this.btnExportar.Text = "Exportar";
+            btnExportar.BackColor = Color.FromArgb(74, 144, 226);
+            btnExportar.FlatStyle = FlatStyle.Flat;
+            btnExportar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnExportar.ForeColor = Color.White;
+            btnExportar.Location = new Point(170, 480);
+            btnExportar.Name = "btnExportar";
+            btnExportar.Size = new Size(120, 40);
+            btnExportar.TabIndex = 3;
+            btnExportar.Text = "Exportar";
+            btnExportar.UseVisualStyleBackColor = false;
             // 
             // btnMarcarTodasFeitas
             // 
-            this.btnMarcarTodasFeitas.BackColor = System.Drawing.ColorTranslator.FromHtml("#7ED321");
-            this.btnMarcarTodasFeitas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMarcarTodasFeitas.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnMarcarTodasFeitas.ForeColor = System.Drawing.Color.White;
-            this.btnMarcarTodasFeitas.Location = new System.Drawing.Point(310, 480);
-            this.btnMarcarTodasFeitas.Size = new System.Drawing.Size(180, 40);
-            this.btnMarcarTodasFeitas.Text = "Marcar todas feitas hoje";
+            btnMarcarTodasFeitas.BackColor = Color.FromArgb(126, 211, 33);
+            btnMarcarTodasFeitas.FlatStyle = FlatStyle.Flat;
+            btnMarcarTodasFeitas.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnMarcarTodasFeitas.ForeColor = Color.White;
+            btnMarcarTodasFeitas.Location = new Point(310, 480);
+            btnMarcarTodasFeitas.Name = "btnMarcarTodasFeitas";
+            btnMarcarTodasFeitas.Size = new Size(180, 40);
+            btnMarcarTodasFeitas.TabIndex = 4;
+            btnMarcarTodasFeitas.Text = "Marcar todas feitas hoje";
+            btnMarcarTodasFeitas.UseVisualStyleBackColor = false;
             // 
             // lblResumoExecucoes
             // 
-            this.lblResumoExecucoes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblResumoExecucoes.ForeColor = System.Drawing.ColorTranslator.FromHtml("#202E39");
-            this.lblResumoExecucoes.Location = new System.Drawing.Point(520, 480);
-            this.lblResumoExecucoes.Size = new System.Drawing.Size(300, 40);
-            this.lblResumoExecucoes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblResumoExecucoes.Text = "Total de execuções este mês: 0";
+            lblResumoExecucoes.Font = new Font("Segoe UI", 12F);
+            lblResumoExecucoes.ForeColor = Color.FromArgb(32, 46, 57);
+            lblResumoExecucoes.Location = new Point(520, 480);
+            lblResumoExecucoes.Name = "lblResumoExecucoes";
+            lblResumoExecucoes.Size = new Size(300, 40);
+            lblResumoExecucoes.TabIndex = 5;
+            lblResumoExecucoes.Text = "Total de execuções este mês: 0";
+            lblResumoExecucoes.TextAlign = ContentAlignment.MiddleLeft;
 
+
+            // 
+            // contextMenuRotinas
+            // 
+            this.contextMenuRotinas = new System.Windows.Forms.ContextMenuStrip();
+            this.editarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.excluirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
+            this.contextMenuRotinas.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.editarToolStripMenuItem, this.excluirToolStripMenuItem});
+
+            this.editarToolStripMenuItem.Text = "Editar";
+            this.excluirToolStripMenuItem.Text = "Excluir";
+            this.listViewRotinas.ContextMenuStrip = this.contextMenuRotinas;
             // 
             // RotinasUserControl
             // 
-            this.BackColor = System.Drawing.ColorTranslator.FromHtml("#FFFCF6");
-            this.Controls.Add(this.lblTitulo);
-            this.Controls.Add(this.listViewRotinas);
-            this.Controls.Add(this.btnAtualizar);
-            this.Controls.Add(this.btnExportar);
-            this.Controls.Add(this.btnMarcarTodasFeitas);
-            this.Controls.Add(this.lblResumoExecucoes);
-            this.Name = "RotinasUserControl";
-            this.Size = new System.Drawing.Size(850, 550);
+            BackColor = Color.FromArgb(255, 252, 246);
+            Controls.Add(lblTitulo);
+            Controls.Add(listViewRotinas);
+            Controls.Add(btnAtualizar);
+            Controls.Add(btnExportar);
+            Controls.Add(btnMarcarTodasFeitas);
+            Controls.Add(lblResumoExecucoes);
+            Name = "RotinasUserControl";
+            Size = new Size(850, 550);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
