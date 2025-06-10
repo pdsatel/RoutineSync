@@ -14,7 +14,7 @@ namespace Tcc
         private DateTimePicker dtpDataEntrega;
         private ComboBox cmbStatus;
         private ComboBox cmbPrioridade;
-        private int usuarioId;
+        public int UsuarioId;
         private ToolTip toolTipDescricao = new ToolTip();
 
         public class TarefaInfo
@@ -32,7 +32,7 @@ namespace Tcc
             InitializeComponent();
             InicializarComponentesPersonalizados();
 
-            usuarioId = idUsuario;
+            UsuarioId = idUsuario;
         }
 
         private void InicializarComponentesPersonalizados()
@@ -205,7 +205,7 @@ namespace Tcc
             Controls.Add(btnExcluir);
             listViewTarefas.MouseMove += ListViewTarefas_MouseMove;
         }
-        private void CarregarTarefas()
+        public void CarregarTarefas()
         {
             listViewTarefas.Items.Clear();
 
@@ -215,7 +215,7 @@ namespace Tcc
                 {
                     string sql = "SELECT id, titulo,descricao, data_entrega, status, prioridade FROM Tarefas WHERE usuario_id = @usuarioId";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@usuarioId", usuarioId);
+                    cmd.Parameters.AddWithValue("@usuarioId", UsuarioId);
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -241,7 +241,7 @@ namespace Tcc
                                 DataEntrega = dataEntrega,
                                 Status = status,
                                 Prioridade = prioridade,
-                                UsuarioId = usuarioId
+                                UsuarioId = UsuarioId
                             };
                             listViewTarefas.Items.Add(item);
                         }
@@ -285,7 +285,7 @@ namespace Tcc
                                    VALUES (@usuarioId, @titulo, @descricao, @data_entrega, @status, @prioridade)";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@usuarioId", usuarioId);
+                    cmd.Parameters.AddWithValue("@usuarioId", UsuarioId);
                     cmd.Parameters.AddWithValue("@titulo", titulo);
                     cmd.Parameters.AddWithValue("@descricao", descricao);
                     cmd.Parameters.AddWithValue("@data_entrega", dataEntrega.Date);
@@ -347,7 +347,7 @@ namespace Tcc
                         string sql = "DELETE FROM Tarefas WHERE id = @tarefaId";
                         MySqlCommand cmd = new MySqlCommand(sql, conn);
                         cmd.Parameters.AddWithValue("@tarefaId", tarefaId);
-                        cmd.Parameters.AddWithValue("@usuarioId", usuarioId);
+                        cmd.Parameters.AddWithValue("@usuarioId", UsuarioId);
                         int linhasAfetadas = cmd.ExecuteNonQuery();
 
 
@@ -495,6 +495,31 @@ namespace Tcc
                 if (item.Tag is TarefaInfo info && info.UsuarioId == usuarioId)
                 {
                     tarefas.Add(info);
+                }
+            }
+            return tarefas;
+        }
+        public List<TarefaInfo> BuscarTarefasBanco()
+        {
+            var tarefas = new List<TarefaInfo>();
+            using (MySqlConnection conn = Conexao.ObterConexao())
+            {
+                string sql = "SELECT * FROM Tarefas WHERE usuario_id = @usuarioId";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@usuarioId", this.UsuarioId);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        tarefas.Add(new TarefaInfo
+                        {
+                            Id = reader.GetInt64("id"),
+                            Titulo = reader.GetString("titulo"),
+                            Descricao = reader.GetString("descricao"),
+                            Status = reader.GetString("status"),
+                            Prioridade = reader.GetString("prioridade")
+                        });
+                    }
                 }
             }
             return tarefas;

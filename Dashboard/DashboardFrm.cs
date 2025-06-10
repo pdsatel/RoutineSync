@@ -7,10 +7,6 @@
 
     namespace Tcc
     {
-
-
-   
-
         public partial class DashboardFrm : Form
 
 
@@ -23,11 +19,17 @@
             {   
                 InitializeComponent();
                 this.usuarioId = idUsuario;
-                tarefasControl = new TarefasUserControl(usuarioId); 
-                rotinasControl = new RotinasUserControl(usuarioId);
+
+               tarefasControl = new TarefasUserControl(usuarioId); 
+               tarefasControl.CarregarTarefas();
+               tarefasControl.Dock = DockStyle.Fill;
 
 
-            }
+
+               rotinasControl = new RotinasUserControl(tarefasControl);
+               rotinasControl.Dock = DockStyle.Fill;   
+
+        }
 
             private void DashboardFrm_Load(object sender, EventArgs e)
             {
@@ -58,9 +60,7 @@
                 btnSair.TextImageRelation = TextImageRelation.ImageBeforeText;
 
 
-                rotinasControl = new RotinasUserControl(usuarioId);
-                rotinasControl.Dock = DockStyle.Fill;
-                tarefasControl.Dock = DockStyle.Fill;
+                
             }
 
 
@@ -69,19 +69,20 @@
                panelConteudo.Controls.Clear();
                panelConteudo.Controls.Add(tarefasControl);  
                tarefasControl.Dock = DockStyle.Fill;
-               
-           
-
            
                 }
 
             private void btnRotina_Click(object sender, EventArgs e)
             {
                 var tarefas = tarefasControl.ObterTarefas(usuarioId); // pega as tarefas do usuário
-            MessageBox.Show($"Tarefas: {tarefas.Count}");
-                rotinasControl.CarregarRotinas(tarefas); // passa para o outro controle
-                panelConteudo.Controls.Clear();
+                 rotinasControl.CarregarRotinasDeTarefas(tarefas); // passa para o outro controle
+
+                MessageBox.Show("Tarefas carregadas: " + tarefas.Count);
+
+
+            panelConteudo.Controls.Clear();
                 panelConteudo.Controls.Add(rotinasControl);
+                rotinasControl.Dock= DockStyle.Fill;
         }
 
 

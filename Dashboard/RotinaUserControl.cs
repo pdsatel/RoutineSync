@@ -1,72 +1,90 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 using static Tcc.TarefasUserControl;
 
 namespace Tcc
 {
     public partial class RotinasUserControl : UserControl
-
-       
     {
         int usuarioId;
-        public RotinasUserControl(int usuarioId)
+
+        // Simulação de lista de tarefas/rotinas (substitua pelo seu repositório real)
+        private List<TarefaInfo> listaRotinas = new List<TarefaInfo>();
+        private TarefasUserControl tarefasControl;
+
+        public RotinasUserControl(TarefasUserControl tarefasControl)
         {
             InitializeComponent();
-            this.usuarioId = usuarioId;
+            this.usuarioId = tarefasControl.UsuarioId;
+            this.tarefasControl = tarefasControl;
+
+            var tarefas = tarefasControl.BuscarTarefasBanco();
+            CarregarRotinasDeTarefas(tarefas);
+
+
             // Associe eventos aqui
             btnAtualizar.Click += BtnAtualizar_Click;
             btnExportar.Click += BtnExportar_Click;
             btnMarcarTodasFeitas.Click += BtnMarcarTodasFeitas_Click;
             listViewRotinas.ItemCheck += listViewRotinas_ItemCheck;
-            this.editarToolStripMenuItem.Click += editarToolStripMenuItem_Click;
-            this.excluirToolStripMenuItem.Click += excluirToolStripMenuItem_Click;
+           
+            excluirToolStripMenuItem.Click += excluirToolStripMenuItem_Click;
 
-            // Carregue as rotinas iniciais (exemplo)
-
+            // Carregue as rotinas iniciais
+            
         }
 
-        public void CarregarRotinas(List<TarefasUserControl.TarefaInfo> tarefas)
+        // Método para buscar rotinas (simulação, adapte para banco de dados se necessário)
+        private List<TarefaInfo> BuscarRotinasUsuario()
         {
-            // Limpe o listViewRotinas
+            // Exemplo: retorna todas as rotinas do usuário
+            // Filtre por usuárioId se for necessário
+            return listaRotinas;
+        }
+
+        public void CarregarRotinasDeTarefas(List<TarefaInfo> tarefas)
+        {
             listViewRotinas.Items.Clear();
-
-            listViewRotinas.Groups.Clear();
-            var gruposPorData = new Dictionary<string, ListViewGroup>();
-
             foreach (var tarefa in tarefas)
             {
-                var data = tarefa.DataEntrega;
-                string datastr = tarefa.DataEntrega.ToShortDateString();
-
-                if (!gruposPorData.ContainsKey(datastr))
-                {
-                    var grupo = new ListViewGroup(datastr, datastr);
-                    listViewRotinas.Groups.Add(grupo);
-                    gruposPorData[datastr] = grupo;
-                }
-
-                var item = new ListViewItem(""); // Coluna "Feito" (checkbox)
-                item.SubItems.Add(tarefa.Titulo); // Coluna "Título"
-                item.SubItems.Add(tarefa.DataEntrega.ToShortDateString()); // Data
-                item.SubItems.Add(tarefa.Status); // Coluna "Status"
-                item.SubItems.Add(tarefa.Prioridade); // Coluna "Prioridade"
-                item.SubItems.Add("0"); // Ou tarefa.ExecucoesMes, se existir
+                var item = new ListViewItem(""); // checkbox
+                item.SubItems.Add(tarefa.Titulo);
+                item.SubItems.Add(tarefa.Descricao.Length > 50 ? tarefa.Descricao.Substring(0, 50) + "..." : tarefa.Descricao);
+                item.SubItems.Add(tarefa.Status);
+                item.SubItems.Add(tarefa.Prioridade);
+                item.SubItems.Add("0"); // execuções/mês, inicial
                 item.Tag = tarefa;
-                item.Group = gruposPorData[datastr];
+                item.Checked = tarefa.Status.ToLower() == "concluído" || tarefa.Status.ToLower() == "concluida";
                 listViewRotinas.Items.Add(item);
             }
-            AtualizarResumoExecucoes();
         }
 
         private void BtnAtualizar_Click(object sender, EventArgs e)
         {
-            // Atualize a lista de rotinas
             
+        }
+
+        private void btnConcluir_Click(object sender, EventArgs e)
+        {
+            if (listViewRotinas.SelectedItems.Count > 0)
+            {
+                var item = listViewRotinas.SelectedItems[0];
+                long tarefaId = (long)item.Tag;
+                using (MySqlConnection conn = Conexao.ObterConexao())
+                {
+                    string sql = "UPDATE Tarefas SET status = 'Concluído' WHERE id = @id";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@id", tarefaId);
+                    cmd.ExecuteNonQuery();
+                }
+                
+            }
         }
 
         private void BtnExportar_Click(object sender, EventArgs e)
         {
-            // Exporte as rotinas (exemplo)
             MessageBox.Show("Exportar rotinas - função ainda não implementada.");
         }
 
@@ -85,36 +103,20 @@ namespace Tcc
 
         private void listViewRotinas_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (e.NewValue == CheckState.Checked)
-            {
-                // Pergunta ao usuário
-                var result = MessageBox.Show("Tem certeza que deseja marcar esta tarefa como concluída?", "Confirmar conclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    // Aguarda o estado ser alterado, então remove
-                    this.BeginInvoke(new Action(() =>
-                    {
-                        var item = listViewRotinas.Items[e.Index];
-                        listViewRotinas.Items.Remove(item);
-                        // Aqui, se quiser, atualize o status no banco de dados também!
-                        AtualizarResumoExecucoes();
-                    }));
-                }
-                else
-                {
-                    // Cancela o check
-                    e.NewValue = CheckState.Unchecked;
-                }
-            }
         }
-        private void editarToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void btnEditar_Click(object sender, EventArgs e)
         {
             if (listViewRotinas.SelectedItems.Count > 0)
             {
                 var item = listViewRotinas.SelectedItems[0];
-                var tarefa = (TarefasUserControl.TarefaInfo)item.Tag;
-                // Aqui você pode abrir um painel de edição, formulário, ou editar inline.
-                MessageBox.Show($"Editar tarefa: {tarefa.Titulo}");
+                long tarefaId = (long)item.Tag;
+
+                // Monte e mostre um formulário de edição (ou campos na tela)
+                // Depois que o usuário editar e clicar em salvar:
+                // UPDATE Tarefas SET ... WHERE id = @id
+                // E recarregue a lista:
+                CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
             }
         }
 
@@ -125,22 +127,48 @@ namespace Tcc
                 var item = listViewRotinas.SelectedItems[0];
                 if (MessageBox.Show("Confirma exclusão desta tarefa?", "Excluir", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
+                    // Remova do banco/lista também, se necessário
+                    var tarefa = (TarefaInfo)item.Tag;
+                    listaRotinas.Remove(tarefa);
                     listViewRotinas.Items.Remove(item);
-                    // Remova do banco também, se necessário
+                    AtualizarResumoExecucoes();
                 }
             }
         }
 
-
         private void AtualizarResumoExecucoes()
         {
-            // Soma todas execuções do mês
             int total = 0;
             foreach (ListViewItem item in listViewRotinas.Items)
             {
                 total += int.Parse(item.SubItems[5].Text);
             }
             lblResumoExecucoes.Text = $"Total de execuções este mês: {total}";
+        }
+
+        private void lblResumoExecucoes_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRemover_Click(object sender, EventArgs e)
+        {
+            if (listViewRotinas.SelectedItems.Count > 0)
+            {
+                var item = listViewRotinas.SelectedItems[0];
+                long tarefaId = (long)item.Tag;
+                if (MessageBox.Show("Confirma exclusão desta rotina?", "Excluir", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    using (MySqlConnection conn = Conexao.ObterConexao())
+                    {
+                        string sql = "DELETE FROM Tarefas WHERE id = @id";
+                        MySqlCommand cmd = new MySqlCommand(sql, conn);
+                        cmd.Parameters.AddWithValue("@id", tarefaId);
+                        cmd.ExecuteNonQuery();
+                    }
+                    CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
+                }
+            }
         }
     }
 }
