@@ -128,6 +128,9 @@ namespace Tcc
             panelMenu.Visible = true;
             panelCadastro.Visible = false;
 
+            panelLogin.Location = new Point(0, 0);
+            panelLogin.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
+
             btnLogin.Visible = true;
             btnCadastro.Visible = true;
             labelTitulo.Visible = true;
@@ -202,10 +205,7 @@ namespace Tcc
 
             //Botões
 
-            ArredondarControle(panelLogin, 20);
-            ArredondarControle(panelMenu, 20);
-            ArredondarControle(btnLogin, 20);
-            ArredondarControle(panelCadastro, 20);
+            
 
             ArredondarBotao(btnLogin, 20);
             ArredondarBotao(btnCadastro, 20);
@@ -220,14 +220,22 @@ namespace Tcc
         }
         private void btnAbrirCadastro_Click(object sender, EventArgs e)
         {
+
             panelMenu.Visible = false;
             panelCadastro.Visible = true;
             panelLogin.Visible = false;
+            panelCadastro.Location = new Point(0, 0);
+            panelCadastro.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
         }
         private void btnLogin_Click(object sender, EventArgs e)
+
+
         {
-            panelLogin.Visible = true;
             panelMenu.Visible = false;
+            panelCadastro.Visible = false;
+            panelLogin.Visible = true;
+            panelLogin.Location = new Point(this.ClientSize.Width / 2, 0);
+            panelLogin.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
 
         }
         private void btnVoltarlogin_Click(object sender, EventArgs e)
@@ -249,9 +257,21 @@ namespace Tcc
 
         private void MenuPrincipalFrm_SizeChanged(object sender, EventArgs e)
         {
-            CentralizarPainel(panelMenu);
-            CentralizarPainel(panelLogin);
-            CentralizarPainel(panelCadastro);
+            if (panelLogin.Visible)
+            {
+                panelLogin.Location = new Point(0, 0);
+                panelLogin.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
+            }
+            else if (panelMenu.Visible)
+            {
+                panelMenu.Location = new Point(0, 0);
+                panelMenu.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
+            }
+            else if (panelCadastro.Visible)
+            {
+                panelCadastro.Location = new Point(0, 0);
+                panelCadastro.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
+            }
         }
 
         private void panelLogin_Paint(object sender, PaintEventArgs e)
@@ -337,8 +357,10 @@ namespace Tcc
         }
         private void btnVoltarCad_Click(object sender, EventArgs e)
         {
-            panelCadastro.Visible = false;
             panelMenu.Visible = true;
+            panelCadastro.Visible = false;
+            panelLogin.Visible = false;
+           
         }
 
         private void panelCadastro_Paint(object sender, PaintEventArgs e)
@@ -366,6 +388,7 @@ namespace Tcc
                     Enter(ctrl);
             }
         }
+        
 
         private void AplicarFonte(Control parent, Font fonte)
         {
