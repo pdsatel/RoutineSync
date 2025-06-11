@@ -206,7 +206,8 @@ namespace Tcc
 
             CentralizarLogin();
             CentralizarCadastro();
-            Enter(panelCadastro);   
+            Enter(panelCadastro);
+            Enter(panelLogin);
         }
         private void btnAbrirCadastro_Click(object sender, EventArgs e)
         {
@@ -353,6 +354,7 @@ namespace Tcc
             {
                 MessageBox.Show("Erro ao cadastrar: " + ex.Message);
             }
+            panelLogin.Visible = true; 
         }
         private void btnVoltarCad_Click(object sender, EventArgs e)
         {
@@ -435,7 +437,7 @@ namespace Tcc
             Font fonteMaior = new Font("Segoe UI", 12F, FontStyle.Regular);
             textBoxEmail.Font = fonteMaior;
             textBoxSenha.Font = fonteMaior;
-            btnEntrar.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+           
 
             // Posiciona verticalmente
             int centroX = (panelLogin.Width - larguraCampo) / 2;

@@ -39,6 +39,9 @@
             Load += TarefasUserControl_Load;
             SizeChanged += TarefasUserControl_SizeChanged;
             ResumeLayout(false);
+
+
+
         }
 
         #endregion

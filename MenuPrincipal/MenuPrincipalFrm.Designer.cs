@@ -79,10 +79,6 @@
             // 
             // panelLogin
             // 
-
-            int panelWidth = 601;
-            int centralX = (panelWidth - 300) / 2;
-
             panelLogin.Controls.Add(labelLogin);
             panelLogin.Controls.Add(labelEmail);
             panelLogin.Controls.Add(textBoxEmail);
@@ -92,61 +88,68 @@
             panelLogin.Controls.Add(linkRegistrar);
             panelLogin.Location = new Point(14, 42);
             panelLogin.Name = "panelLogin";
-            panelLogin.Size = new Size(panelWidth, 778);
+            panelLogin.Size = new Size(601, 778);
             panelLogin.TabIndex = 1;
             panelLogin.Visible = false;
             panelLogin.Paint += panelLogin_Paint;
-
-            // Label Login
+            // 
+            // labelLogin
+            // 
             labelLogin.AutoSize = true;
             labelLogin.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
             labelLogin.ForeColor = SystemColors.ActiveCaption;
-            labelLogin.Location = new Point((panelWidth - labelLogin.PreferredWidth) / 2, 45);
+            labelLogin.Location = new Point(601, 45);
             labelLogin.Name = "labelLogin";
             labelLogin.Size = new Size(155, 65);
             labelLogin.TabIndex = 6;
             labelLogin.Text = "Login";
             labelLogin.Click += label1_Click_1;
-
-            // Label Email
-            labelEmail.Location = new Point(centralX, 140);
+            // 
+            // labelEmail
+            // 
+            labelEmail.Location = new Point(601, 140);
             labelEmail.Name = "labelEmail";
             labelEmail.Size = new Size(100, 30);
             labelEmail.TabIndex = 0;
             labelEmail.Text = "Email:";
-
-            // TextBox Email
-            textBoxEmail.Location = new Point(centralX, 170);
+            // 
+            // textBoxEmail
+            // 
+            textBoxEmail.Location = new Point(601, 170);
             textBoxEmail.Name = "textBoxEmail";
             textBoxEmail.Size = new Size(300, 31);
             textBoxEmail.TabIndex = 1;
-
-            // Label Senha
-            labelSenha.Location = new Point(centralX, 215);
+            // 
+            // labelSenha
+            // 
+            labelSenha.Location = new Point(601, 215);
             labelSenha.Name = "labelSenha";
             labelSenha.Size = new Size(100, 30);
             labelSenha.TabIndex = 2;
             labelSenha.Text = "Senha:";
-
-            // TextBox Senha
-            textBoxSenha.Location = new Point(centralX, 245);
+            // 
+            // textBoxSenha
+            // 
+            textBoxSenha.Location = new Point(601, 245);
             textBoxSenha.Name = "textBoxSenha";
             textBoxSenha.PasswordChar = '*';
             textBoxSenha.Size = new Size(300, 31);
             textBoxSenha.TabIndex = 3;
-
-            // Botão Entrar
-            btnEntrar.Location = new Point(centralX + 100, 300);
+            // 
+            // btnEntrar
+            // 
+            btnEntrar.Location = new Point(601, 300);
             btnEntrar.Name = "btnEntrar";
             btnEntrar.Size = new Size(100, 40);
             btnEntrar.TabIndex = 4;
             btnEntrar.Text = "Entrar";
             btnEntrar.UseVisualStyleBackColor = false;
             btnEntrar.Click += btnEntrar_Click;
-
-            // Link Registrar
+            // 
+            // linkRegistrar
+            // 
             linkRegistrar.AutoSize = true;
-            linkRegistrar.Location = new Point(centralX, 360);
+            linkRegistrar.Location = new Point(601, 360);
             linkRegistrar.Margin = new Padding(4, 0, 4, 0);
             linkRegistrar.Name = "linkRegistrar";
             linkRegistrar.Size = new Size(270, 25);

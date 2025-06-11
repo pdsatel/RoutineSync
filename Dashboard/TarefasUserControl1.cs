@@ -16,6 +16,7 @@ namespace Tcc
         private ComboBox cmbPrioridade;
         public int UsuarioId;
         private ToolTip toolTipDescricao = new ToolTip();
+       
 
         public class TarefaInfo
         {
@@ -265,10 +266,6 @@ namespace Tcc
             string prioridade = cmbPrioridade.SelectedItem.ToString();
             string resumo = descricao.Length > 50 ? descricao.Substring(0, 50) + "..." : descricao;
 
-
-
-
-
             if (string.IsNullOrEmpty(titulo))
             {
                 MessageBox.Show("O Titulo da tarefa não pode estar vazio.");
@@ -324,6 +321,8 @@ namespace Tcc
             {
                 MessageBox.Show("Erro ao salvar tarefa: " + ex.Message);
             }
+
+
         }
         private void btnExcluir_Click(object sender, EventArgs e)
         {

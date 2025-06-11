@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using Syncfusion.Windows.Forms.Tools;
 using static Tcc.TarefasUserControl;
 
 namespace Tcc
@@ -20,8 +21,9 @@ namespace Tcc
             this.usuarioId = tarefasControl.UsuarioId;
             this.tarefasControl = tarefasControl;
 
-            var tarefas = tarefasControl.BuscarTarefasBanco();
-            CarregarRotinasDeTarefas(tarefas);
+           
+        
+            
 
 
             // Associe eventos aqui
@@ -29,7 +31,7 @@ namespace Tcc
             btnExportar.Click += BtnExportar_Click;
             btnMarcarTodasFeitas.Click += BtnMarcarTodasFeitas_Click;
             listViewRotinas.ItemCheck += listViewRotinas_ItemCheck;
-           
+            CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
             excluirToolStripMenuItem.Click += excluirToolStripMenuItem_Click;
 
             // Carregue as rotinas iniciais
@@ -63,7 +65,10 @@ namespace Tcc
 
         private void BtnAtualizar_Click(object sender, EventArgs e)
         {
-            
+
+
+            CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
+
         }
 
         private void btnConcluir_Click(object sender, EventArgs e)
@@ -168,6 +173,17 @@ namespace Tcc
                     }
                     CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
                 }
+            }
+        }
+        public void AtualizarRotinas()
+        {
+            CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
+        }
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab == tabRotinas) // ajuste "tabRotinas" para o nome real
+            {
+                rotinasUserControl.AtualizarRotinas();
             }
         }
     }
