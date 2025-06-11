@@ -29,7 +29,7 @@ namespace Tcc
             public string Prioridade { get; set; }
             public int UsuarioId { get; set; }  
 
-            public DateTime DataEntrega {get; set; }
+            
         }
         public TarefasUserControl(int idUsuario)
         {
