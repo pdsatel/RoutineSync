@@ -29,7 +29,7 @@ namespace Tcc
             // Associe eventos aqui
             btnAtualizar.Click += BtnAtualizar_Click;
             btnExportar.Click += BtnExportar_Click;
-            btnMarcarTodasFeitas.Click += BtnMarcarTodasFeitas_Click;
+            
             listViewRotinas.ItemCheck += listViewRotinas_ItemCheck;
             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
             excluirToolStripMenuItem.Click += excluirToolStripMenuItem_Click;
@@ -93,18 +93,7 @@ namespace Tcc
             MessageBox.Show("Exportar rotinas - função ainda não implementada.");
         }
 
-        private void BtnMarcarTodasFeitas_Click(object sender, EventArgs e)
-        {
-            foreach (ListViewItem item in listViewRotinas.Items)
-            {
-                item.Checked = true;
-                // Aqui você pode incrementar o campo "Execuções/Mês"
-                int execucoes = int.Parse(item.SubItems[5].Text);
-                execucoes++;
-                item.SubItems[5].Text = execucoes.ToString();
-            }
-            AtualizarResumoExecucoes();
-        }
+        
 
         private void listViewRotinas_ItemCheck(object sender, ItemCheckEventArgs e)
         {
@@ -161,17 +150,19 @@ namespace Tcc
             if (listViewRotinas.SelectedItems.Count > 0)
             {
                 var item = listViewRotinas.SelectedItems[0];
-                long tarefaId = (long)item.Tag;
-                if (MessageBox.Show("Confirma exclusão desta rotina?", "Excluir", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                TarefaInfo tarefa = item.Tag as TarefaInfo;
+                if (tarefa != null &&
+                    MessageBox.Show("Confirma exclusão desta rotina?", "Excluir", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     using (MySqlConnection conn = Conexao.ObterConexao())
                     {
                         string sql = "DELETE FROM Tarefas WHERE id = @id";
                         MySqlCommand cmd = new MySqlCommand(sql, conn);
-                        cmd.Parameters.AddWithValue("@id", tarefaId);
+                        cmd.Parameters.AddWithValue("@id", tarefa.Id);
                         cmd.ExecuteNonQuery();
                     }
-                    CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
+                    AtualizarRotinas();
+                    MessageBox.Show("Rotina removida!");
                 }
             }
         }
@@ -179,12 +170,6 @@ namespace Tcc
         {
             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
         }
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (tabControl1.SelectedTab == tabRotinas) // ajuste "tabRotinas" para o nome real
-            {
-                rotinasUserControl.AtualizarRotinas();
-            }
-        }
+      
     }
 }

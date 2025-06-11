@@ -147,7 +147,7 @@ namespace Tcc
             cmbStatus = new ComboBox()
             {
                 Location = new Point(startX, currentY),
-                Width = 200,
+                Width = 230,
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Font = new Font("Segoe UI", 11)
             };
@@ -170,7 +170,7 @@ namespace Tcc
             cmbPrioridade = new ComboBox()
             {
                 Location = new Point(startX, currentY),
-                Width = 200,
+                Width = 230,
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Font = new Font("Segoe UI", 11)
             };
@@ -346,18 +346,19 @@ namespace Tcc
                         string sql = "DELETE FROM Tarefas WHERE id = @tarefaId";
                         MySqlCommand cmd = new MySqlCommand(sql, conn);
                         cmd.Parameters.AddWithValue("@tarefaId", tarefaId);
-                        cmd.Parameters.AddWithValue("@usuarioId", UsuarioId);
+                       
                         int linhasAfetadas = cmd.ExecuteNonQuery();
 
 
                         if (linhasAfetadas == 0)
                         {
-                            listViewTarefas.Items.Remove(itemSelecionado);
+                            
                             MessageBox.Show("Nenhuma tarefa encontrada com o ID especificado.");
                             return;
                         }
                         else
                         {
+                            listViewTarefas.Items.Remove(itemSelecionado);
                             MessageBox.Show("Tarefa excluída com sucesso!");
                         }
                     }

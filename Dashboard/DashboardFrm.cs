@@ -2,6 +2,7 @@
         System;
     using System.Globalization;
     using System.Windows.Forms;
+using Syncfusion.Windows.Forms.Tools;
 
 
 
@@ -27,7 +28,9 @@
 
 
                rotinasControl = new RotinasUserControl(tarefasControl);
-               rotinasControl.Dock = DockStyle.Fill;   
+               rotinasControl.Dock = DockStyle.Fill;
+
+             
 
         }
 
@@ -74,10 +77,10 @@
 
             private void btnRotina_Click(object sender, EventArgs e)
             {
-                var tarefas = tarefasControl.ObterTarefas(usuarioId); // pega as tarefas do usuário
+                var tarefas = tarefasControl.BuscarTarefasBanco(); // pega as tarefas do usuário
                  rotinasControl.CarregarRotinasDeTarefas(tarefas); // passa para o outro controle
 
-                MessageBox.Show("Tarefas carregadas: " + tarefas.Count);
+            MessageBox.Show("Rotinas carregadas!");
 
 
             panelConteudo.Controls.Clear();
@@ -114,5 +117,10 @@
             {
 
             }
+            private void TabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Sempre recarrega as rotinas ao entrar na aba
+            
         }
+    }
     }
