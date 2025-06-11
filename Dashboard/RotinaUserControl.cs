@@ -29,13 +29,13 @@ namespace Tcc
             // Associe eventos aqui
             btnAtualizar.Click += BtnAtualizar_Click;
             btnExportar.Click += BtnExportar_Click;
-            
             listViewRotinas.ItemCheck += listViewRotinas_ItemCheck;
             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
             excluirToolStripMenuItem.Click += excluirToolStripMenuItem_Click;
+            btnConcluir.Click += btnConcluir_Click;
 
             // Carregue as rotinas iniciais
-            
+
         }
 
         // Método para buscar rotinas (simulação, adapte para banco de dados se necessário)
@@ -56,9 +56,16 @@ namespace Tcc
                 item.SubItems.Add(tarefa.Descricao.Length > 50 ? tarefa.Descricao.Substring(0, 50) + "..." : tarefa.Descricao);
                 item.SubItems.Add(tarefa.Status);
                 item.SubItems.Add(tarefa.Prioridade);
-                item.SubItems.Add("0"); // execuções/mês, inicial
                 item.Tag = tarefa;
-                item.Checked = tarefa.Status.ToLower() == "concluído" || tarefa.Status.ToLower() == "concluida";
+                item.Checked = tarefa.Status.Equals("Concluído", StringComparison.OrdinalIgnoreCase)|| tarefa.Status.Equals("Concluida", StringComparison.OrdinalIgnoreCase);
+
+                // Adicione esta parte para pintar de verde as concluídas:
+                if (item.Checked)
+                {
+                    item.BackColor = System.Drawing.Color.LightGreen;
+                    // item.ForeColor = System.Drawing.Color.DarkGreen; // opcional
+                }
+
                 listViewRotinas.Items.Add(item);
             }
         }
@@ -73,18 +80,33 @@ namespace Tcc
 
         private void btnConcluir_Click(object sender, EventArgs e)
         {
-            if (listViewRotinas.SelectedItems.Count > 0)
+            bool concluiuAlguma = false;
+            foreach (ListViewItem item in listViewRotinas.Items)
             {
-                var item = listViewRotinas.SelectedItems[0];
-                long tarefaId = (long)item.Tag;
-                using (MySqlConnection conn = Conexao.ObterConexao())
+                if (item.Checked)
                 {
-                    string sql = "UPDATE Tarefas SET status = 'Concluído' WHERE id = @id";
-                    MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@id", tarefaId);
-                    cmd.ExecuteNonQuery();
+                    TarefaInfo tarefa = item.Tag as TarefaInfo;
+                    if (tarefa != null)
+                    {
+                        using (MySqlConnection conn = Conexao.ObterConexao())
+                        {
+                            string sql = "UPDATE Tarefas SET status = 'Concluído' WHERE id = @id";
+                            MySqlCommand cmd = new MySqlCommand(sql, conn);
+                            cmd.Parameters.AddWithValue("@id", tarefa.Id);
+                            cmd.ExecuteNonQuery();
+                        }
+                        concluiuAlguma = true;
+                    }
                 }
-                
+            }
+            if (concluiuAlguma)
+            {
+                AtualizarRotinas();
+                MessageBox.Show("Rotinas selecionadas marcadas como concluídas!");
+            }
+            else
+            {
+                MessageBox.Show("Selecione pelo menos uma rotina para concluir.");
             }
         }
 
@@ -125,7 +147,7 @@ namespace Tcc
                     var tarefa = (TarefaInfo)item.Tag;
                     listaRotinas.Remove(tarefa);
                     listViewRotinas.Items.Remove(item);
-                    AtualizarResumoExecucoes();
+                   
                 }
             }
         }

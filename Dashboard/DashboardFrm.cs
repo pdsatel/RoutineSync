@@ -69,6 +69,9 @@ using Syncfusion.Windows.Forms.Tools;
 
             private void btnTarefas_Click(object sender, EventArgs e)
             {
+
+            
+            
                panelConteudo.Controls.Clear();
                panelConteudo.Controls.Add(tarefasControl);  
                tarefasControl.Dock = DockStyle.Fill;
