@@ -20,10 +20,12 @@ namespace Tcc
         {
             InitializeComponent();
 
+            this.Shown += MenuPrincipalFrm_Shown;
             this.SizeChanged += new EventHandler(MenuPrincipalFrm_SizeChanged);
             btnLogin.Click += btnLogin_Click;
+            this.Load += new EventHandler(MenuPrincipalFrm_Load);
 
-            
+
 
             this.StartPosition = FormStartPosition.CenterParent;
 
@@ -123,49 +125,41 @@ namespace Tcc
         private void MenuPrincipalFrm_Load(object sender, EventArgs e)
         {
 
-            panelCadastro.BackColor = ColorTranslator.FromHtml("#FFFCF6");
-            panelLogin.Visible = false;
-            panelMenu.Visible = true;
-            panelCadastro.Visible = false;
-
-            panelLogin.Location = new Point(0, 0);
-            panelLogin.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
-
-            btnLogin.Visible = true;
-            btnCadastro.Visible = true;
-            labelTitulo.Visible = true;
-
-           
-
-            textBoxEmail.KeyDown += Controle_KeyDown;
-            textBoxSenha.KeyDown += Controle_KeyDown;
-            btnEntrar.KeyDown += Controle_KeyDown;
-
-            // Foco inicial no campo de email
-            textBoxEmail.Focus();
-
+            
+                // Ajusta cores e posição inicial
             this.BackColor = corPrimaria;
-            panelMenu.BackColor = corSecundaria;
+
+            panelCadastro.BackColor = corSecundaria;
             panelLogin.BackColor = corSecundaria;
 
-            labelTitulo.ForeColor = corTexto;
+            panelLogin.Visible = true;
+            panelCadastro.Visible = false;
+            
 
-            btnLogin.BackColor = corPrimaria;
-            btnLogin.ForeColor = Color.White;
-            btnCadastro.BackColor = corPrimaria;
-            btnCadastro.ForeColor = Color.White;
+                // Posicionamento fixo à esquerda
+            panelLogin.Location = new Point(0, 0);
+            panelLogin.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
+            panelCadastro.Location = new Point(0, 0);
+            panelCadastro.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
 
+                // Foco no e-mail
+                textBoxEmail.Focus();
+
+               // Cores
+            labelLogin.ForeColor = corTexto;
             btnEntrar.BackColor = corPrimaria;
             btnEntrar.ForeColor = Color.White;
-
-            btnVoltarLogin.BackColor = corPrimaria;
-            btnVoltarLogin.ForeColor = Color.White;
-
+                
             labelLogin.ForeColor = corTexto;
 
-            
-          
 
+            labelTitulo.Left = (this.ClientSize.Width - labelTitulo.Width) / 2;
+
+            panelLogin.Left = (this.ClientSize.Width - panelLogin.Width) / 2;
+            panelLogin.Top = (this.ClientSize.Height - panelLogin.Height) / 2;
+
+            panelCadastro.Left = (this.ClientSize.Width - panelCadastro.Width) / 2;
+            panelCadastro.Top = (this.ClientSize.Height - panelCadastro.Height) / 2;
             //Cadastro
 
 
@@ -202,36 +196,29 @@ namespace Tcc
                     dt.ForeColor = corTexto;
                 }
             }
-
             //Botões
-
-            
-
             ArredondarBotao(btnLogin, 20);
             ArredondarBotao(btnCadastro, 20);
             ArredondarBotao(btnEntrar, 20);
             ArredondarBotao(btnVoltarCad, 20);
             ArredondarBotao(btnCadastrar, 20);
 
-            CentralizarPainel(panelMenu);
-            CentralizarPainel(panelCadastro);
-            CentralizarPainel(panelLogin);
+
+            CentralizarLogin();
+            CentralizarCadastro();
             Enter(panelCadastro);   
         }
         private void btnAbrirCadastro_Click(object sender, EventArgs e)
         {
 
-            panelMenu.Visible = false;
+            
             panelCadastro.Visible = true;
             panelLogin.Visible = false;
             panelCadastro.Location = new Point(0, 0);
             panelCadastro.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
         }
         private void btnLogin_Click(object sender, EventArgs e)
-
-
-        {
-            panelMenu.Visible = false;
+        { 
             panelCadastro.Visible = false;
             panelLogin.Visible = true;
             panelLogin.Location = new Point(this.ClientSize.Width / 2, 0);
@@ -241,7 +228,7 @@ namespace Tcc
         private void btnVoltarlogin_Click(object sender, EventArgs e)
         {
             panelLogin.Visible = false;
-            panelMenu.Visible = true;
+            
         }
 
         private void panelMenu_Paint(object sender, PaintEventArgs e)
@@ -249,11 +236,25 @@ namespace Tcc
 
         }
 
-        private void CentralizarPainel(Control painel)
+        private void CentralizarLogin()
         {
-            painel.Left = (this.ClientSize.Width - painel.Width) / 2;
-            painel.Top = (this.ClientSize.Height - painel.Height) / 2;
+            int panelWidth = panelLogin.Width;
+
+            int centralX = (panelWidth - 300) / 2;
+
+            labelLogin.Left = (panelWidth - labelLogin.Width) / 2;
+
+            labelEmail.Left = centralX;
+            textBoxEmail.Left = centralX;
+
+            labelSenha.Left = centralX;
+            textBoxSenha.Left = centralX;
+
+            btnEntrar.Left = centralX + 100;
+
+            linkRegistrar.Left = centralX;
         }
+
 
         private void MenuPrincipalFrm_SizeChanged(object sender, EventArgs e)
         {
@@ -262,16 +263,14 @@ namespace Tcc
                 panelLogin.Location = new Point(0, 0);
                 panelLogin.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
             }
-            else if (panelMenu.Visible)
-            {
-                panelMenu.Location = new Point(0, 0);
-                panelMenu.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
-            }
+            
             else if (panelCadastro.Visible)
             {
                 panelCadastro.Location = new Point(0, 0);
                 panelCadastro.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
             }
+            CentralizarLogin();
+            CentralizarCadastro();
         }
 
         private void panelLogin_Paint(object sender, PaintEventArgs e)
@@ -348,7 +347,7 @@ namespace Tcc
                 dateTimeHoraAcordar.Value = DateTime.Now;
 
                 panelCadastro.Visible = false;
-                panelMenu.Visible = true;
+                
             }
             catch (Exception ex)
             {
@@ -357,10 +356,13 @@ namespace Tcc
         }
         private void btnVoltarCad_Click(object sender, EventArgs e)
         {
-            panelMenu.Visible = true;
             panelCadastro.Visible = false;
-            panelLogin.Visible = false;
-           
+            panelLogin.Visible = true;
+            panelLogin.Location = new Point(0, 0);
+            panelLogin.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
+
+
+
         }
 
         private void panelCadastro_Paint(object sender, PaintEventArgs e)
@@ -377,6 +379,14 @@ namespace Tcc
         {
 
         }
+        private void linkRegistrar_Click(object sender, EventArgs e)
+        {
+            panelLogin.Visible = false;
+            panelCadastro.Visible = true;
+            panelCadastro.Location = new Point(0, 0);
+            panelCadastro.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
+        }
+
         private void Enter(Control parent)
         {
             foreach (Control ctrl in parent.Controls)
@@ -402,7 +412,63 @@ namespace Tcc
                 }
             }
         }
+        private void MenuPrincipalFrm_Shown(object sender, EventArgs e)
+        {
+            panelLogin.Location = new Point(0, 0);
+            panelLogin.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
+
+            panelCadastro.Location = new Point(0, 0);
+            panelCadastro.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
+
+
+            int larguraCampo = 280;
+            int alturaCampo = 40;
+
+            // Redimensiona textboxes
+            
+
+            // Redimensiona botão Entrar
+            btnEntrar.Width = larguraCampo;
+            btnEntrar.Height = alturaCampo;
+
+            // Ajusta fonte
+            Font fonteMaior = new Font("Segoe UI", 12F, FontStyle.Regular);
+            textBoxEmail.Font = fonteMaior;
+            textBoxSenha.Font = fonteMaior;
+            btnEntrar.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+
+            // Posiciona verticalmente
+            int centroX = (panelLogin.Width - larguraCampo) / 2;
+            int startY = 100;
+
+            
+           
+        }
+
+        private void CentralizarCadastro()
+        {
+            int panelWidth = panelCadastro.Width;
+            int centralX = (panelWidth - 300) / 2;
+
+            labelCadastro.Left = (panelWidth - labelCadastro.Width) / 2;
+
+            textBoxNomecad.Left = centralX;
+            textBoxEmailcad.Left = centralX;
+            textBoxSenhacad.Left = centralX;
+            textBoxConfirmarsenha.Left = centralX;
+            textBoxAltura.Left = centralX;
+            textBoxPeso.Left = centralX;
+            dateTimeHoraDormir.Left = centralX;
+            dateTimeHoraAcordar.Left = centralX;
+
+            btnCadastrar.Left = centralX;
+            btnVoltarCad.Left = centralX + 110;
+        }
 
 
     }
+
+
+
 }
+
