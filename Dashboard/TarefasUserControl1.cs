@@ -14,6 +14,7 @@ namespace Tcc
         private DateTimePicker dtpDataEntrega;
         private ComboBox cmbStatus;
         private ComboBox cmbPrioridade;
+      
         public int UsuarioId;
         private ToolTip toolTipDescricao = new ToolTip();
        
@@ -27,6 +28,8 @@ namespace Tcc
             public string Status { get; set; }
             public string Prioridade { get; set; }
             public int UsuarioId { get; set; }  
+
+            public DateTime DataEntrega {get; set; }
         }
         public TarefasUserControl(int idUsuario)
         {
@@ -60,6 +63,7 @@ namespace Tcc
             int startX = 830;
             int currentY = 10;
             int espacamentoVertical = 30;
+            int larguraCampo = 350;
 
             // Título
             var lblTitulo = new Label()
@@ -68,7 +72,7 @@ namespace Tcc
                 Location = new Point(startX, currentY),
                 AutoSize = true,
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                ForeColor = Color.White
+                ForeColor = Color.FromArgb(32, 46, 57)
             };
             Controls.Add(lblTitulo);
 
@@ -76,9 +80,10 @@ namespace Tcc
             txtTitulo = new TextBox()
             {
                 Location = new Point(startX, currentY),
-                Width = 350,
+                Width = larguraCampo,
                 Font = new Font("Segoe UI", 11),
-                ForeColor = Color.White
+                ForeColor = Color.FromArgb(51, 51, 51),
+                BackColor = Color.White
             };
             Controls.Add(txtTitulo);
 
@@ -91,7 +96,7 @@ namespace Tcc
                 Location = new Point(startX, currentY),
                 AutoSize = true,
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                ForeColor = Color.White
+                ForeColor = Color.FromArgb(32, 46, 57)
             };
             Controls.Add(lblDescricao);
 
@@ -99,11 +104,12 @@ namespace Tcc
             txtDescricao = new TextBox()
             {
                 Location = new Point(startX, currentY),
-                Width = 350,
+                Width = larguraCampo,
                 Height = 140,
                 Multiline = true,
                 Font = new Font("Segoe UI", 11),
-                ForeColor = Color.White
+                ForeColor = Color.FromArgb(51, 51, 51),
+                BackColor = Color.White
             };
             Controls.Add(txtDescricao);
 
@@ -116,7 +122,7 @@ namespace Tcc
                 Location = new Point(startX, currentY),
                 AutoSize = true,
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                ForeColor = Color.White
+                ForeColor = Color.FromArgb(32, 46, 57)
             };
             Controls.Add(lblDataEntrega);
 
@@ -125,7 +131,13 @@ namespace Tcc
             {
                 Location = new Point(startX, currentY),
                 Font = new Font("Segoe UI", 11),
-                Width = 200
+                Width = 200,
+                CalendarForeColor = Color.Black,
+                CalendarMonthBackground = Color.White,
+                CalendarTitleBackColor = Color.FromArgb(32, 46, 57),
+                CalendarTitleForeColor = Color.White,
+                BackColor = Color.White,
+                ForeColor = Color.FromArgb(51, 51, 51)
             };
             Controls.Add(dtpDataEntrega);
 
@@ -138,8 +150,7 @@ namespace Tcc
                 Location = new Point(startX, currentY),
                 AutoSize = true,
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                ForeColor = Color.White
-
+                ForeColor = Color.FromArgb(32, 46, 57)
             };
             Controls.Add(lblStatus);
 
@@ -149,12 +160,17 @@ namespace Tcc
                 Location = new Point(startX, currentY),
                 Width = 230,
                 DropDownStyle = ComboBoxStyle.DropDownList,
-                Font = new Font("Segoe UI", 11)
+                Font = new Font("Segoe UI", 11),
+                BackColor = Color.White,
+                ForeColor = Color.FromArgb(51, 51, 51),
+                FlatStyle = FlatStyle.Flat
             };
             cmbStatus.Items.AddRange(new string[] { "Pendente", "Em andamento", "Concluído" });
             cmbStatus.SelectedIndex = 0;
             Controls.Add(cmbStatus);
+
             currentY += espacamentoVertical + 10;
+
             // Prioridade
             var lblPrioridade = new Label()
             {
@@ -162,7 +178,7 @@ namespace Tcc
                 Location = new Point(startX, currentY),
                 AutoSize = true,
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                ForeColor = Color.White
+                ForeColor = Color.FromArgb(32, 46, 57)
             };
             Controls.Add(lblPrioridade);
 
@@ -172,7 +188,10 @@ namespace Tcc
                 Location = new Point(startX, currentY),
                 Width = 230,
                 DropDownStyle = ComboBoxStyle.DropDownList,
-                Font = new Font("Segoe UI", 11)
+                Font = new Font("Segoe UI", 11),
+                BackColor = Color.White,
+                ForeColor = Color.FromArgb(51, 51, 51),
+                FlatStyle = FlatStyle.Flat
             };
             cmbPrioridade.Items.AddRange(new string[] { "Baixa", "Média", "Alta" });
             cmbPrioridade.SelectedIndex = 1;
@@ -180,7 +199,7 @@ namespace Tcc
 
             currentY += espacamentoVertical + 20;
 
-            // Botões
+            // Botões (todos padronizados)
             btnSalvar = new Button()
             {
                 Text = "Salvar",
@@ -188,7 +207,9 @@ namespace Tcc
                 Width = 140,
                 Height = 45,
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                ForeColor = Color.White
+                ForeColor = Color.White,
+                BackColor = Color.FromArgb(32, 46, 57),
+                FlatStyle = FlatStyle.Flat
             };
             btnSalvar.Click += BtnSalvar_Click;
             Controls.Add(btnSalvar);
@@ -200,10 +221,29 @@ namespace Tcc
                 Width = 140,
                 Height = 45,
                 Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                ForeColor = Color.White
+                ForeColor = Color.White,
+                BackColor = Color.FromArgb(244, 67, 54), // Vermelho para excluir
+                FlatStyle = FlatStyle.Flat
             };
             btnExcluir.Click += btnExcluir_Click;
             Controls.Add(btnExcluir);
+
+            currentY += 60;
+
+            btnAtualizar = new Button()
+            {
+                Text = "Atualizar",
+                Location = new Point(startX, currentY),
+                Width = 140,
+                Height = 45,
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                ForeColor = Color.White,
+                BackColor = Color.FromArgb(32, 46, 57),
+                FlatStyle = FlatStyle.Flat
+            };
+            btnAtualizar.Click += BtnAtualizar_Click;
+            Controls.Add(btnAtualizar);
+
             listViewTarefas.MouseMove += ListViewTarefas_MouseMove;
         }
         public void CarregarTarefas()
@@ -256,6 +296,10 @@ namespace Tcc
             {
                 MessageBox.Show("Erro ao carregar tarefas: " + ex.Message);
             }
+        }
+        private void BtnAtualizar_Click(object sender, EventArgs e)
+        {
+            CarregarTarefas();
         }
         private void BtnSalvar_Click(object sender, EventArgs e)
         {
@@ -431,7 +475,7 @@ namespace Tcc
             CentralizarPainel(this);
 
             // Define cor de fundo geral
-            this.BackColor = ColorTranslator.FromHtml("#202E39");
+            this.BackColor = ColorTranslator.FromHtml("#FFFCF6");
 
             // Aplica fonte e cor aos controles existentes
             // Estilo para os controles TextBox, ComboBox, DateTimePicker, ListView
@@ -478,6 +522,7 @@ namespace Tcc
             ArredondarControle(cmbStatus, 10);
             ArredondarControle(cmbPrioridade, 10);  
             ArredondarControle(listViewTarefas, 10);
+            ArredondarBotao(btnAtualizar, 10);
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {

@@ -49,23 +49,40 @@ namespace Tcc
         public void CarregarRotinasDeTarefas(List<TarefaInfo> tarefas)
         {
             listViewRotinas.Items.Clear();
+            listViewRotinas.Groups.Clear();
+
+            // Crie um dicionário para armazenar grupos por data
+            Dictionary<DateTime, ListViewGroup> gruposPorData = new Dictionary<DateTime, ListViewGroup>();
+
             foreach (var tarefa in tarefas)
             {
+                // Supondo que tarefa.DataEntrega é do tipo DateTime
+                DateTime dataGrupo = tarefa.DataEntrega.Date; // Agrupa só pela data (ignora hora)
+
+                // Crie o grupo se não existir ainda
+                if (!gruposPorData.ContainsKey(dataGrupo))
+                {
+                    var grupo = new ListViewGroup(dataGrupo.ToString("dd/MM/yyyy"), HorizontalAlignment.Left);
+                    gruposPorData[dataGrupo] = grupo;
+                    listViewRotinas.Groups.Add(grupo);
+                }
+
                 var item = new ListViewItem(""); // checkbox
                 item.SubItems.Add(tarefa.Titulo);
                 item.SubItems.Add(tarefa.Descricao.Length > 50 ? tarefa.Descricao.Substring(0, 50) + "..." : tarefa.Descricao);
                 item.SubItems.Add(tarefa.Status);
                 item.SubItems.Add(tarefa.Prioridade);
                 item.Tag = tarefa;
-                item.Checked = tarefa.Status.Equals("Concluído", StringComparison.OrdinalIgnoreCase)|| tarefa.Status.Equals("Concluida", StringComparison.OrdinalIgnoreCase);
+                item.Checked = tarefa.Status.Equals("Concluído", StringComparison.OrdinalIgnoreCase) ||
+                               tarefa.Status.Equals("Concluida", StringComparison.OrdinalIgnoreCase);
 
-                // Adicione esta parte para pintar de verde as concluídas:
                 if (item.Checked)
                 {
                     item.BackColor = System.Drawing.Color.LightGreen;
-                    // item.ForeColor = System.Drawing.Color.DarkGreen; // opcional
                 }
 
+                // Adiciona o item ao grupo correspondente
+                item.Group = gruposPorData[dataGrupo];
                 listViewRotinas.Items.Add(item);
             }
         }
@@ -95,6 +112,9 @@ namespace Tcc
                             cmd.Parameters.AddWithValue("@id", tarefa.Id);
                             cmd.ExecuteNonQuery();
                         }
+
+                        tarefa.Status = "Conluido";
+                        item.BackColor = System.Drawing.Color.LightGreen;
                         concluiuAlguma = true;
                     }
                 }
