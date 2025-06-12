@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Syncfusion.Windows.Forms.Tools;
+using Tcc;
 using static Tcc.TarefasUserControl;
 
 namespace Tcc
@@ -21,9 +22,9 @@ namespace Tcc
             this.usuarioId = tarefasControl.UsuarioId;
             this.tarefasControl = tarefasControl;
 
-           
-        
-            
+
+
+
 
 
             // Associe eventos aqui
@@ -76,7 +77,7 @@ namespace Tcc
                 }
 
                 var item = new ListViewItem(tarefa.Titulo);                    // Coluna 1: Título
-                item.SubItems.Add(tarefa.DataEntrega == DateTime.MinValue  ? "Sem data": tarefa.DataEntrega.ToString("dd/MM/yyyy"));              // Coluna 2: Data Entrega
+                item.SubItems.Add(tarefa.DataEntrega == DateTime.MinValue ? "Sem data" : tarefa.DataEntrega.ToString("dd/MM/yyyy"));              // Coluna 2: Data Entrega
                 item.SubItems.Add(tarefa.Status);                              // Coluna 3: Status
                 item.SubItems.Add(tarefa.Prioridade);                          // Coluna 4: Prioridade
                 item.SubItems.Add(tarefa.Descricao != null && tarefa.Descricao.Length > 50
@@ -137,13 +138,13 @@ namespace Tcc
             MessageBox.Show("Exportar rotinas - função ainda não implementada.");
         }
 
-        
+
 
         private void listViewRotinas_ItemCheck(object sender, ItemCheckEventArgs e)
         {
         }
 
-        
+
 
         private void excluirToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -156,7 +157,7 @@ namespace Tcc
                     var tarefa = (TarefaInfo)item.Tag;
                     listaRotinas.Remove(tarefa);
                     listViewRotinas.Items.Remove(item);
-                   
+
                 }
             }
         }
@@ -169,33 +170,38 @@ namespace Tcc
                 TarefasUserControl.TarefaInfo tarefa = item.Tag as TarefasUserControl.TarefaInfo;
                 if (tarefa != null)
                 {
-                    // Exemplo de formulário de edição rápido usando InputBox (pode substituir por um formulário customizado)
-                    string novoTitulo = Microsoft.VisualBasic.Interaction.InputBox("Novo título:", "Editar Rotina", tarefa.Titulo);
-                    if (!string.IsNullOrEmpty(novoTitulo))
-                        tarefa.Titulo = novoTitulo;
-
-                    string novaDescricao = Microsoft.VisualBasic.Interaction.InputBox("Nova descrição:", "Editar Rotina", tarefa.Descricao);
-                    if (!string.IsNullOrEmpty(novaDescricao))
-                        tarefa.Descricao = novaDescricao;
-
-                    string novaData = Microsoft.VisualBasic.Interaction.InputBox("Nova data (dd/MM/yyyy):", "Editar Rotina", tarefa.DataEntrega.ToString("dd/MM/yyyy"));
-                    if (DateTime.TryParse(novaData, out DateTime dt))
-                        tarefa.DataEntrega = dt;
-
-                    // Atualiza no banco
-                    using (MySqlConnection conn = Conexao.ObterConexao())
+                    using (var frm = new EditarRotinaForm(
+                        tarefa.Titulo,
+                        tarefa.Descricao,
+                        tarefa.DataEntrega,
+                        tarefa.Prioridade))
                     {
-                        string sql = "UPDATE Tarefas SET titulo = @titulo, descricao = @descricao, data_entrega = @data WHERE id = @id";
-                        MySqlCommand cmd = new MySqlCommand(sql, conn);
-                        cmd.Parameters.AddWithValue("@id", tarefa.Id);
-                        cmd.Parameters.AddWithValue("@titulo", tarefa.Titulo);
-                        cmd.Parameters.AddWithValue("@descricao", tarefa.Descricao);
-                        cmd.Parameters.AddWithValue("@data", tarefa.DataEntrega);
-                        cmd.ExecuteNonQuery();
-                    }
+                        if (frm.ShowDialog() == DialogResult.OK)
+                        {
+                            // 1. Atualiza o objeto em memória
+                            tarefa.Titulo = frm.NovoTitulo;
+                            tarefa.Descricao = frm.NovaDescricao;
+                            tarefa.DataEntrega = frm.NovaDataEntrega;
+                            tarefa.Prioridade = frm.NovaPrioridade;
 
-                    CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
-                    MessageBox.Show("Rotina atualizada com sucesso!");
+                            // 2. Atualiza no banco de dados
+                            using (MySqlConnection conn = Conexao.ObterConexao())
+                            {
+                                string sql = "UPDATE Tarefas SET titulo = @titulo, descricao = @descricao, data_entrega = @data, prioridade = @prioridade WHERE id = @id";
+                                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                                cmd.Parameters.AddWithValue("@id", tarefa.Id);
+                                cmd.Parameters.AddWithValue("@titulo", tarefa.Titulo);
+                                cmd.Parameters.AddWithValue("@descricao", tarefa.Descricao);
+                                cmd.Parameters.AddWithValue("@data", tarefa.DataEntrega);
+                                cmd.Parameters.AddWithValue("@prioridade", tarefa.Prioridade);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            // 3. Recarrega o ListView com as rotinas atualizadas
+                            CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
+                            MessageBox.Show("Rotina atualizada com sucesso!");
+                        }
+                    }
                 }
             }
             else
@@ -204,10 +210,14 @@ namespace Tcc
             }
         }
 
-        private void lblResumoExecucoes_Click(object sender, EventArgs e)
-        {
 
-        }
+
+
+
+
+
+
+
 
         private void btnRemover_Click(object sender, EventArgs e)
         {
@@ -289,4 +299,5 @@ namespace Tcc
         }
       
     }
+    
 }
