@@ -22,11 +22,6 @@ namespace Tcc
             this.usuarioId = tarefasControl.UsuarioId;
             this.tarefasControl = tarefasControl;
 
-
-
-
-
-
             // Associe eventos aqui
             btnAtualizar.Click += BtnAtualizar_Click;
             btnExportar.Click += BtnExportar_Click;
@@ -34,11 +29,11 @@ namespace Tcc
             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
             excluirToolStripMenuItem.Click += excluirToolStripMenuItem_Click;
             btnConcluir.Click += btnConcluir_Click;
-
-            // Carregue as rotinas iniciais
+            listViewRotinas.OwnerDraw = true;
+            listViewRotinas.DrawColumnHeader += (s, e) => e.DrawDefault = true;
+            listViewRotinas.DrawSubItem += ListViewRotinas_DrawSubItem;
 
         }
-
         // Método para buscar rotinas (simulação, adapte para banco de dados se necessário)
         private List<TarefaInfo> BuscarRotinasUsuario()
         {
@@ -106,7 +101,6 @@ namespace Tcc
             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
 
         }
-
         private void btnConcluir_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem item in listViewRotinas.Items)
@@ -137,15 +131,9 @@ namespace Tcc
         {
             MessageBox.Show("Exportar rotinas - função ainda não implementada.");
         }
-
-
-
         private void listViewRotinas_ItemCheck(object sender, ItemCheckEventArgs e)
         {
         }
-
-
-
         private void excluirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listViewRotinas.SelectedItems.Count > 0)
@@ -161,7 +149,6 @@ namespace Tcc
                 }
             }
         }
-
         private void btnEditar_Click(object sender, EventArgs e)
         {
             if (listViewRotinas.SelectedItems.Count > 0)
@@ -209,16 +196,6 @@ namespace Tcc
                 MessageBox.Show("Selecione uma rotina para editar.");
             }
         }
-
-
-
-
-
-
-
-
-
-
         private void btnRemover_Click(object sender, EventArgs e)
         {
             if (listViewRotinas.SelectedItems.Count > 0)
@@ -290,9 +267,6 @@ namespace Tcc
                 e.DrawDefault = true;
             }
         }
-
-
-
         public void AtualizarRotinas()
         {
             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());

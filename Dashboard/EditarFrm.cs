@@ -36,5 +36,10 @@ namespace Tcc
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
+        private void dtpDataEntrega_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

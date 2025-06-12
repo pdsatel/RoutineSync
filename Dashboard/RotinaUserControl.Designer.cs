@@ -88,18 +88,11 @@
                 Name = "listViewRotinas",
                 TabIndex = 1
             };
-
                 listViewRotinas.Columns.Add("Título", 200);
                 listViewRotinas.Columns.Add("Data Entrega", 120);
                 listViewRotinas.Columns.Add("Status", 100);
                 listViewRotinas.Columns.Add("Prioridade", 100);
                 listViewRotinas.Columns.Add("Descrição", 250);
-
-                listViewRotinas.OwnerDraw = true;
-                listViewRotinas.DrawColumnHeader += (s, e) => e.DrawDefault = true;
-                listViewRotinas.DrawSubItem += ListViewRotinas_DrawSubItem;
-
-
             // Adicionar colunas ao listViewRotinas
 
             // 
@@ -179,7 +172,6 @@
                 btnRemover.Click += btnRemover_Click;
             // 
                 // ... (demais declarações)
-                
                 btnEditar.BackColor = Color.FromArgb(32, 46, 57);
                 btnEditar.FlatStyle = FlatStyle.Flat;
                 btnEditar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
@@ -192,7 +184,6 @@
                 btnEditar.UseVisualStyleBackColor = false;
                 btnEditar.Click += btnEditar_Click;
                 Controls.Add(btnEditar);
-
             // 
             // RotinasUserControl
             // 
