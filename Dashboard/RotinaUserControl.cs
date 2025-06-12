@@ -51,30 +51,41 @@ namespace Tcc
             listViewRotinas.Items.Clear();
             listViewRotinas.Groups.Clear();
 
-            // Crie um dicionário para armazenar grupos por data
-            Dictionary<DateTime, ListViewGroup> gruposPorData = new Dictionary<DateTime, ListViewGroup>();
+            // Dicionário para armazenar grupos por data
+            Dictionary<string, ListViewGroup> gruposPorData = new Dictionary<string, ListViewGroup>();
 
             foreach (var tarefa in tarefas)
             {
-                // Supondo que tarefa.DataEntrega é do tipo DateTime
-                DateTime dataGrupo = tarefa.DataEntrega.Date; // Agrupa só pela data (ignora hora)
+                // Trata datas não definidas ou zeradas
+                string dataGrupoStr;
+                if (tarefa.DataEntrega == DateTime.MinValue)
+                {
+                    dataGrupoStr = "Sem data";
+                }
+                else
+                {
+                    dataGrupoStr = tarefa.DataEntrega.Date.ToString("dd/MM/yyyy");
+                }
 
                 // Crie o grupo se não existir ainda
-                if (!gruposPorData.ContainsKey(dataGrupo))
+                if (!gruposPorData.ContainsKey(dataGrupoStr))
                 {
-                    var grupo = new ListViewGroup(dataGrupo.ToString("dd/MM/yyyy"), HorizontalAlignment.Left);
-                    gruposPorData[dataGrupo] = grupo;
+                    var grupo = new ListViewGroup(dataGrupoStr, HorizontalAlignment.Left);
+                    gruposPorData[dataGrupoStr] = grupo;
                     listViewRotinas.Groups.Add(grupo);
                 }
 
-                var item = new ListViewItem(""); // checkbox
-                item.SubItems.Add(tarefa.Titulo);
-                item.SubItems.Add(tarefa.Descricao.Length > 50 ? tarefa.Descricao.Substring(0, 50) + "..." : tarefa.Descricao);
-                item.SubItems.Add(tarefa.Status);
-                item.SubItems.Add(tarefa.Prioridade);
+                var item = new ListViewItem(tarefa.Titulo);                    // Coluna 1: Título
+                item.SubItems.Add(tarefa.DataEntrega == DateTime.MinValue  ? "Sem data": tarefa.DataEntrega.ToString("dd/MM/yyyy"));              // Coluna 2: Data Entrega
+                item.SubItems.Add(tarefa.Status);                              // Coluna 3: Status
+                item.SubItems.Add(tarefa.Prioridade);                          // Coluna 4: Prioridade
+                item.SubItems.Add(tarefa.Descricao != null && tarefa.Descricao.Length > 50
+                    ? tarefa.Descricao.Substring(0, 50) + "..."
+                    : tarefa.Descricao ?? "");                                 // Coluna 5: Descrição
                 item.Tag = tarefa;
-                item.Checked = tarefa.Status.Equals("Concluído", StringComparison.OrdinalIgnoreCase) ||
-                               tarefa.Status.Equals("Concluida", StringComparison.OrdinalIgnoreCase);
+                item.Checked = tarefa.Status != null &&
+                               (tarefa.Status.Equals("Concluído", StringComparison.OrdinalIgnoreCase) ||
+                                tarefa.Status.Equals("Concluida", StringComparison.OrdinalIgnoreCase));
 
                 if (item.Checked)
                 {
@@ -82,7 +93,7 @@ namespace Tcc
                 }
 
                 // Adiciona o item ao grupo correspondente
-                item.Group = gruposPorData[dataGrupo];
+                item.Group = gruposPorData[dataGrupoStr];
                 listViewRotinas.Items.Add(item);
             }
         }
@@ -97,14 +108,13 @@ namespace Tcc
 
         private void btnConcluir_Click(object sender, EventArgs e)
         {
-            bool concluiuAlguma = false;
             foreach (ListViewItem item in listViewRotinas.Items)
             {
                 if (item.Checked)
                 {
-                    TarefaInfo tarefa = item.Tag as TarefaInfo;
-                    if (tarefa != null)
+                    if (item.Tag is TarefasUserControl.TarefaInfo tarefa)
                     {
+                        // Atualiza no banco
                         using (MySqlConnection conn = Conexao.ObterConexao())
                         {
                             string sql = "UPDATE Tarefas SET status = 'Concluído' WHERE id = @id";
@@ -112,22 +122,14 @@ namespace Tcc
                             cmd.Parameters.AddWithValue("@id", tarefa.Id);
                             cmd.ExecuteNonQuery();
                         }
-
-                        tarefa.Status = "Conluido";
-                        item.BackColor = System.Drawing.Color.LightGreen;
-                        concluiuAlguma = true;
+                        // Atualiza no objeto em memória
+                        tarefa.Status = "Concluído";
+                        item.Tag = tarefa; // (Redundante, mas mantém atualizado)
                     }
                 }
             }
-            if (concluiuAlguma)
-            {
-                AtualizarRotinas();
-                MessageBox.Show("Rotinas selecionadas marcadas como concluídas!");
-            }
-            else
-            {
-                MessageBox.Show("Selecione pelo menos uma rotina para concluir.");
-            }
+
+            CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
         }
 
         private void BtnExportar_Click(object sender, EventArgs e)
@@ -141,20 +143,7 @@ namespace Tcc
         {
         }
 
-        private void btnEditar_Click(object sender, EventArgs e)
-        {
-            if (listViewRotinas.SelectedItems.Count > 0)
-            {
-                var item = listViewRotinas.SelectedItems[0];
-                long tarefaId = (long)item.Tag;
-
-                // Monte e mostre um formulário de edição (ou campos na tela)
-                // Depois que o usuário editar e clicar em salvar:
-                // UPDATE Tarefas SET ... WHERE id = @id
-                // E recarregue a lista:
-                CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
-            }
-        }
+        
 
         private void excluirToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -172,14 +161,47 @@ namespace Tcc
             }
         }
 
-        private void AtualizarResumoExecucoes()
+        private void btnEditar_Click(object sender, EventArgs e)
         {
-            int total = 0;
-            foreach (ListViewItem item in listViewRotinas.Items)
+            if (listViewRotinas.SelectedItems.Count > 0)
             {
-                total += int.Parse(item.SubItems[5].Text);
+                var item = listViewRotinas.SelectedItems[0];
+                TarefasUserControl.TarefaInfo tarefa = item.Tag as TarefasUserControl.TarefaInfo;
+                if (tarefa != null)
+                {
+                    // Exemplo de formulário de edição rápido usando InputBox (pode substituir por um formulário customizado)
+                    string novoTitulo = Microsoft.VisualBasic.Interaction.InputBox("Novo título:", "Editar Rotina", tarefa.Titulo);
+                    if (!string.IsNullOrEmpty(novoTitulo))
+                        tarefa.Titulo = novoTitulo;
+
+                    string novaDescricao = Microsoft.VisualBasic.Interaction.InputBox("Nova descrição:", "Editar Rotina", tarefa.Descricao);
+                    if (!string.IsNullOrEmpty(novaDescricao))
+                        tarefa.Descricao = novaDescricao;
+
+                    string novaData = Microsoft.VisualBasic.Interaction.InputBox("Nova data (dd/MM/yyyy):", "Editar Rotina", tarefa.DataEntrega.ToString("dd/MM/yyyy"));
+                    if (DateTime.TryParse(novaData, out DateTime dt))
+                        tarefa.DataEntrega = dt;
+
+                    // Atualiza no banco
+                    using (MySqlConnection conn = Conexao.ObterConexao())
+                    {
+                        string sql = "UPDATE Tarefas SET titulo = @titulo, descricao = @descricao, data_entrega = @data WHERE id = @id";
+                        MySqlCommand cmd = new MySqlCommand(sql, conn);
+                        cmd.Parameters.AddWithValue("@id", tarefa.Id);
+                        cmd.Parameters.AddWithValue("@titulo", tarefa.Titulo);
+                        cmd.Parameters.AddWithValue("@descricao", tarefa.Descricao);
+                        cmd.Parameters.AddWithValue("@data", tarefa.DataEntrega);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
+                    MessageBox.Show("Rotina atualizada com sucesso!");
+                }
             }
-            lblResumoExecucoes.Text = $"Total de execuções este mês: {total}";
+            else
+            {
+                MessageBox.Show("Selecione uma rotina para editar.");
+            }
         }
 
         private void lblResumoExecucoes_Click(object sender, EventArgs e)
@@ -208,6 +230,59 @@ namespace Tcc
                 }
             }
         }
+        private void ListViewRotinas_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+            int prioridadeColIndex = 3; // 0: Título, 1: Data Entrega, 2: Status, 3: Prioridade, 4: Descrição
+
+            // Checa se a rotina está concluída
+            bool isConcluida = false;
+            if (e.Item.Tag is TarefasUserControl.TarefaInfo tarefa)
+            {
+                isConcluida = tarefa.Status != null &&
+                    (tarefa.Status.Equals("Concluído", StringComparison.OrdinalIgnoreCase) ||
+                     tarefa.Status.Equals("Concluida", StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (isConcluida)
+            {
+                // Linha inteira verde claro
+                using (Brush bg = new SolidBrush(Color.LightGreen))
+                    e.Graphics.FillRectangle(bg, e.Bounds);
+
+                TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter;
+                Color textColor = e.Item.Selected ? SystemColors.HighlightText : e.SubItem.ForeColor;
+                TextRenderer.DrawText(e.Graphics, e.SubItem.Text, e.SubItem.Font, e.Bounds, textColor, flags);
+            }
+            else if (e.ColumnIndex == prioridadeColIndex)
+            {
+                // Só a célula da prioridade colorida
+                Color corFundo;
+                string prioridade = e.SubItem.Text.ToLower();
+
+                if (prioridade.Contains("baixa"))
+                    corFundo = Color.FromArgb(200, 255, 255, 200); // Verde claro
+                else if (prioridade.Contains("média") || prioridade.Contains("media"))
+                    corFundo = Color.FromArgb(255, 255, 220, 180); // Laranja claro
+                else if (prioridade.Contains("alta"))
+                    corFundo = Color.FromArgb(255, 220, 120, 120); // Vermelho claro
+                else
+                    corFundo = e.Item.Selected ? SystemColors.Highlight : e.SubItem.BackColor;
+
+                using (Brush bg = new SolidBrush(corFundo))
+                    e.Graphics.FillRectangle(bg, e.Bounds);
+
+                TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter;
+                Color textColor = e.Item.Selected ? SystemColors.HighlightText : e.SubItem.ForeColor;
+                TextRenderer.DrawText(e.Graphics, e.SubItem.Text, e.SubItem.Font, e.Bounds, textColor, flags);
+            }
+            else
+            {
+                e.DrawDefault = true;
+            }
+        }
+
+
+
         public void AtualizarRotinas()
         {
             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());

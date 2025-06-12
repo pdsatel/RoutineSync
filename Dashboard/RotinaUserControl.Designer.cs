@@ -21,13 +21,14 @@
             private ContextMenuStrip contextMenuRotinas;
             private ToolStripMenuItem editarToolStripMenuItem;
             private ToolStripMenuItem excluirToolStripMenuItem;
-            private Label lblResumoExecucoes;
+           
+            private Button btnEditar;
 
-            /// <summary> 
-            /// Clean up any resources being used.
-            /// </summary>
-            /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-            protected override void Dispose(bool disposing)
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
             {
                 if (disposing && (components != null))
                 {
@@ -43,6 +44,9 @@
                 components = new Container();
                 lblTitulo = new Label();
                 listViewRotinas = new ListView();
+            {
+                
+            }
                 contextMenuRotinas = new ContextMenuStrip(components);
                 editarToolStripMenuItem = new ToolStripMenuItem();
                 excluirToolStripMenuItem = new ToolStripMenuItem();
@@ -51,7 +55,7 @@
                 btnConcluir = new Button();
                 btnAdicionar = new Button();
                 btnRemover = new Button();
-                lblResumoExecucoes = new Label();
+                btnEditar = new Button();
                 contextMenuRotinas.SuspendLayout();
                 SuspendLayout();
                 // 
@@ -65,35 +69,43 @@
                 lblTitulo.Size = new Size(343, 60);
                 lblTitulo.TabIndex = 0;
                 lblTitulo.Text = "Minhas Rotinas";
-                // 
-                // listViewRotinas
-                // 
-                listViewRotinas.BackColor = Color.FromArgb(255, 252, 246);
-                listViewRotinas.CheckBoxes = true;
-                listViewRotinas.ContextMenuStrip = contextMenuRotinas;
-                listViewRotinas.Font = new Font("Segoe UI", 11F);
-                listViewRotinas.ForeColor = Color.FromArgb(51, 51, 51);
-                listViewRotinas.FullRowSelect = true;
-                listViewRotinas.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-                listViewRotinas.Location = new Point(30, 85);
-                listViewRotinas.Name = "listViewRotinas";
-                listViewRotinas.Size = new Size(790, 370);
-                listViewRotinas.TabIndex = 1;
-                listViewRotinas.UseCompatibleStateImageBehavior = false;
-                listViewRotinas.View = View.Details;
+            // 
+            // listViewRotinas
+            // 
+            listViewRotinas = new ListView
+            {
+                View = View.Details,
+                FullRowSelect = true,
+                GridLines = true,
+                Location = new Point(30, 85),
+                Size = new Size(900, 450),
+                Font = new Font("Segoe UI", 11),
+                BackColor = Color.White,
+                ForeColor = Color.FromArgb(51, 51, 51),
+                HeaderStyle = ColumnHeaderStyle.Nonclickable,
+                CheckBoxes = true,
+                UseCompatibleStateImageBehavior = false,
+                Name = "listViewRotinas",
+                TabIndex = 1
+            };
 
-
-                // Adicionar colunas ao listViewRotinas
-                listViewRotinas.Columns.Add("", 30); // coluna para checkbox (pode ser vazia)
-                listViewRotinas.Columns.Add("Título", 150);
-                listViewRotinas.Columns.Add("Descrição", 250);
-                listViewRotinas.Columns.Add("Status", 120);
+                listViewRotinas.Columns.Add("Título", 200);
+                listViewRotinas.Columns.Add("Data Entrega", 120);
+                listViewRotinas.Columns.Add("Status", 100);
                 listViewRotinas.Columns.Add("Prioridade", 100);
-                listViewRotinas.Columns.Add("Execuções/Mês", 100);
-                // 
-                // contextMenuRotinas
-                // 
-                contextMenuRotinas.ImageScalingSize = new Size(24, 24);
+                listViewRotinas.Columns.Add("Descrição", 250);
+
+                listViewRotinas.OwnerDraw = true;
+                listViewRotinas.DrawColumnHeader += (s, e) => e.DrawDefault = true;
+                listViewRotinas.DrawSubItem += ListViewRotinas_DrawSubItem;
+
+
+            // Adicionar colunas ao listViewRotinas
+
+            // 
+            // contextMenuRotinas
+            // 
+            contextMenuRotinas.ImageScalingSize = new Size(24, 24);
                 contextMenuRotinas.Items.AddRange(new ToolStripItem[] { editarToolStripMenuItem, excluirToolStripMenuItem });
                 contextMenuRotinas.Name = "contextMenuRotinas";
                 contextMenuRotinas.Size = new Size(134, 68);
@@ -116,7 +128,7 @@
                 btnAtualizar.FlatStyle = FlatStyle.Flat;
                 btnAtualizar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
                 btnAtualizar.ForeColor = Color.White;
-                btnAtualizar.Location = new Point(30, 470);
+                btnAtualizar.Location = new Point(30, 550);
                 btnAtualizar.Name = "btnAtualizar";
                 btnAtualizar.Size = new Size(120, 40);
                 btnAtualizar.TabIndex = 2;
@@ -142,7 +154,7 @@
                 btnConcluir.FlatStyle = FlatStyle.Flat;
                 btnConcluir.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
                 btnConcluir.ForeColor = Color.White;
-                btnConcluir.Location = new Point(290, 470);
+                btnConcluir.Location = new Point(290, 550);
                 btnConcluir.Name = "btnConcluir";
                 btnConcluir.Size = new Size(180, 40);
                 btnConcluir.TabIndex = 4;
@@ -150,17 +162,7 @@
                 btnConcluir.UseVisualStyleBackColor = false;
                 // 
                 // btnAdicionar
-                // 
-                btnAdicionar.BackColor = Color.FromArgb(32, 46, 57);
-                btnAdicionar.FlatStyle = FlatStyle.Flat;
-                btnAdicionar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-                btnAdicionar.ForeColor = Color.White;
-                btnAdicionar.Location = new Point(480, 470);
-                btnAdicionar.Name = "btnAdicionar";
-                btnAdicionar.Size = new Size(120, 40);
-                btnAdicionar.TabIndex = 5;
-                btnAdicionar.Text = "Adicionar";
-                btnAdicionar.UseVisualStyleBackColor = false;
+                
                 // 
                 // btnRemover
                 // 
@@ -168,28 +170,33 @@
                 btnRemover.FlatStyle = FlatStyle.Flat;
                 btnRemover.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
                 btnRemover.ForeColor = Color.White;
-                btnRemover.Location = new Point(610, 470);
+                btnRemover.Location = new Point(610, 550);
                 btnRemover.Name = "btnRemover";
                 btnRemover.Size = new Size(120, 40);
                 btnRemover.TabIndex = 6;
                 btnRemover.Text = "Remover";
                 btnRemover.UseVisualStyleBackColor = false;
                 btnRemover.Click += btnRemover_Click;
-                // 
-                // lblResumoExecucoes
-                // 
-                lblResumoExecucoes.AutoSize = true;
-                lblResumoExecucoes.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-                lblResumoExecucoes.ForeColor = Color.FromArgb(32, 46, 57);
-                lblResumoExecucoes.Location = new Point(30, 530);
-                lblResumoExecucoes.Name = "lblResumoExecucoes";
-                lblResumoExecucoes.Size = new Size(363, 32);
-                lblResumoExecucoes.TabIndex = 7;
-                lblResumoExecucoes.Text = "Total de execuções este mês: 0";
-                // 
-                // RotinasUserControl
-                // 
-                BackColor = Color.FromArgb(255, 252, 246);
+            // 
+                // ... (demais declarações)
+                
+                btnEditar.BackColor = Color.FromArgb(32, 46, 57);
+                btnEditar.FlatStyle = FlatStyle.Flat;
+                btnEditar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+                btnEditar.ForeColor = Color.White;
+                btnEditar.Location = new Point(480, 550); // ajuste a posição como quiser
+                btnEditar.Name = "btnEditar";
+                btnEditar.Size = new Size(120, 40);
+                btnEditar.TabIndex = 5;
+                btnEditar.Text = "Editar";
+                btnEditar.UseVisualStyleBackColor = false;
+                btnEditar.Click += btnEditar_Click;
+                Controls.Add(btnEditar);
+
+            // 
+            // RotinasUserControl
+            // 
+            BackColor = Color.FromArgb(255, 252, 246);
                 Controls.Add(lblTitulo);
                 Controls.Add(listViewRotinas);
                 Controls.Add(btnAtualizar);
@@ -197,7 +204,7 @@
                 Controls.Add(btnConcluir);
                 Controls.Add(btnAdicionar);
                 Controls.Add(btnRemover);
-                Controls.Add(lblResumoExecucoes);
+                Controls.Add(btnEditar);
                 Name = "RotinasUserControl";
                 Size = new Size(850, 600);
                 contextMenuRotinas.ResumeLayout(false);

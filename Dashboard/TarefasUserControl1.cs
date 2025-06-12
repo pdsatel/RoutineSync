@@ -49,6 +49,7 @@ namespace Tcc
                 View = View.Details,
                 FullRowSelect = true,
                 GridLines = true,
+                
                 Location = new Point(10, 10),
                 Size = new Size(800, 850)
             };
@@ -58,6 +59,11 @@ namespace Tcc
             listViewTarefas.Columns.Add("Prioridade", 100);
             listViewTarefas.Columns.Add("Descrição", 250);
             Controls.Add(listViewTarefas);
+
+            listViewTarefas.MouseMove += ListViewTarefas_MouseMove;
+            listViewTarefas.OwnerDraw = true;
+            listViewTarefas.DrawColumnHeader += (s, e) => e.DrawDefault = true;
+            listViewTarefas.DrawSubItem += ListViewTarefas_DrawSubItem;
 
             // Posição inicial para os componentes ao lado direito
             int startX = 830;
@@ -244,7 +250,7 @@ namespace Tcc
             btnAtualizar.Click += BtnAtualizar_Click;
             Controls.Add(btnAtualizar);
 
-            listViewTarefas.MouseMove += ListViewTarefas_MouseMove;
+           
         }
         public void CarregarTarefas()
         {
@@ -292,11 +298,48 @@ namespace Tcc
                 }
             }
 
+
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao carregar tarefas: " + ex.Message);
             }
         }
+
+        private void ListViewTarefas_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+            int prioridadeColIndex = 3; // 0: Título, 1: Data Entrega, 2: Status, 3: Prioridade, 4: Descrição
+
+            if (e.ColumnIndex == prioridadeColIndex)
+            {
+                Color corFundo;
+                string prioridade = e.SubItem.Text.ToLower();
+
+                if (prioridade.Contains("baixa"))
+                    corFundo = Color.FromArgb(200, 255, 255, 200); // Verde claro
+                else if (prioridade.Contains("média") || prioridade.Contains("media"))
+                    corFundo = Color.FromArgb(255, 255, 220, 180); // Laranja claro
+                else if (prioridade.Contains("alta"))
+                    corFundo = Color.FromArgb(255, 220, 120, 120); // Vermelho claro
+                else
+                    corFundo = e.Item.Selected ? SystemColors.Highlight : e.SubItem.BackColor;
+
+                using (Brush bg = new SolidBrush(corFundo))
+                    e.Graphics.FillRectangle(bg, e.Bounds);
+
+                TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter;
+                Color textColor = e.Item.Selected ? SystemColors.HighlightText : e.SubItem.ForeColor;
+                TextRenderer.DrawText(e.Graphics, e.SubItem.Text, e.SubItem.Font, e.Bounds, textColor, flags);
+            }
+            else
+            {
+                e.DrawDefault = true;
+            }
+        }
+
+
+
+
+
         private void BtnAtualizar_Click(object sender, EventArgs e)
         {
             CarregarTarefas();
@@ -562,7 +605,8 @@ namespace Tcc
                             Titulo = reader.GetString("titulo"),
                             Descricao = reader.GetString("descricao"),
                             Status = reader.GetString("status"),
-                            Prioridade = reader.GetString("prioridade")
+                            Prioridade = reader.GetString("prioridade"),
+                            DataEntrega = reader.GetDateTime("data_entrega")
                         });
                     }
                 }
