@@ -112,7 +112,7 @@ namespace Tcc
                         // Atualiza no banco
                         using (MySqlConnection conn = Conexao.ObterConexao())
                         {
-                            string sql = "UPDATE Tarefas SET status = 'Concluído' WHERE id = @id";
+                            string sql = "UPDATE Tarefas SET status = 'concluida' WHERE id = @id";
                             MySqlCommand cmd = new MySqlCommand(sql, conn);
                             cmd.Parameters.AddWithValue("@id", tarefa.Id);
                             cmd.ExecuteNonQuery();

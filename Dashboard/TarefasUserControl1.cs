@@ -280,6 +280,7 @@ namespace Tcc
                             item.SubItems.Add(dataEntrega.ToShortDateString());
                             item.SubItems.Add(status);
                             item.SubItems.Add(prioridade);
+                            item.SubItems.Add(descricao);
                             item.Tag = new TarefaInfo
                             {
                                 Id = tarefaId,

@@ -16,6 +16,7 @@ using Syncfusion.Windows.Forms.Tools;
             private int usuarioId;
             private RotinasUserControl rotinasControl;
             private TarefasUserControl tarefasControl;
+            private RelatorioUserControl relatorioControl;
             public DashboardFrm(int idUsuario)
             {   
                 InitializeComponent();
@@ -101,12 +102,25 @@ using Syncfusion.Windows.Forms.Tools;
                 MessageBox.Show("Abrir painel de Saúde");
             }
 
-            private void btnRelatorios_Click(object sender, EventArgs e)
-            {
-                MessageBox.Show("Abrir painel de Relatórios");
-            }
 
-            private void btnIA_Click(object sender, EventArgs e)
+
+        private void btnRelatorios_Click(object sender, EventArgs e)
+        {
+            if (relatorioControl == null)
+                relatorioControl = new RelatorioUserControl();
+
+
+            // Atualiza relatórios com os dados do usuário atual ao abrir
+            relatorioControl.AtualizarRelatorioDoBanco(usuarioId);
+
+           
+
+            panelConteudo.Controls.Clear();
+            panelConteudo.Controls.Add(relatorioControl);
+            relatorioControl.Dock = DockStyle.Fill;
+        }
+
+        private void btnIA_Click(object sender, EventArgs e)
             {
                 MessageBox.Show("Abrir painel de Sugestões IA");
             }

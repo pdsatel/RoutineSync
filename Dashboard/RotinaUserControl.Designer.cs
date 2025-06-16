@@ -128,18 +128,9 @@
                 btnAtualizar.Text = "Atualizar";
                 btnAtualizar.UseVisualStyleBackColor = false;
                 // 
-                // btnExportar
+            
                 // 
-                btnExportar.BackColor = Color.FromArgb(32, 46, 57); ;
-                btnExportar.FlatStyle = FlatStyle.Flat;
-                btnExportar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-                btnExportar.ForeColor = Color.White;
-                btnExportar.Location = new Point(160, 470);
-                btnExportar.Name = "btnExportar";
-                btnExportar.Size = new Size(120, 40);
-                btnExportar.TabIndex = 3;
-                btnExportar.Text = "Exportar";
-                btnExportar.UseVisualStyleBackColor = false;
+               
                 // 
                 // btnConcluir
                 // 

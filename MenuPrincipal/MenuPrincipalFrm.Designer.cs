@@ -51,21 +51,7 @@
             panelLogin.SuspendLayout();
             panelCadastro.SuspendLayout();
             SuspendLayout();
-            // 
-            // btnCadastro
-            // 
-            btnCadastro.Location = new Point(0, 0);
-            btnCadastro.Name = "btnCadastro";
-            btnCadastro.Size = new Size(75, 23);
-            btnCadastro.TabIndex = 0;
-            // 
-            // btnLogin
-            // 
-            btnLogin.Location = new Point(0, 0);
-            btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(75, 23);
-            btnLogin.TabIndex = 0;
-            // 
+           
             // labelTitulo
             // 
             labelTitulo.AutoSize = true;
@@ -283,14 +269,39 @@
             dateTimeHoraAcordar.ShowUpDown = true;
 
             // Botões centralizados na parte inferior do painel
-            int botoesY = panelCadastro.Height - 62;
-            btnCadastrar.Size = new Size(120, 38);
-            btnCadastrar.Location = new Point(panelCadastro.Width / 2 - btnCadastrar.Width - 14, botoesY);
-            btnCadastrar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            panelCadastro.BorderStyle = BorderStyle.FixedSingle;
+            panelCadastro.Size = new Size(700, 540);
+            panelCadastro.Location = new Point((this.ClientSize.Width - panelCadastro.Width) / 2, 60);
+            panelCadastro.BackColor = Color.White;
+            panelCadastro.Visible = false;
 
+            // ...[configuração dos outros controles]...
+
+            // Crie e configure os botões antes de adicionar ao painel
+            btnCadastrar = new Button();
+            btnCadastrar.Size = new Size(120, 38);
+            btnCadastrar.Location = new Point(panelCadastro.Width / 2 - btnCadastrar.Width - 14, panelCadastro.Height - 62);
+            btnCadastrar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnCadastrar.Text = "Cadastrar";
+            btnCadastrar.UseVisualStyleBackColor = true;
+            btnCadastrar.Click += btnCadastrar_Click;
+
+            btnVoltarCad = new Button();
             btnVoltarCad.Size = new Size(120, 38);
-            btnVoltarCad.Location = new Point(panelCadastro.Width / 2 + 14, botoesY);
+            btnVoltarCad.Location = new Point(panelCadastro.Width / 2 + 14, panelCadastro.Height - 62);
             btnVoltarCad.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnVoltarCad.Text = "Voltar";
+            btnVoltarCad.UseVisualStyleBackColor = true;
+            btnVoltarCad.Click += btnVoltarCad_Click;
+
+            // Adicione todos os controles depois de configurar
+            panelCadastro.Controls.AddRange(new Control[] {
+            labelCadastro, labelNome, textBoxNomecad, labelEmailcad, textBoxEmailcad,
+            labelSenhacad, textBoxSenhacad, labelSenha2cad, textBoxConfirmarsenha,
+            labelAltura, textBoxAltura, labelPeso, textBoxPeso,
+            labelHoraDormir, dateTimeHoraDormir, labelHoraAcordar, dateTimeHoraAcordar,
+            btnCadastrar, btnVoltarCad
+});
             // MenuPrincipalFrm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
