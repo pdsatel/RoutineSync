@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
-using Syncfusion.Windows.Forms.Tools;
+
 using Tcc;
 using static Tcc.TarefasUserControl;
 

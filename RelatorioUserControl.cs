@@ -1,35 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
 using MySql.Data.MySqlClient;
+using OxyPlot;
+using OxyPlot.Series;
+using OxyPlot.WindowsForms;
 
 namespace Tcc
 {
     public partial class RelatorioUserControl : UserControl
     {
+        
+
         public RelatorioUserControl()
         {
             InitializeComponent();
-            
 
+            // Inicializa e posiciona os gráficos
+            plotViewPrioridade = new PlotView
+            {
+                Location = new System.Drawing.Point(20, 20),
+                Size = new System.Drawing.Size(400, 300)
+            };
+            plotViewStatus = new PlotView
+            {
+                Location = new System.Drawing.Point(450, 20),
+                Size = new System.Drawing.Size(400, 300)
+            };
 
-
+            this.Controls.Add(plotViewPrioridade);
+            this.Controls.Add(plotViewStatus);
         }
 
-        // Chame este método para atualizar o relatório para um usuário específico
         public void AtualizarRelatorioDoBanco(int usuarioId)
         {
-            // Opcional: debug
-            // MessageBox.Show("Carregando relatório!"); 
-
             var tarefas = BuscarTarefasUsuario(usuarioId);
             AtualizarGraficoPrioridade(tarefas);
             AtualizarGraficoStatus(tarefas);
             MessageBox.Show(tarefas.Count.ToString());
         }
 
-        // Busca as tarefas desse usuário diretamente do banco
         private List<TarefasUserControl.TarefaInfo> BuscarTarefasUsuario(int usuarioId)
         {
             var tarefas = new List<TarefasUserControl.TarefaInfo>();
@@ -59,51 +70,38 @@ namespace Tcc
             return tarefas;
         }
 
-        // Gráfico de tarefas por prioridade
+        // Pie chart de prioridade
         private void AtualizarGraficoPrioridade(List<TarefasUserControl.TarefaInfo> tarefas)
         {
-            chart1.Series.Clear();
-            var series = new Series("Prioridade")
-            {
-                ChartType = SeriesChartType.Pie
-            };
+            int baixa = tarefas.Count(t => t.Prioridade.Equals("Baixa", StringComparison.OrdinalIgnoreCase));
+            int media = tarefas.Count(t => t.Prioridade.Equals("Média", StringComparison.OrdinalIgnoreCase) || t.Prioridade.Equals("Media", StringComparison.OrdinalIgnoreCase));
+            int alta = tarefas.Count(t => t.Prioridade.Equals("Alta", StringComparison.OrdinalIgnoreCase));
 
-            int baixa = tarefas.Count(t => t.Prioridade == "Baixa");
-            int media = tarefas.Count(t => t.Prioridade == "Média" || t.Prioridade == "Media");
-            int alta = tarefas.Count(t => t.Prioridade == "Alta");
+            var model = new PlotModel { Title = "Distribuição de Tarefas por Prioridade" };
+            var pie = new PieSeries { StrokeThickness = 2.0, InsideLabelPosition = 0.8, AngleSpan = 360, StartAngle = 0 };
 
-            series.Points.AddXY("Baixa", baixa);
-            series.Points.AddXY("Média", media);
-            series.Points.AddXY("Alta", alta);
+            pie.Slices.Add(new PieSlice("Baixa", baixa) { Fill = OxyColors.LightGreen });
+            pie.Slices.Add(new PieSlice("Média", media) { Fill = OxyColors.Orange });
+            pie.Slices.Add(new PieSlice("Alta", alta) { Fill = OxyColors.Red });
 
-           
-            chart1.Legends[0].Enabled = true;
-            chart1.Titles.Clear();
-            chart1.Titles.Add("Distribuição de Tarefas por Prioridade");
-            chart1.Series.Add(series);
-
+            model.Series.Add(pie);
+            plotViewPrioridade.Model = model;
         }
 
-        // Gráfico de tarefas por status (concluída x pendente)
+        // Pie chart de status
         private void AtualizarGraficoStatus(List<TarefasUserControl.TarefaInfo> tarefas)
         {
-            chart2.Series.Clear();
-            var series = new Series("Status")
-            {
-                ChartType = SeriesChartType.Pie
-            };
+            int concluidas = tarefas.Count(t => t.Status.Equals("Concluída", StringComparison.OrdinalIgnoreCase) || t.Status.Equals("Concluida", StringComparison.OrdinalIgnoreCase));
+            int pendentes = tarefas.Count(t => t.Status.Equals("Pendente", StringComparison.OrdinalIgnoreCase));
 
-            int concluidas = tarefas.Count(t => t.Status.Equals("concluida", StringComparison.OrdinalIgnoreCase));
-            int pendentes = tarefas.Count(t => t.Status.Equals("pendente", StringComparison.OrdinalIgnoreCase));
+            var model = new PlotModel { Title = "Tarefas Concluídas x Pendentes" };
+            var pie = new PieSeries { StrokeThickness = 2.0, InsideLabelPosition = 0.8, AngleSpan = 360, StartAngle = 0 };
 
-            series.Points.AddXY("Concluídas", concluidas);
-            series.Points.AddXY("Pendentes", pendentes);
+            pie.Slices.Add(new PieSlice("Concluídas", concluidas) { Fill = OxyColors.SkyBlue });
+            pie.Slices.Add(new PieSlice("Pendentes", pendentes) { Fill = OxyColors.LightPink });
 
-            
-            chart2.Legends[0].Enabled = true;
-            chart2.Titles.Clear();
-            chart2.Titles.Add("Tarefas Concluídas x Pendentes");
-            chart2.Series.Add(series);
+            model.Series.Add(pie);
+            plotViewStatus.Model = model;
         }
     }
 }

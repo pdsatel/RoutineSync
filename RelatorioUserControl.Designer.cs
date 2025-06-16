@@ -7,14 +7,14 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        // Adicione o campo Chart aqui
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+        // Adicione os campos PlotView aqui
+        private OxyPlot.WindowsForms.PlotView plotViewPrioridade;
+        private OxyPlot.WindowsForms.PlotView plotViewStatus;
 
         /// <summary> 
         /// Limpar os recursos que estão sendo usados.
         /// </summary>
-        /// <param name="disposing">true se for necessário descartar os recursos gerenciados; caso contrário, false.</param>
+        /// <param name="disposing">true se necessário descartar os recursos gerenciados; caso contrário, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -32,35 +32,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
+            this.plotViewPrioridade = new OxyPlot.WindowsForms.PlotView();
+            this.plotViewStatus = new OxyPlot.WindowsForms.PlotView();
 
-            // chart1
-            this.chart1.Location = new System.Drawing.Point(20, 20);
-            this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(400, 300);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "chart1";
-            this.chart1.Legends.Add(new System.Windows.Forms.DataVisualization.Charting.Legend());
+            // 
+            // plotViewPrioridade
+            // 
+            this.plotViewPrioridade.Location = new System.Drawing.Point(20, 20);
+            this.plotViewPrioridade.Name = "plotViewPrioridade";
+            this.plotViewPrioridade.PanCursor = System.Windows.Forms.Cursors.Hand;
+            this.plotViewPrioridade.Size = new System.Drawing.Size(400, 300);
+            this.plotViewPrioridade.TabIndex = 0;
+            this.plotViewPrioridade.Text = "Gráfico Prioridade";
+            this.plotViewPrioridade.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
+            this.plotViewPrioridade.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
+            this.plotViewPrioridade.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
 
-            // chart2
-            this.chart2.Location = new System.Drawing.Point(450, 20);
-            this.chart2.Name = "chart2";
-            this.chart2.Size = new System.Drawing.Size(400, 300);
-            this.chart2.TabIndex = 1;
-            this.chart2.Text = "chart2";
-            this.chart2.Legends.Add(new System.Windows.Forms.DataVisualization.Charting.Legend());
+            // 
+            // plotViewStatus
+            // 
+            this.plotViewStatus.Location = new System.Drawing.Point(450, 20);
+            this.plotViewStatus.Name = "plotViewStatus";
+            this.plotViewStatus.PanCursor = System.Windows.Forms.Cursors.Hand;
+            this.plotViewStatus.Size = new System.Drawing.Size(400, 300);
+            this.plotViewStatus.TabIndex = 1;
+            this.plotViewStatus.Text = "Gráfico Status";
+            this.plotViewStatus.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
+            this.plotViewStatus.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
+            this.plotViewStatus.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
 
+            // 
             // RelatorioUserControl
-            this.Controls.Add(this.chart1);
-            this.Controls.Add(this.chart2);
+            // 
+            this.Controls.Add(this.plotViewPrioridade);
+            this.Controls.Add(this.plotViewStatus);
+            this.Name = "RelatorioUserControl";
             this.Size = new System.Drawing.Size(900, 350);
-
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
         }
+
+        #endregion
     }
-    #endregion
 }
