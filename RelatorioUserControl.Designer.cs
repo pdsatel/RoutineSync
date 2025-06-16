@@ -34,6 +34,7 @@
         {
             this.plotViewPrioridade = new OxyPlot.WindowsForms.PlotView();
             this.plotViewStatus = new OxyPlot.WindowsForms.PlotView();
+          
 
             // 
             // plotViewPrioridade

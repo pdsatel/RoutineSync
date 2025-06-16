@@ -18,23 +18,20 @@ namespace Tcc
             InitializeComponent();
 
             // Inicializa e posiciona os gráficos
-            plotViewPrioridade = new PlotView
-            {
-                Location = new System.Drawing.Point(20, 20),
-                Size = new System.Drawing.Size(400, 300)
-            };
-            plotViewStatus = new PlotView
-            {
-                Location = new System.Drawing.Point(450, 20),
-                Size = new System.Drawing.Size(400, 300)
-            };
-
-            this.Controls.Add(plotViewPrioridade);
-            this.Controls.Add(plotViewStatus);
+            
         }
 
         public void AtualizarRelatorioDoBanco(int usuarioId)
         {
+
+            var model = new PlotModel { Title = "Teste Gráfico" };
+            var pie = new PieSeries();
+            pie.Slices.Add(new PieSlice("A", 10) { Fill = OxyColors.Red });
+            pie.Slices.Add(new PieSlice("B", 20) { Fill = OxyColors.Green });
+            model.Series.Add(pie);
+            plotViewPrioridade.Model = model;
+
+
             var tarefas = BuscarTarefasUsuario(usuarioId);
             AtualizarGraficoPrioridade(tarefas);
             AtualizarGraficoStatus(tarefas);
