@@ -17,8 +17,7 @@
 
         private void InitializeComponent()
         {
-            btnCadastro = new Button();
-            btnLogin = new Button();
+            
             labelTitulo = new Label();
             panelLogin = new Panel();
             labelLogin = new Label();
@@ -118,20 +117,13 @@
             // 
             textBoxSenha.Location = new Point(601, 245);
             textBoxSenha.Name = "textBoxSenha";
-            textBoxSenha.PasswordChar = '*';
+           
             textBoxSenha.Size = new Size(300, 31);
             textBoxSenha.TabIndex = 3;
             // 
             // btnEntrar
             // 
-            btnEntrar.Location = new Point(601, 300);
-            btnEntrar.Name = "btnEntrar";
-            btnEntrar.Size = new Size(100, 40);
-            btnEntrar.TabIndex = 4;
-            btnEntrar.Text = "Entrar";
-            btnEntrar.UseVisualStyleBackColor = false;
-            btnEntrar.Click += btnEntrar_Click;
-            // 
+            
             // linkRegistrar
             // 
             linkRegistrar.AutoSize = true;
@@ -184,15 +176,15 @@
             int campoAltura = 28;
             int labelLargura = 120;
             int xLabel = 55;
-            int xCampo = xLabel + labelLargura + 8;
+            int xCampo = 360;
             int yInicio = 90;
-            int yStep = 44;
+            int yStep = 50;
 
             // labelNome
             labelNome.Location = new Point(xLabel, yInicio);
-            labelNome.Size = new Size(labelLargura, campoAltura);
-            labelNome.Text = "Nome:";
-            labelNome.Font = new Font("Segoe UI", 11F);
+            labelNome.Size = new Size(120, campoAltura);
+            textBoxNomecad.Location = new Point(xCampo, yInicio);
+            textBoxNomecad.Size = new Size(campoLargura, campoAltura);
 
             // textBoxNomecad
             textBoxNomecad.Location = new Point(xCampo, yInicio);
@@ -288,36 +280,44 @@
             panelCadastro.BackColor = Color.White;
             panelCadastro.Visible = false;
 
-            this.pictureBoxOlhoSenhaCadastro = new System.Windows.Forms.PictureBox();
-            this.pictureBoxOlhoConfirmarSenha = new System.Windows.Forms.PictureBox();
-            this.pictureBoxOlhoLogin = new System.Windows.Forms.PictureBox();
-
-            // Cadastro: SENHA
-            textBoxSenhacad.Size = new Size(265, 28); // tamanho original ou ajustado
-            pictureBoxOlhoSenhaCadastro.Image = global::Tcc.Properties.Resources.eye_close;
-            pictureBoxOlhoSenhaCadastro.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBoxOlhoSenhaCadastro.Cursor = Cursors.Hand;
-            pictureBoxOlhoSenhaCadastro.Size = new Size(30, 28);
-            // Coladinho à direita, fora do TextBox
-            pictureBoxOlhoSenhaCadastro.Location = new Point(textBoxSenhacad.Left + textBoxSenhacad.Width + 4, textBoxSenhacad.Top);
-
-            // Cadastro: CONFIRMAR SENHA
+            textBoxSenhacad.Size = new Size(265, 28);
             textBoxConfirmarsenha.Size = new Size(265, 28);
-            pictureBoxOlhoConfirmarSenha.Image = global::Tcc.Properties.Resources.eye_close;
-            pictureBoxOlhoConfirmarSenha.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBoxOlhoConfirmarSenha.Cursor = Cursors.Hand;
-            pictureBoxOlhoConfirmarSenha.Size = new Size(30, 28);
-            pictureBoxOlhoConfirmarSenha.Location = new Point(textBoxConfirmarsenha.Left + textBoxConfirmarsenha.Width + 4, textBoxConfirmarsenha.Top);
+            // (faça isso depois de todos os AddRange e ajustes de layout!)
 
-            // Login: SENHA
+            // Agora crie os PictureBox e posicione após TODOS os controles já estarem posicionados!
+            this.pictureBoxOlhoSenhaCadastro = new System.Windows.Forms.PictureBox();
+            this.pictureBoxOlhoSenhaCadastro.Image = global::Tcc.Properties.Resources.eye_close;
+            this.pictureBoxOlhoSenhaCadastro.SizeMode = PictureBoxSizeMode.Zoom;
+            this.pictureBoxOlhoSenhaCadastro.Cursor = Cursors.Hand;
+            this.pictureBoxOlhoSenhaCadastro.Size = new Size(26, 26);
+            this.pictureBoxOlhoSenhaCadastro.Location = new Point(
+                textBoxSenhacad.Left + textBoxSenhacad.Width + 8,
+                textBoxSenhacad.Top
+            );
+
+            this.pictureBoxOlhoConfirmarSenha = new System.Windows.Forms.PictureBox();
+            this.pictureBoxOlhoConfirmarSenha.Image = global::Tcc.Properties.Resources.eye_close;
+            this.pictureBoxOlhoConfirmarSenha.SizeMode = PictureBoxSizeMode.Zoom;
+            this.pictureBoxOlhoConfirmarSenha.Cursor = Cursors.Hand;
+            this.pictureBoxOlhoConfirmarSenha.Size = new Size(26, 26);
+            this.pictureBoxOlhoConfirmarSenha.Location = new Point(
+                textBoxConfirmarsenha.Left + textBoxConfirmarsenha.Width + 8,
+                textBoxConfirmarsenha.Top
+            );
+
+            // Faça o mesmo para o login, se quiser fora do campo:
             textBoxSenha.Size = new Size(265, 28);
-            pictureBoxOlhoLogin.Image = global::Tcc.Properties.Resources.eye_close;
-            pictureBoxOlhoLogin.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBoxOlhoLogin.Cursor = Cursors.Hand;
-            pictureBoxOlhoLogin.Size = new Size(30, 28);
-            pictureBoxOlhoLogin.Location = new Point(textBoxSenha.Left + textBoxSenha.Width + 4, textBoxSenha.Top);
+            this.pictureBoxOlhoLogin = new System.Windows.Forms.PictureBox();
+            this.pictureBoxOlhoLogin.Image = global::Tcc.Properties.Resources.eye_close;
+            this.pictureBoxOlhoLogin.SizeMode = PictureBoxSizeMode.Zoom;
+            this.pictureBoxOlhoLogin.Cursor = Cursors.Hand;
+            this.pictureBoxOlhoLogin.Size = new Size(30, 28);
+            this.pictureBoxOlhoLogin.Location = new Point(
+                textBoxSenha.Left + textBoxSenha.Width + 4,
+                textBoxSenha.Top
+            );
 
-            // ADICIONE OS OLHINHOS AOS PAINÉIS após o AddRange dos outros campos!
+            // Adicione os PictureBox DEPOIS do AddRange para garantir que fiquem por cima
             panelCadastro.Controls.Add(this.pictureBoxOlhoSenhaCadastro);
             panelCadastro.Controls.Add(this.pictureBoxOlhoConfirmarSenha);
             panelLogin.Controls.Add(this.pictureBoxOlhoLogin);

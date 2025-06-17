@@ -39,9 +39,9 @@ namespace Tcc
             pictureBoxOlhoLogin.Click += pictureBoxOlhoLogin_Click;
 
             // Começa ocultando as senhas
-            textBoxSenhacad.UseSystemPasswordChar = true;
-            textBoxConfirmarsenha.UseSystemPasswordChar = true;
-            textBoxSenha.UseSystemPasswordChar = true;
+            textBoxSenhacad.UseSystemPasswordChar = false;
+            textBoxConfirmarsenha.UseSystemPasswordChar = false;
+            textBoxSenha.UseSystemPasswordChar = false;
 
 
             pictureBoxOlhoSenhaCadastro.Image = Properties.Resources.eye_close;
