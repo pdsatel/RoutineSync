@@ -1,6 +1,9 @@
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI;
 using System.Drawing.Drawing2D;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
+using System.Security.Cryptography;
 
 
 namespace Tcc
@@ -13,6 +16,7 @@ namespace Tcc
         Color corTexto = ColorTranslator.FromHtml("#333333");
         Color corApoio = ColorTranslator.FromHtml("#4A90E2");
         Color corSuporte = ColorTranslator.FromHtml("#7ED321");
+        private ErrorProvider errorProvider = new ErrorProvider();
 
 
 
@@ -24,6 +28,9 @@ namespace Tcc
             this.SizeChanged += new EventHandler(MenuPrincipalFrm_SizeChanged);
             btnLogin.Click += btnLogin_Click;
             this.Load += new EventHandler(MenuPrincipalFrm_Load);
+            textBoxEmailcad.Validating += textBoxEmailcad_Validating;
+            textBoxSenhacad.Validating += textBoxSenhacad_Validating;
+            textBoxConfirmarsenha.Validating += textBoxConfirmarsenha_Validating;
 
 
 
@@ -62,21 +69,21 @@ namespace Tcc
             {
                 using (var conn = Conexao.ObterConexao())
                 {
-                    string query = "SELECT id FROM usuarios WHERE email = @Email AND senha = @Senha";
+                    string query = "SELECT id, senha FROM usuarios WHERE email = @Email";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Email", email);
-                        cmd.Parameters.AddWithValue("@Senha", senha);
 
-                        object result = cmd.ExecuteScalar();
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                int id = reader.GetInt32("id");
+                                string hashSalva = reader.GetString("senha");
 
-                        if (result != null)
-                        {
-                            return Convert.ToInt32(result); // ID do usuário
-                        }
-                        else
-                        {
-                            return 0; // Login inválido
+                                if (ValidarSenha(senha, hashSalva))
+                                    return id;
+                            }
                         }
                     }
                 }
@@ -84,10 +91,62 @@ namespace Tcc
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao verificar login: " + ex.Message);
-                return 0;
+            }
+            return 0;
+        }
+
+        public static bool ValidarSenha(string senha, string hashSalvo)
+        {
+            byte[] hashBytes = Convert.FromBase64String(hashSalvo);
+            byte[] salt = new byte[16];
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+
+            var pbkdf2 = new Rfc2898DeriveBytes(senha, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+
+            for (int i = 0; i < 20; i++)
+                if (hashBytes[i + 16] != hash[i])
+                    return false;
+            return true;
+        }
+        private void textBoxEmailcad_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!EmailValido(textBoxEmailcad.Text))
+            {
+                errorProvider.SetError(textBoxEmailcad, "E-mail inválido.");
+                e.Cancel = true;
+            }
+            else
+            {
+                errorProvider.SetError(textBoxEmailcad, "");
             }
         }
 
+        private void textBoxSenhacad_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!SenhaForte(textBoxSenhacad.Text))
+            {
+                errorProvider.SetError(textBoxSenhacad, "Senha fraca. Use letras maiúsculas, minúsculas, número e especial.");
+                e.Cancel = true;
+            }
+            else
+            {
+                errorProvider.SetError(textBoxSenhacad, "");
+            }
+        }
+
+        private void textBoxConfirmarsenha_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (textBoxSenhacad.Text != textBoxConfirmarsenha.Text)
+            {
+                errorProvider.SetError(textBoxConfirmarsenha, "As senhas não coincidem.");
+                e.Cancel = true;
+            }
+            else
+            {
+                errorProvider.SetError(textBoxConfirmarsenha, "");
+            }
+        }
 
 
         private void ArredondarBotao(Button btn, int raio)
@@ -285,12 +344,18 @@ namespace Tcc
         }
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
+            
+
+            if(!ValidateChildren())
+                return;
             string nome = textBoxNomecad.Text;
             string email = textBoxEmailcad.Text;
             string senha = textBoxSenhacad.Text;
             string confirmarsenha = textBoxConfirmarsenha.Text;
             string altura = textBoxAltura.Text;
             string peso = textBoxPeso.Text;
+
+            
 
             if (string.IsNullOrEmpty(nome) || string.IsNullOrEmpty(email) ||
                 string.IsNullOrEmpty(senha) || string.IsNullOrEmpty(confirmarsenha))
@@ -325,7 +390,7 @@ namespace Tcc
                     {
                         cmd.Parameters.AddWithValue("@nome", nome);
                         cmd.Parameters.AddWithValue("@email", email);
-                        cmd.Parameters.AddWithValue("@senha", senha);
+                        cmd.Parameters.AddWithValue("@senha", GerarHashSenha(senha));
                         cmd.Parameters.AddWithValue("@altura", alturaDecimal);
                         cmd.Parameters.AddWithValue("@peso", pesoDecimal);
                         cmd.Parameters.AddWithValue("@hora_dormir", horaDormir);
@@ -366,7 +431,17 @@ namespace Tcc
 
 
         }
-
+        private bool EmailValido(string email)
+        {
+            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, pattern);
+        }
+        private bool SenhaForte(string senha)
+        {
+            // Pelo menos 8 caracteres, 1 minúscula, 1 maiúscula, 1 número, 1 especial
+            string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$";
+            return Regex.IsMatch(senha, pattern);
+        }
         private void panelCadastro_Paint(object sender, PaintEventArgs e)
         {
 
@@ -387,6 +462,13 @@ namespace Tcc
             panelCadastro.Visible = true;
             panelCadastro.Location = new Point(0, 0);
             panelCadastro.Size = new Size(this.ClientSize.Width / 2, this.ClientSize.Height);
+        }
+
+        private void linkEsqueciSenha_Click(object sender, EventArgs e)
+        {
+            // Aqui você pode abrir um novo formulário para redefinição
+            var frm = new RedefinirSenhaFrm();
+            frm.ShowDialog();
         }
 
         private void Enter(Control parent)
@@ -443,8 +525,6 @@ namespace Tcc
             int centroX = (panelLogin.Width - larguraCampo) / 2;
             int startY = 100;
 
-            
-           
         }
 
         private void CentralizarCadastro()
@@ -468,7 +548,27 @@ namespace Tcc
         }
 
 
-    }
+       
+
+// Gera hash seguro da senha (PBKDF2)
+        public static string GerarHashSenha(string senha)
+            {
+                byte[] salt = new byte[16];
+                using (var rng = new RNGCryptoServiceProvider())
+                    rng.GetBytes(salt);
+
+                var pbkdf2 = new Rfc2898DeriveBytes(senha, salt, 10000);
+                byte[] hash = pbkdf2.GetBytes(20);
+
+                byte[] hashBytes = new byte[36];
+                Array.Copy(salt, 0, hashBytes, 0, 16);
+                Array.Copy(hash, 0, hashBytes, 16, 20);
+
+                return Convert.ToBase64String(hashBytes);
+            }
+
+
+}
 
 
 

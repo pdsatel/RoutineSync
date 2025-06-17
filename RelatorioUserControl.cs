@@ -259,7 +259,7 @@ namespace Tcc
             plotViewBarras = new PlotView
             {
                 Location = new System.Drawing.Point(450, 420),
-                Size = new System.Drawing.Size(400, 200)
+                Size = new System.Drawing.Size(600, 300)
             };
             this.Controls.Add(plotViewBarras);
         }

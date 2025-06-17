@@ -143,6 +143,18 @@
             linkRegistrar.TabStop = true;
             linkRegistrar.Text = "Não tem uma conta? Registre-se";
             linkRegistrar.Click += linkRegistrar_Click;
+
+            linkEsqueciSenha = new LinkLabel();
+            linkEsqueciSenha.AutoSize = true;
+            linkEsqueciSenha.Location = new Point(601, 400); // Ajuste a posição conforme necessário
+            linkEsqueciSenha.Name = "linkEsqueciSenha";
+            linkEsqueciSenha.Size = new Size(200, 25);
+            linkEsqueciSenha.TabIndex = 9;
+            linkEsqueciSenha.TabStop = true;
+            linkEsqueciSenha.Text = "Esqueci minha senha";
+            linkEsqueciSenha.Click += linkEsqueciSenha_Click;
+            panelLogin.Controls.Add(linkEsqueciSenha);
+
             // 
             // panelCadastro
             // 
@@ -208,6 +220,7 @@
             textBoxSenhacad.Location = new Point(xCampo, yInicio + 2 * yStep);
             textBoxSenhacad.Size = new Size(campoLargura, campoAltura);
             textBoxSenhacad.Font = new Font("Segoe UI", 11F);
+            textBoxSenhacad.PasswordChar = '*';
 
             // labelSenha2cad
             labelSenha2cad.Location = new Point(xLabel, yInicio + 3 * yStep);
@@ -219,6 +232,7 @@
             textBoxConfirmarsenha.Location = new Point(xCampo, yInicio + 3 * yStep);
             textBoxConfirmarsenha.Size = new Size(campoLargura, campoAltura);
             textBoxConfirmarsenha.Font = new Font("Segoe UI", 11F);
+            textBoxConfirmarsenha.PasswordChar = '*';
 
             // labelAltura
             labelAltura.Location = new Point(xLabel, yInicio + 4 * yStep);
@@ -360,5 +374,6 @@
         private Label labelLogin;
         private Label labelTitulo;
         private LinkLabel linkRegistrar;
+        private LinkLabel linkEsqueciSenha;
     }
 }

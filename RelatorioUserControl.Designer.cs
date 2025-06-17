@@ -42,7 +42,7 @@
             this.plotViewPrioridade.Location = new System.Drawing.Point(20, 20);
             this.plotViewPrioridade.Name = "plotViewPrioridade";
             this.plotViewPrioridade.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.plotViewPrioridade.Size = new System.Drawing.Size(400, 300);
+            this.plotViewPrioridade.Size = new System.Drawing.Size(450, 320);
             this.plotViewPrioridade.TabIndex = 0;
             this.plotViewPrioridade.Text = "Gráfico Prioridade";
             this.plotViewPrioridade.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
@@ -55,7 +55,7 @@
             this.plotViewStatus.Location = new System.Drawing.Point(450, 20);
             this.plotViewStatus.Name = "plotViewStatus";
             this.plotViewStatus.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.plotViewStatus.Size = new System.Drawing.Size(400, 300);
+            this.plotViewStatus.Size = new System.Drawing.Size(450, 320);
             this.plotViewStatus.TabIndex = 1;
             this.plotViewStatus.Text = "Gráfico Status";
             this.plotViewStatus.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
