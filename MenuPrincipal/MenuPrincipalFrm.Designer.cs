@@ -73,7 +73,7 @@
             panelLogin.Controls.Add(linkRegistrar);
             panelLogin.Location = new Point(3, 35);
             panelLogin.Name = "panelLogin";
-            panelLogin.Size = new Size(601, 778);
+            panelLogin.Size = new Size(701, 878);
             panelLogin.TabIndex = 1;
             panelLogin.Visible = false;
             panelLogin.Paint += panelLogin_Paint;
@@ -115,7 +115,7 @@
             // 
             // textBoxSenha
             // 
-            textBoxSenha.Location = new Point(601, 245);
+            textBoxSenha.Location = new Point(620, 245);
             textBoxSenha.Name = "textBoxSenha";
            
             textBoxSenha.Size = new Size(300, 31);
@@ -125,7 +125,7 @@
 
             btnEntrar.Location = new Point(601, 300);
             btnEntrar.Name = "btnEntrar";
-            btnEntrar.Size = new Size(100, 40);
+            btnEntrar.Size = new Size(10, 30);
             btnEntrar.TabIndex = 4;
             btnEntrar.Text = "Entrar";
             btnEntrar.UseVisualStyleBackColor = false;
@@ -321,8 +321,7 @@
             this.pictureBoxOlhoLogin.Cursor = Cursors.Hand;
             this.pictureBoxOlhoLogin.Size = new Size(30, 28);
             this.pictureBoxOlhoLogin.Location = new Point(
-                textBoxSenha.Left + textBoxSenha.Width + 4,
-                textBoxSenha.Top
+            textBoxSenha.Left + textBoxSenha.Width + 2,textBoxSenha.Top
             );
 
             // Adicione os PictureBox DEPOIS do AddRange para garantir que fiquem por cima

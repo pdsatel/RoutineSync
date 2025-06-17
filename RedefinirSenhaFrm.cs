@@ -12,6 +12,10 @@ namespace Tcc
         public RedefinirSenhaFrm()
         {
             InitializeComponent();
+
+            textBoxEmail.KeyDown += Controle_KeyDown;
+            textBoxSenha.KeyDown += Controle_KeyDown;
+            textBoxConfirmar.KeyDown += Controle_KeyDown;
         }
 
         private void btnRedefinir_Click(object sender, EventArgs e)
@@ -97,6 +101,24 @@ namespace Tcc
             Array.Copy(hash, 0, hashBytes, 16, 20);
 
             return Convert.ToBase64String(hashBytes);
+        }
+
+        private void Controle_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+
+                // Se for o último campo, volta para o primeiro campo
+                if (sender == textBoxConfirmar)
+                {
+                    textBoxEmail.Focus();
+                }
+                else
+                {
+                    this.SelectNextControl((Control)sender, true, true, true, true);
+                }
+            }
         }
     }
 }

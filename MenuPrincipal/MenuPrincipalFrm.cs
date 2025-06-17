@@ -17,9 +17,9 @@ namespace Tcc
         Color corApoio = ColorTranslator.FromHtml("#4A90E2");
         Color corSuporte = ColorTranslator.FromHtml("#7ED321");
         private ErrorProvider errorProvider = new ErrorProvider();
-        private bool senhaCadastroVisivel = false;
-        private bool senhaCadastroConfirmVisivel = false;
-        private bool senhaLoginVisivel = false;
+        private bool senhaCadastroVisivel = true;
+        private bool senhaCadastroConfirmVisivel = true;
+        private bool senhaLoginVisivel = true;
 
 
 
@@ -39,9 +39,9 @@ namespace Tcc
             pictureBoxOlhoLogin.Click += pictureBoxOlhoLogin_Click;
 
             // Começa ocultando as senhas
-            textBoxSenhacad.UseSystemPasswordChar = false;
-            textBoxConfirmarsenha.UseSystemPasswordChar = false;
-            textBoxSenha.UseSystemPasswordChar = false;
+            textBoxSenhacad.UseSystemPasswordChar = true;
+            textBoxConfirmarsenha.UseSystemPasswordChar = true;
+            textBoxSenha.UseSystemPasswordChar = true;
 
 
             pictureBoxOlhoSenhaCadastro.Image = Properties.Resources.eye_close;
@@ -302,6 +302,7 @@ namespace Tcc
             ArredondarBotao(btnCadastrar, 20);
 
 
+
            CentralizarLogin ();
             CentralizarCadastro();
             Enter(panelCadastro);
@@ -337,21 +338,51 @@ namespace Tcc
 
         private void CentralizarLogin()
         {
+            int larguraCampo = 300;
+            int alturaCampo = 36;
+            int espacoVertical = 15;
+
             int panelWidth = panelLogin.Width;
+            int centralX = (panelWidth - larguraCampo) / 2;
 
-            int centralX = (panelWidth - 300) / 2;
-
+            // Label Login
+            labelLogin.Top = 40;
             labelLogin.Left = (panelWidth - labelLogin.Width) / 2;
 
+            // Email
+            labelEmail.Top = labelLogin.Bottom + 30;
             labelEmail.Left = centralX;
+            textBoxEmail.Top = labelEmail.Bottom + 2;
             textBoxEmail.Left = centralX;
+            textBoxEmail.Width = larguraCampo;
+            textBoxEmail.Height = alturaCampo;
 
+            // Senha
+            labelSenha.Top = textBoxEmail.Bottom + espacoVertical;
             labelSenha.Left = centralX;
+            textBoxSenha.Top = labelSenha.Bottom + 2;
             textBoxSenha.Left = centralX;
+            textBoxSenha.Width = larguraCampo;
+            textBoxSenha.Height = alturaCampo;
 
-            btnEntrar.Left = centralX + 100;
+            // Olho da senha
+            pictureBoxOlhoLogin.Top = textBoxSenha.Top;
+            pictureBoxOlhoLogin.Left = textBoxSenha.Right + 4;
+            pictureBoxOlhoLogin.Size = new Size(alturaCampo, alturaCampo);
 
+            // Botão Entrar
+            btnEntrar.Top = textBoxSenha.Bottom + espacoVertical + 10;
+            btnEntrar.Left = centralX;
+            btnEntrar.Width = larguraCampo;
+            btnEntrar.Height = alturaCampo;
+
+            // Link Registrar
+            linkRegistrar.Top = btnEntrar.Bottom + 10;
             linkRegistrar.Left = centralX;
+
+            // Link Esqueci Senha
+            linkEsqueciSenha.Top = linkRegistrar.Bottom + 6;
+            linkEsqueciSenha.Left = centralX;
         }
 
 
@@ -568,28 +599,140 @@ namespace Tcc
 
         private void CentralizarCadastro()
         {
+            int larguraCampo = 300;
+            int alturaCampo = 36;
+            int larguraLabel = 160;      // aumente para caber "Confirmar Senha:"
+            int espacoVertical = 13;
             int panelWidth = panelCadastro.Width;
-            int centralX = (panelWidth - 300) / 2;
+            int centralX = (panelWidth - larguraCampo) / 2;
+            int labelX = centralX - larguraLabel - 12; // ajuste fino entre label e campo
+            int y = 40;
 
+            // Título
+            labelCadastro.Top = y;
             labelCadastro.Left = (panelWidth - labelCadastro.Width) / 2;
+            y = labelCadastro.Bottom + 20;
 
+            // NOME
+            labelNome.Top = y;
+            labelNome.Left = labelX;
+            labelNome.Width = larguraLabel;
+            labelNome.Text = "Nome:";
+            labelNome.TextAlign = ContentAlignment.MiddleRight;
+            textBoxNomecad.Top = y;
             textBoxNomecad.Left = centralX;
-            textBoxEmailcad.Left = centralX;
-            textBoxSenhacad.Left = centralX;
-            textBoxConfirmarsenha.Left = centralX;
-            textBoxAltura.Left = centralX;
-            textBoxPeso.Left = centralX;
-            dateTimeHoraDormir.Left = centralX;
-            dateTimeHoraAcordar.Left = centralX;
+            textBoxNomecad.Width = larguraCampo;
+            textBoxNomecad.Height = alturaCampo;
+            y += alturaCampo + espacoVertical;
 
+            // EMAIL
+            labelEmailcad.Top = y;
+            labelEmailcad.Left = labelX;
+            labelEmailcad.Width = larguraLabel;
+            labelEmailcad.Text = "Email:";
+            labelEmailcad.TextAlign = ContentAlignment.MiddleRight;
+            textBoxEmailcad.Top = y;
+            textBoxEmailcad.Left = centralX;
+            textBoxEmailcad.Width = larguraCampo;
+            textBoxEmailcad.Height = alturaCampo;
+            y += alturaCampo + espacoVertical;
+
+            // SENHA
+            labelSenhacad.Top = y;
+            labelSenhacad.Left = labelX;
+            labelSenhacad.Width = larguraLabel;
+            labelSenhacad.Text = "Senha:";
+            labelSenhacad.TextAlign = ContentAlignment.MiddleRight;
+            textBoxSenhacad.Top = y;
+            textBoxSenhacad.Left = centralX;
+            textBoxSenhacad.Width = larguraCampo;
+            textBoxSenhacad.Height = alturaCampo;
+            // Olho menor e centralizado verticalmente
+            int olhoTamanho = 22;
+            pictureBoxOlhoSenhaCadastro.Top = textBoxSenhacad.Top + (alturaCampo - olhoTamanho) / 2;
+            pictureBoxOlhoSenhaCadastro.Left = textBoxSenhacad.Right + 4;
+            pictureBoxOlhoSenhaCadastro.Size = new Size(olhoTamanho, olhoTamanho);
+            y += alturaCampo + espacoVertical;
+
+            // CONFIRMAR SENHA
+            labelSenha2cad.Top = y;
+            labelSenha2cad.Left = labelX;
+            labelSenha2cad.Width = larguraLabel;
+            labelSenha2cad.Text = "Confirmar Senha:";
+            labelSenha2cad.TextAlign = ContentAlignment.MiddleRight;
+            textBoxConfirmarsenha.Top = y;
+            textBoxConfirmarsenha.Left = centralX;
+            textBoxConfirmarsenha.Width = larguraCampo;
+            textBoxConfirmarsenha.Height = alturaCampo;
+            pictureBoxOlhoConfirmarSenha.Top = textBoxConfirmarsenha.Top + (alturaCampo - olhoTamanho) / 2;
+            pictureBoxOlhoConfirmarSenha.Left = textBoxConfirmarsenha.Right + 4;
+            pictureBoxOlhoConfirmarSenha.Size = new Size(olhoTamanho, olhoTamanho);
+            y += alturaCampo + espacoVertical;
+
+            // ALTURA
+            labelAltura.Top = y;
+            labelAltura.Left = labelX;
+            labelAltura.Width = larguraLabel;
+            labelAltura.Text = "Altura (cm):";
+            labelAltura.TextAlign = ContentAlignment.MiddleRight;
+            textBoxAltura.Top = y;
+            textBoxAltura.Left = centralX;
+            textBoxAltura.Width = 80;
+            textBoxAltura.Height = alturaCampo;
+            y += alturaCampo + espacoVertical;
+
+            // PESO
+            labelPeso.Top = y;
+            labelPeso.Left = labelX;
+            labelPeso.Width = larguraLabel;
+            labelPeso.Text = "Peso (kg):";
+            labelPeso.TextAlign = ContentAlignment.MiddleRight;
+            textBoxPeso.Top = y;
+            textBoxPeso.Left = centralX;
+            textBoxPeso.Width = 80;
+            textBoxPeso.Height = alturaCampo;
+            y += alturaCampo + espacoVertical;
+
+            // HORA DORMIR
+            labelHoraDormir.Top = y;
+            labelHoraDormir.Left = labelX;
+            labelHoraDormir.Width = larguraLabel;
+            labelHoraDormir.Text = "Hora de Dormir:";
+            labelHoraDormir.TextAlign = ContentAlignment.MiddleRight;
+            dateTimeHoraDormir.Top = y;
+            dateTimeHoraDormir.Left = centralX;
+            dateTimeHoraDormir.Width = 120;
+            dateTimeHoraDormir.Height = alturaCampo;
+            y += alturaCampo + espacoVertical;
+
+            // HORA ACORDAR
+            labelHoraAcordar.Top = y;
+            labelHoraAcordar.Left = labelX;
+            labelHoraAcordar.Width = larguraLabel;
+            labelHoraAcordar.Text = "Hora de Acordar:";
+            labelHoraAcordar.TextAlign = ContentAlignment.MiddleRight;
+            dateTimeHoraAcordar.Top = y;
+            dateTimeHoraAcordar.Left = centralX;
+            dateTimeHoraAcordar.Width = 120;
+            dateTimeHoraAcordar.Height = alturaCampo;
+            y += alturaCampo + 2 * espacoVertical;
+
+            // BOTÕES
+            btnCadastrar.Top = y;
             btnCadastrar.Left = centralX;
-            btnVoltarCad.Left = centralX + 110;
+            btnCadastrar.Width = 140;
+            btnCadastrar.Height = alturaCampo;
+
+            btnVoltarCad.Top = y;
+            btnVoltarCad.Left = btnCadastrar.Right + 12;
+            btnVoltarCad.Width = 140;
+            btnVoltarCad.Height = alturaCampo;
         }
 
 
-       
 
-// Gera hash seguro da senha (PBKDF2)
+
+        // Gera hash seguro da senha (PBKDF2)
         public static string GerarHashSenha(string senha)
             {
                 byte[] salt = new byte[16];

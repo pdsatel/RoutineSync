@@ -46,17 +46,13 @@
                 btnRotina.ImageAlign = ContentAlignment.MiddleLeft;
                 btnRotina.TextImageRelation = TextImageRelation.ImageBeforeText;
 
-                btnSaude.Image = Properties.Resources.Coração_png;
-                btnSaude.ImageAlign = ContentAlignment.MiddleLeft;
-                btnSaude.TextImageRelation = TextImageRelation.ImageBeforeText;
+                
 
                 btnRelatorios.Image = Properties.Resources.Relatorio_png;
                 btnRelatorios.ImageAlign = ContentAlignment.MiddleLeft;
                 btnRelatorios.TextImageRelation = TextImageRelation.ImageBeforeText;
 
-                btnIA.Image = Properties.Resources.IA_png;
-                btnIA.ImageAlign = ContentAlignment.MiddleLeft;
-                btnIA.TextImageRelation = TextImageRelation.ImageBeforeText;
+               
 
                 btnSair.Image = Properties.Resources.Sair_png; 
                 btnSair.ImageAlign = ContentAlignment.MiddleLeft;
@@ -65,9 +61,12 @@
 
                 
             }
+        private void btnNotificacoes_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Você clicou em Notificações!", "Teste de Notificações", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
-
-            private void btnTarefas_Click(object sender, EventArgs e)
+        private void btnTarefas_Click(object sender, EventArgs e)
             {
 
             
