@@ -29,7 +29,7 @@ namespace Tcc
 
             this.Shown += MenuPrincipalFrm_Shown;
             this.SizeChanged += new EventHandler(MenuPrincipalFrm_SizeChanged);
-            btnLogin.Click += btnLogin_Click;
+           
             this.Load += new EventHandler(MenuPrincipalFrm_Load);
             textBoxEmailcad.Validating += textBoxEmailcad_Validating;
             textBoxSenhacad.Validating += textBoxSenhacad_Validating;
@@ -296,14 +296,13 @@ namespace Tcc
                 }
             }
             //Botões
-            ArredondarBotao(btnLogin, 20);
-            ArredondarBotao(btnCadastro, 20);
-            ArredondarBotao(btnEntrar, 20);
+           
+            
             ArredondarBotao(btnVoltarCad, 20);
             ArredondarBotao(btnCadastrar, 20);
 
 
-            CentralizarLogin();
+           CentralizarLogin ();
             CentralizarCadastro();
             Enter(panelCadastro);
             Enter(panelLogin);

@@ -122,8 +122,16 @@
             textBoxSenha.TabIndex = 3;
             // 
             // btnEntrar
+
+            btnEntrar.Location = new Point(601, 300);
+            btnEntrar.Name = "btnEntrar";
+            btnEntrar.Size = new Size(100, 40);
+            btnEntrar.TabIndex = 4;
+            btnEntrar.Text = "Entrar";
+            btnEntrar.UseVisualStyleBackColor = false;
+            btnEntrar.Click += btnEntrar_Click;
             // 
-            
+
             // linkRegistrar
             // 
             linkRegistrar.AutoSize = true;
@@ -377,8 +385,7 @@
 
         #endregion
 
-        private Button btnCadastro;
-        private Button btnLogin;
+       
 
         //Cadastro
         private Panel panelCadastro;

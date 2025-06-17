@@ -86,7 +86,7 @@
             MessageBox.Show("Rotinas carregadas!");
 
 
-            panelConteudo.Controls.Clear();
+                panelConteudo.Controls.Clear();
                 panelConteudo.Controls.Add(rotinasControl);
                 rotinasControl.Dock= DockStyle.Fill;
         }
