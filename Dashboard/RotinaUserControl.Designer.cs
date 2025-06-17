@@ -13,10 +13,8 @@
 
             private Label lblTitulo;
             private ListView listViewRotinas;
-            private Button btnAtualizar;
-            private Button btnExportar;
+        private Button btnAtualizar;
             private Button btnConcluir;
-            private Button btnAdicionar;
             private Button btnRemover;
             private ContextMenuStrip contextMenuRotinas;
             private ToolStripMenuItem editarToolStripMenuItem;
@@ -51,9 +49,9 @@
                 editarToolStripMenuItem = new ToolStripMenuItem();
                 excluirToolStripMenuItem = new ToolStripMenuItem();
                 btnAtualizar = new Button();
-                btnExportar = new Button();
+              
                 btnConcluir = new Button();
-                btnAdicionar = new Button();
+                
                 btnRemover = new Button();
                 btnEditar = new Button();
                 contextMenuRotinas.SuspendLayout();
@@ -182,9 +180,9 @@
                 Controls.Add(lblTitulo);
                 Controls.Add(listViewRotinas);
                 Controls.Add(btnAtualizar);
-                Controls.Add(btnExportar);
+                
                 Controls.Add(btnConcluir);
-                Controls.Add(btnAdicionar);
+               
                 Controls.Add(btnRemover);
                 Controls.Add(btnEditar);
                 Name = "RotinasUserControl";

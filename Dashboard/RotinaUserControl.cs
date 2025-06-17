@@ -24,7 +24,7 @@ namespace Tcc
 
             // Associe eventos aqui
             btnAtualizar.Click += BtnAtualizar_Click;
-            btnExportar.Click += BtnExportar_Click;
+           
             listViewRotinas.ItemCheck += listViewRotinas_ItemCheck;
             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
             excluirToolStripMenuItem.Click += excluirToolStripMenuItem_Click;
