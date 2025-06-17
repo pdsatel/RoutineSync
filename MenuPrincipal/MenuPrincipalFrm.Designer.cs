@@ -51,7 +51,7 @@
             panelLogin.SuspendLayout();
             panelCadastro.SuspendLayout();
             SuspendLayout();
-           
+
             // labelTitulo
             // 
             labelTitulo.AutoSize = true;
@@ -220,7 +220,6 @@
             textBoxSenhacad.Location = new Point(xCampo, yInicio + 2 * yStep);
             textBoxSenhacad.Size = new Size(campoLargura, campoAltura);
             textBoxSenhacad.Font = new Font("Segoe UI", 11F);
-            textBoxSenhacad.PasswordChar = '*';
 
             // labelSenha2cad
             labelSenha2cad.Location = new Point(xLabel, yInicio + 3 * yStep);
@@ -232,7 +231,7 @@
             textBoxConfirmarsenha.Location = new Point(xCampo, yInicio + 3 * yStep);
             textBoxConfirmarsenha.Size = new Size(campoLargura, campoAltura);
             textBoxConfirmarsenha.Font = new Font("Segoe UI", 11F);
-            textBoxConfirmarsenha.PasswordChar = '*';
+
 
             // labelAltura
             labelAltura.Location = new Point(xLabel, yInicio + 4 * yStep);
@@ -289,6 +288,44 @@
             panelCadastro.BackColor = Color.White;
             panelCadastro.Visible = false;
 
+            this.pictureBoxOlhoSenhaCadastro = new System.Windows.Forms.PictureBox();
+            this.pictureBoxOlhoConfirmarSenha = new System.Windows.Forms.PictureBox();
+            this.pictureBoxOlhoLogin = new System.Windows.Forms.PictureBox();
+
+            // Cadastro: SENHA
+            textBoxSenhacad.Size = new Size(265, 28); // tamanho original ou ajustado
+            pictureBoxOlhoSenhaCadastro.Image = global::Tcc.Properties.Resources.eye_close;
+            pictureBoxOlhoSenhaCadastro.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxOlhoSenhaCadastro.Cursor = Cursors.Hand;
+            pictureBoxOlhoSenhaCadastro.Size = new Size(30, 28);
+            // Coladinho à direita, fora do TextBox
+            pictureBoxOlhoSenhaCadastro.Location = new Point(textBoxSenhacad.Left + textBoxSenhacad.Width + 4, textBoxSenhacad.Top);
+
+            // Cadastro: CONFIRMAR SENHA
+            textBoxConfirmarsenha.Size = new Size(265, 28);
+            pictureBoxOlhoConfirmarSenha.Image = global::Tcc.Properties.Resources.eye_close;
+            pictureBoxOlhoConfirmarSenha.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxOlhoConfirmarSenha.Cursor = Cursors.Hand;
+            pictureBoxOlhoConfirmarSenha.Size = new Size(30, 28);
+            pictureBoxOlhoConfirmarSenha.Location = new Point(textBoxConfirmarsenha.Left + textBoxConfirmarsenha.Width + 4, textBoxConfirmarsenha.Top);
+
+            // Login: SENHA
+            textBoxSenha.Size = new Size(265, 28);
+            pictureBoxOlhoLogin.Image = global::Tcc.Properties.Resources.eye_close;
+            pictureBoxOlhoLogin.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxOlhoLogin.Cursor = Cursors.Hand;
+            pictureBoxOlhoLogin.Size = new Size(30, 28);
+            pictureBoxOlhoLogin.Location = new Point(textBoxSenha.Left + textBoxSenha.Width + 4, textBoxSenha.Top);
+
+            // ADICIONE OS OLHINHOS AOS PAINÉIS após o AddRange dos outros campos!
+            panelCadastro.Controls.Add(this.pictureBoxOlhoSenhaCadastro);
+            panelCadastro.Controls.Add(this.pictureBoxOlhoConfirmarSenha);
+            panelLogin.Controls.Add(this.pictureBoxOlhoLogin);
+
+
+
+
+
             // ...[configuração dos outros controles]...
 
             // Crie e configure os botões antes de adicionar ao painel
@@ -298,6 +335,7 @@
             btnCadastrar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnCadastrar.Text = "Cadastrar";
             btnCadastrar.UseVisualStyleBackColor = true;
+            btnCadastrar.CausesValidation = true;
             btnCadastrar.Click += btnCadastrar_Click;
 
             btnVoltarCad = new Button();
@@ -375,5 +413,11 @@
         private Label labelTitulo;
         private LinkLabel linkRegistrar;
         private LinkLabel linkEsqueciSenha;
+
+
+
+        private System.Windows.Forms.PictureBox pictureBoxOlhoSenhaCadastro;
+        private System.Windows.Forms.PictureBox pictureBoxOlhoConfirmarSenha;
+        private System.Windows.Forms.PictureBox pictureBoxOlhoLogin;
     }
 }

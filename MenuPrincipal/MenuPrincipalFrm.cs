@@ -17,6 +17,9 @@ namespace Tcc
         Color corApoio = ColorTranslator.FromHtml("#4A90E2");
         Color corSuporte = ColorTranslator.FromHtml("#7ED321");
         private ErrorProvider errorProvider = new ErrorProvider();
+        private bool senhaCadastroVisivel = false;
+        private bool senhaCadastroConfirmVisivel = false;
+        private bool senhaLoginVisivel = false;
 
 
 
@@ -31,10 +34,24 @@ namespace Tcc
             textBoxEmailcad.Validating += textBoxEmailcad_Validating;
             textBoxSenhacad.Validating += textBoxSenhacad_Validating;
             textBoxConfirmarsenha.Validating += textBoxConfirmarsenha_Validating;
+            pictureBoxOlhoSenhaCadastro.Click += pictureBoxOlhoSenhaCadastro_Click;
+            pictureBoxOlhoConfirmarSenha.Click += pictureBoxOlhoConfirmarSenha_Click;
+            pictureBoxOlhoLogin.Click += pictureBoxOlhoLogin_Click;
 
+            // Começa ocultando as senhas
+            textBoxSenhacad.UseSystemPasswordChar = true;
+            textBoxConfirmarsenha.UseSystemPasswordChar = true;
+            textBoxSenha.UseSystemPasswordChar = true;
+
+
+            pictureBoxOlhoSenhaCadastro.Image = Properties.Resources.eye_close;
+            pictureBoxOlhoConfirmarSenha.Image = Properties.Resources.eye_close;
+            pictureBoxOlhoLogin.Image = Properties.Resources.eye_close;
 
 
             this.StartPosition = FormStartPosition.CenterParent;
+
+            
 
         }
 
@@ -114,7 +131,7 @@ namespace Tcc
             if (!EmailValido(textBoxEmailcad.Text))
             {
                 errorProvider.SetError(textBoxEmailcad, "E-mail inválido.");
-                e.Cancel = true;
+                e.Cancel = false;
             }
             else
             {
@@ -127,7 +144,7 @@ namespace Tcc
             if (!SenhaForte(textBoxSenhacad.Text))
             {
                 errorProvider.SetError(textBoxSenhacad, "Senha fraca. Use letras maiúsculas, minúsculas, número e especial.");
-                e.Cancel = true;
+                e.Cancel = false;
             }
             else
             {
@@ -140,12 +157,35 @@ namespace Tcc
             if (textBoxSenhacad.Text != textBoxConfirmarsenha.Text)
             {
                 errorProvider.SetError(textBoxConfirmarsenha, "As senhas não coincidem.");
-                e.Cancel = true;
+                e.Cancel = false;
             }
             else
             {
                 errorProvider.SetError(textBoxConfirmarsenha, "");
             }
+        }
+
+        private bool senhaVisivel = false;
+
+        private void pictureBoxOlhoSenhaCadastro_Click(object sender, EventArgs e)
+        {
+            senhaCadastroVisivel = !senhaCadastroVisivel;
+            textBoxSenhacad.UseSystemPasswordChar = !senhaCadastroVisivel;
+            pictureBoxOlhoSenhaCadastro.Image = senhaCadastroVisivel ? Properties.Resources.eye_open : Properties.Resources.eye_close;
+        }
+
+        private void pictureBoxOlhoConfirmarSenha_Click(object sender, EventArgs e)
+        {
+            senhaCadastroConfirmVisivel = !senhaCadastroConfirmVisivel;
+            textBoxConfirmarsenha.UseSystemPasswordChar = !senhaCadastroConfirmVisivel;
+            pictureBoxOlhoConfirmarSenha.Image = senhaCadastroConfirmVisivel ? Properties.Resources.eye_open : Properties.Resources.eye_close;
+        }
+
+        private void pictureBoxOlhoLogin_Click(object sender, EventArgs e)
+        {
+            senhaLoginVisivel = !senhaLoginVisivel;
+            textBoxSenha.UseSystemPasswordChar = !senhaLoginVisivel;
+            pictureBoxOlhoLogin.Image = senhaLoginVisivel ? Properties.Resources.eye_open : Properties.Resources.eye_close;
         }
 
 
