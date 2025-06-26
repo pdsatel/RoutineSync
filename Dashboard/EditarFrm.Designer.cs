@@ -38,9 +38,8 @@ namespace Tcc
             btnSalvar = new Button();
             btnCancelar = new Button();
             SuspendLayout();
-            // 
+
             // lblTitulo
-            // 
             lblTitulo.AutoSize = true;
             lblTitulo.ForeColor = Color.FromArgb(51, 51, 51);
             lblTitulo.Location = new Point(40, 36);
@@ -48,9 +47,7 @@ namespace Tcc
             lblTitulo.Size = new Size(66, 28);
             lblTitulo.TabIndex = 0;
             lblTitulo.Text = "Título:";
-            // 
             // txtTitulo
-            // 
             txtTitulo.BackColor = Color.White;
             txtTitulo.BorderStyle = BorderStyle.FixedSingle;
             txtTitulo.ForeColor = Color.FromArgb(51, 51, 51);
@@ -58,9 +55,7 @@ namespace Tcc
             txtTitulo.Name = "txtTitulo";
             txtTitulo.Size = new Size(340, 34);
             txtTitulo.TabIndex = 1;
-            // 
             // lblDescricao
-            // 
             lblDescricao.AutoSize = true;
             lblDescricao.ForeColor = Color.FromArgb(51, 51, 51);
             lblDescricao.Location = new Point(40, 84);
@@ -68,9 +63,7 @@ namespace Tcc
             lblDescricao.Size = new Size(100, 28);
             lblDescricao.TabIndex = 2;
             lblDescricao.Text = "Descrição:";
-            // 
             // txtDescricao
-            // 
             txtDescricao.BackColor = Color.White;
             txtDescricao.BorderStyle = BorderStyle.FixedSingle;
             txtDescricao.ForeColor = Color.FromArgb(51, 51, 51);
@@ -79,9 +72,7 @@ namespace Tcc
             txtDescricao.Name = "txtDescricao";
             txtDescricao.Size = new Size(340, 80);
             txtDescricao.TabIndex = 3;
-            // 
             // lblDataEntrega
-            // 
             lblDataEntrega.AutoSize = true;
             lblDataEntrega.ForeColor = Color.FromArgb(51, 51, 51);
             lblDataEntrega.Location = new Point(40, 185);
@@ -89,19 +80,17 @@ namespace Tcc
             lblDataEntrega.Size = new Size(129, 28);
             lblDataEntrega.TabIndex = 4;
             lblDataEntrega.Text = "Data Entrega:";
-            // 
             // dtpDataEntrega
-            // 
             dtpDataEntrega.CalendarMonthBackground = Color.White;
             dtpDataEntrega.ForeColor = Color.FromArgb(51, 51, 51);
-            dtpDataEntrega.Format = DateTimePickerFormat.Short;
+            dtpDataEntrega.Format = DateTimePickerFormat.Custom;
+            dtpDataEntrega.CustomFormat = "dd/MM/yyyy HH:mm";
+            dtpDataEntrega.ShowUpDown = true;
             dtpDataEntrega.Location = new Point(175, 180);
             dtpDataEntrega.Name = "dtpDataEntrega";
-            dtpDataEntrega.Size = new Size(120, 34);
+            dtpDataEntrega.Size = new Size(180, 34);
             dtpDataEntrega.TabIndex = 5;
-            // 
             // lblPrioridade
-            // 
             lblPrioridade.AutoSize = true;
             lblPrioridade.ForeColor = Color.FromArgb(51, 51, 51);
             lblPrioridade.Location = new Point(40, 235);
@@ -109,9 +98,7 @@ namespace Tcc
             lblPrioridade.Size = new Size(107, 28);
             lblPrioridade.TabIndex = 6;
             lblPrioridade.Text = "Prioridade:";
-            // 
             // cmbPrioridade
-            // 
             cmbPrioridade.BackColor = Color.White;
             cmbPrioridade.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbPrioridade.ForeColor = Color.FromArgb(51, 51, 51);
@@ -120,9 +107,7 @@ namespace Tcc
             cmbPrioridade.Name = "cmbPrioridade";
             cmbPrioridade.Size = new Size(140, 36);
             cmbPrioridade.TabIndex = 7;
-            // 
             // btnSalvar
-            // 
             btnSalvar.BackColor = Color.FromArgb(32, 46, 57);
             btnSalvar.FlatAppearance.BorderSize = 0;
             btnSalvar.FlatStyle = FlatStyle.Flat;
@@ -135,9 +120,7 @@ namespace Tcc
             btnSalvar.Text = "Salvar";
             btnSalvar.UseVisualStyleBackColor = false;
             btnSalvar.Click += btnSalvar_Click;
-            // 
             // btnCancelar
-            // 
             btnCancelar.BackColor = Color.FromArgb(32, 46, 57);
             btnCancelar.FlatAppearance.BorderSize = 0;
             btnCancelar.FlatStyle = FlatStyle.Flat;
@@ -150,9 +133,7 @@ namespace Tcc
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = false;
             btnCancelar.Click += btnCancelar_Click;
-            // 
             // EditarRotinaForm
-            // 
             AcceptButton = btnSalvar;
             BackColor = Color.FromArgb(255, 252, 246);
             CancelButton = btnCancelar;

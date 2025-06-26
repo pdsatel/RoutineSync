@@ -48,8 +48,7 @@ namespace Tcc
             listViewRotinas.Groups.Clear();
 
             // Dicionário para armazenar grupos por data
-            Dictionary<string, ListViewGroup> gruposPorData = new Dictionary<string, ListViewGroup>();
-
+            SortedDictionary<string, ListViewGroup> gruposPorData = new SortedDictionary<string, ListViewGroup>();
             foreach (var tarefa in tarefas)
             {
                 // Trata datas não definidas ou zeradas
@@ -60,7 +59,7 @@ namespace Tcc
                 }
                 else
                 {
-                    dataGrupoStr = tarefa.DataEntrega.Date.ToString("dd/MM/yyyy");
+                    dataGrupoStr = tarefa.DataEntrega.ToString("dd/MM/yyyy HH:mm"); // Agora é data + hora
                 }
 
                 // Crie o grupo se não existir ainda
@@ -72,7 +71,7 @@ namespace Tcc
                 }
 
                 var item = new ListViewItem(tarefa.Titulo);                    // Coluna 1: Título
-                item.SubItems.Add(tarefa.DataEntrega == DateTime.MinValue ? "Sem data" : tarefa.DataEntrega.ToString("dd/MM/yyyy"));              // Coluna 2: Data Entrega
+                item.SubItems.Add( tarefa.DataEntrega == DateTime.MinValue ? "Sem data": tarefa.DataEntrega.ToString("dd/MM/yyyy HH:mm"));      
                 item.SubItems.Add(tarefa.Status);                              // Coluna 3: Status
                 item.SubItems.Add(tarefa.Prioridade);                          // Coluna 4: Prioridade
                 item.SubItems.Add(tarefa.Descricao != null && tarefa.Descricao.Length > 50

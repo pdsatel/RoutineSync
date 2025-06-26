@@ -10,9 +10,8 @@
         private System.Windows.Forms.Panel panelMenu;
         private System.Windows.Forms.Button btnTarefas;
         private System.Windows.Forms.Button btnRotina;
-        private System.Windows.Forms.Button btnSaude;
         private System.Windows.Forms.Button btnRelatorios;
-        private System.Windows.Forms.Button btnIA;
+        private System.Windows.Forms.Button btnNotificacao;
         private System.Windows.Forms.Button btnSair;
 
         private System.Windows.Forms.Panel panelConteudo;
@@ -29,9 +28,8 @@
             panelTopo = new Panel();
             labelTitulo = new Label();
             panelMenu = new Panel();
-            btnIA = new Button();
+            btnNotificacao = new Button();
             btnRelatorios = new Button();
-            btnSaude = new Button();
             btnRotina = new Button();
             btnTarefas = new Button();
             btnSair = new Button();
@@ -66,9 +64,8 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.FromArgb(44, 62, 80);
-            panelMenu.Controls.Add(btnIA);
+            panelMenu.Controls.Add(btnNotificacao);
             panelMenu.Controls.Add(btnRelatorios);
-            panelMenu.Controls.Add(btnSaude);
             panelMenu.Controls.Add(btnRotina);
             panelMenu.Controls.Add(btnTarefas);
             panelMenu.Controls.Add(btnSair);
@@ -81,21 +78,21 @@
             // 
             // btnIA
             // 
-            btnIA.BackColor = Color.FromArgb(44, 62, 80);
-            btnIA.Dock = DockStyle.Top;
-            btnIA.FlatAppearance.BorderSize = 0;
-            btnIA.FlatStyle = FlatStyle.Flat;
-            btnIA.Font = new Font("Microsoft Sans Serif", 12F);
-            btnIA.ForeColor = Color.White;
-            btnIA.Location = new Point(0, 307);
-            btnIA.Margin = new Padding(0, 0, 0, 10);
-            btnIA.Name = "btnIA";
-            btnIA.Size = new Size(225, 77);
-            btnIA.TabIndex = 0;
-            btnIA.Height = 110;
-            btnIA.Text = "Sugestões IA";
-            btnIA.UseVisualStyleBackColor = false;
-            btnIA.Click += btnIA_Click;
+            btnNotificacao.BackColor = Color.FromArgb(44, 62, 80);
+            btnNotificacao.Dock = DockStyle.Top;
+            btnNotificacao.FlatAppearance.BorderSize = 0;
+            btnNotificacao.FlatStyle = FlatStyle.Flat;
+            btnNotificacao.Font = new Font("Microsoft Sans Serif", 12F);
+            btnNotificacao.ForeColor = Color.White;
+            btnNotificacao.Location = new Point(0, 307);
+            btnNotificacao.Margin = new Padding(0, 0, 0, 10);
+            btnNotificacao.Name = "btnNotificao";
+            btnNotificacao.Size = new Size(225, 77);
+            btnNotificacao.TabIndex = 0;
+            btnNotificacao.Height = 110;
+            btnNotificacao.Text = "Notificações";
+            btnNotificacao.UseVisualStyleBackColor = false;
+            btnNotificacao.Click += btnNotificacao_Click;
             // 
             // btnRelatorios
             // 
@@ -117,21 +114,7 @@
             // 
             // btnSaude
             // 
-            btnSaude.BackColor = Color.FromArgb(44, 62, 80);
-            btnSaude.Dock = DockStyle.Top;
-            btnSaude.FlatAppearance.BorderSize = 0;
-            btnSaude.FlatStyle = FlatStyle.Flat;
-            btnSaude.Font = new Font("Microsoft Sans Serif", 12F);
-            btnSaude.ForeColor = Color.White;
-            btnSaude.Location = new Point(0, 149);
-            btnSaude.Margin = new Padding(0, 0, 0, 10);
-            btnSaude.Name = "btnSaude";
-            btnSaude.Size = new Size(225, 75);
-            btnSaude.TabIndex = 2;
-            btnSaude.Height = 110;
-            btnSaude.Text = "Saúde";
-            btnSaude.UseVisualStyleBackColor = false;
-            btnSaude.Click += btnSaude_Click;
+
             // 
             // btnRotina
             // 

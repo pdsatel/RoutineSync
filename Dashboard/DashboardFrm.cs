@@ -1,11 +1,12 @@
 ﻿    using System;
     using System.Globalization;
     using System.Windows.Forms;
+using RoutineSync;
 
 
 
 
-    namespace Tcc
+namespace Tcc
     {
         public partial class DashboardFrm : Form
 
@@ -16,6 +17,7 @@
             private RotinasUserControl rotinasControl;
             private TarefasUserControl tarefasControl;
             private RelatorioUserControl relatorioControl;
+            private Notificacao notificacaoControl;
             public DashboardFrm(int idUsuario)
             {   
                 InitializeComponent();
@@ -30,7 +32,9 @@
                rotinasControl = new RotinasUserControl(tarefasControl);
                rotinasControl.Dock = DockStyle.Fill;
 
-             
+               notificacaoControl = new Notificacao(); // Supondo que Notificacao é seu UserControl de notificações
+               notificacaoControl.Dock = DockStyle.Fill;
+
 
         }
 
@@ -61,10 +65,7 @@
 
                 
             }
-        private void btnNotificacoes_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Você clicou em Notificações!", "Teste de Notificações", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
+        
 
         private void btnTarefas_Click(object sender, EventArgs e)
             {
@@ -95,10 +96,7 @@
 
 
 
-            private void btnSaude_Click(object sender, EventArgs e)
-            {
-                MessageBox.Show("Abrir painel de Saúde");
-            }
+           
 
 
 
@@ -118,12 +116,21 @@
             relatorioControl.Dock = DockStyle.Fill;
         }
 
-        private void btnIA_Click(object sender, EventArgs e)
-            {
-                MessageBox.Show("Abrir painel de Sugestões IA");
-            }
+        private void btnNotificacao_Click(object sender, EventArgs e)
+        {
+            var tarefas = tarefasControl.BuscarTarefasBanco();
+            notificacaoControl.GerarNotificacoesDasTarefas(tarefas);
 
-            private void btnSair_Click(object sender, EventArgs e)
+            MessageBox.Show($"Quantidade de tarefas carregadas: {tarefas.Count}", "Verificador de Tarefas", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            panelConteudo.Controls.Clear();
+            panelConteudo.Controls.Add(notificacaoControl);
+            notificacaoControl.Dock = DockStyle.Fill;
+            notificacaoControl.Visible= true;
+            notificacaoControl.BringToFront();
+        }
+
+        private void btnSair_Click(object sender, EventArgs e)
             {
                 this.Close();
             }

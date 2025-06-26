@@ -138,6 +138,9 @@ namespace Tcc
                 Location = new Point(startX, currentY),
                 Font = new Font("Segoe UI", 11),
                 Width = 200,
+                Format = DateTimePickerFormat.Custom,
+                CustomFormat = "dd/MM/yyyy HH:mm",
+                ShowUpDown = true,
                 CalendarForeColor = Color.Black,
                 CalendarMonthBackground = Color.White,
                 CalendarTitleBackColor = Color.FromArgb(32, 46, 57),
@@ -277,7 +280,7 @@ namespace Tcc
                             string resumo = descricao.Length > 50 ? descricao.Substring(0, 50) + "..." : descricao;
 
                             var item = new ListViewItem(titulo);
-                            item.SubItems.Add(dataEntrega.ToShortDateString());
+                            item.SubItems.Add(dataEntrega.ToString("dd/MM/yyyy HH:mm"));
                             item.SubItems.Add(status);
                             item.SubItems.Add(prioridade);
                             item.SubItems.Add(descricao);
@@ -373,10 +376,10 @@ namespace Tcc
                     cmd.Parameters.AddWithValue("@usuarioId", UsuarioId);
                     cmd.Parameters.AddWithValue("@titulo", titulo);
                     cmd.Parameters.AddWithValue("@descricao", descricao);
-                    cmd.Parameters.AddWithValue("@data_entrega", dataEntrega.Date);
+                    cmd.Parameters.AddWithValue("@data_entrega", dataEntrega);
                     cmd.Parameters.AddWithValue("@status", status.ToLower());
                     cmd.Parameters.AddWithValue("@prioridade", prioridade);
-                    cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();  
 
                   
                    
