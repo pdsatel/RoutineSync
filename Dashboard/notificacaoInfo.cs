@@ -1,4 +1,4 @@
-﻿namespace RoutineSync
+﻿namespace Tcc
 {
     public class NotificacaoInfo
     {

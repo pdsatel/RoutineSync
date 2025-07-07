@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Tcc;
 
-namespace RoutineSync
+namespace Tcc
 {
     public partial class Notificacao : UserControl
     {
@@ -39,7 +39,8 @@ namespace RoutineSync
 
             foreach (var tarefa in tarefas)
             {
-                if (tarefa.Status != null && !tarefa.Status.ToLower().Contains("conclu"))
+                // Filtro ajustado (notifica tudo exceto "Concluído")
+                if (tarefa.Status != null && !tarefa.Status.Equals("Concluído", StringComparison.OrdinalIgnoreCase))
                 {
                     AdicionarNotificacao(
                         tarefa.Titulo,
@@ -57,45 +58,50 @@ namespace RoutineSync
         {
             var painel = new Panel
             {
-                Height = 60,
-                Dock = DockStyle.Top,
+                Width = flowPanelNotificacoes.ClientSize.Width - 20,
                 BackColor = info.Lida ? Color.LightGray : Color.LightYellow,
-                Padding = new Padding(5)
+                Margin = new Padding(0, 0, 0, 10)
             };
 
             var lblTitulo = new Label
             {
                 Text = info.Titulo,
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 Dock = DockStyle.Top,
-                Height = 20
+                AutoSize = true,
+                Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                Padding = new Padding(5)
             };
+
             var lblMsg = new Label
             {
                 Text = info.Mensagem,
                 Dock = DockStyle.Top,
-                Height = 20
+                AutoSize = true,
+                MaximumSize = new Size(painel.Width - 10, 0),
+                Padding = new Padding(5, 0, 5, 5)
             };
+
             var lblData = new Label
             {
                 Text = info.Data.ToString("g"),
                 Dock = DockStyle.Top,
-                Height = 20,
-                ForeColor = Color.Gray
+                AutoSize = true,
+                ForeColor = Color.Gray,
+                Padding = new Padding(5, 0, 5, 5)
             };
 
             painel.Controls.Add(lblData);
             painel.Controls.Add(lblMsg);
             painel.Controls.Add(lblTitulo);
 
-            painel.Click += (s, e) => {
-                info.Lida = true;
-                painel.BackColor = Color.LightGray;
-            };
+            // Ajuste dinâmico da altura
+            painel.Height = lblTitulo.Height + lblMsg.Height + lblData.Height + 15;
 
-            // Supondo que você tenha um FlowLayoutPanel chamado flowPanelNotificacoes
             flowPanelNotificacoes.Controls.Add(painel);
-            flowPanelNotificacoes.Controls.SetChildIndex(painel, 0); // mais recente no topo
+            flowPanelNotificacoes.Controls.SetChildIndex(painel, 0);
+        }
+
+        // Supondo que você tenha um FlowLayoutPanel chamado flowPanelNotificacoes
+        // mais recente no topo
         }
     }
-}

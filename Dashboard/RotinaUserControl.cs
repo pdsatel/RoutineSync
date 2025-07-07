@@ -21,12 +21,21 @@ namespace Tcc
             InitializeComponent();
             this.usuarioId = tarefasControl.UsuarioId;
             this.tarefasControl = tarefasControl;
+            this.Dock = DockStyle.Fill;
 
             // Associe eventos aqui
+
+
+
+
             btnAtualizar.Click += BtnAtualizar_Click;
-           
+
             listViewRotinas.ItemCheck += listViewRotinas_ItemCheck;
             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
+
+            var tarefas = tarefasControl.BuscarTarefasBanco();
+            MessageBox.Show($"Qtde tarefas retornadas: {tarefas.Count}");
+            CarregarRotinasDeTarefas(tarefas);
             excluirToolStripMenuItem.Click += excluirToolStripMenuItem_Click;
             btnConcluir.Click += btnConcluir_Click;
             listViewRotinas.OwnerDraw = true;
@@ -71,7 +80,7 @@ namespace Tcc
                 }
 
                 var item = new ListViewItem(tarefa.Titulo);                    // Coluna 1: Título
-                item.SubItems.Add( tarefa.DataEntrega == DateTime.MinValue ? "Sem data": tarefa.DataEntrega.ToString("dd/MM/yyyy HH:mm"));      
+                item.SubItems.Add(tarefa.DataEntrega == DateTime.MinValue ? "Sem data" : tarefa.DataEntrega.ToString("dd/MM/yyyy HH:mm"));
                 item.SubItems.Add(tarefa.Status);                              // Coluna 3: Status
                 item.SubItems.Add(tarefa.Prioridade);                          // Coluna 4: Prioridade
                 item.SubItems.Add(tarefa.Descricao != null && tarefa.Descricao.Length > 50
@@ -268,9 +277,24 @@ namespace Tcc
         }
         public void AtualizarRotinas()
         {
+            listViewRotinas.Items.Clear();
             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
         }
-      
+
+        private void btnAtualizar_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void RotinasUserControl_Load(object sender, EventArgs e)
+        {
+
+        }
     }
-    
+
 }

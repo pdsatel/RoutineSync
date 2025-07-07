@@ -2,7 +2,7 @@
 
 
 
-namespace RoutineSync
+namespace Tcc
 {
     partial class Notificacao
     {
@@ -32,44 +32,43 @@ namespace RoutineSync
         /// </summary>
         private void InitializeComponent()
         {
-            this.flowPanelNotificacoes = new System.Windows.Forms.FlowLayoutPanel();
-            this.lblTitulo = new System.Windows.Forms.Label();
-            this.SuspendLayout();
-            // 
-            // lblTitulo
-            // 
-            this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblTitulo.Location = new System.Drawing.Point(15, 10);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(222, 32);
-            this.lblTitulo.TabIndex = 0;
-            this.lblTitulo.Text = "Caixa de Notificações";
+            flowPanelNotificacoes = new FlowLayoutPanel();
+            lblTitulo = new Label();
+            SuspendLayout();
             // 
             // flowPanelNotificacoes
             // 
-            this.flowPanelNotificacoes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowPanelNotificacoes.AutoScroll = true;
-            this.flowPanelNotificacoes.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowPanelNotificacoes.Location = new System.Drawing.Point(15, 50);
-            this.flowPanelNotificacoes.Name = "flowPanelNotificacoes";
-            this.flowPanelNotificacoes.Size = new System.Drawing.Size(450, 340);
-            this.flowPanelNotificacoes.TabIndex = 1;
-            this.flowPanelNotificacoes.WrapContents = true;
+            flowPanelNotificacoes.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            flowPanelNotificacoes.AutoScroll = true;
+            flowPanelNotificacoes.FlowDirection = FlowDirection.TopDown;
+            flowPanelNotificacoes.Location = new Point(13, 35);
+            flowPanelNotificacoes.Margin = new Padding(3, 2, 3, 2);
+            flowPanelNotificacoes.Name = "flowPanelNotificacoes";
+            flowPanelNotificacoes.Size = new Size(394, 255);
+            flowPanelNotificacoes.TabIndex = 1;
+            // 
+            // lblTitulo
+            // 
+            lblTitulo.AutoSize = true;
+            lblTitulo.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            lblTitulo.Location = new Point(13, 8);
+            lblTitulo.Name = "lblTitulo";
+            lblTitulo.Size = new Size(201, 25);
+            lblTitulo.TabIndex = 0;
+            lblTitulo.Text = "Caixa de Notificações";
             // 
             // Notificacao
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.Controls.Add(this.lblTitulo);
-            this.Controls.Add(this.flowPanelNotificacoes);
-            this.Name = "Notificacao";
-            this.Size = new System.Drawing.Size(480, 410);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.WhiteSmoke;
+            Controls.Add(lblTitulo);
+            Controls.Add(flowPanelNotificacoes);
+            Margin = new Padding(3, 2, 3, 2);
+            Name = "Notificacao";
+            Size = new Size(420, 308);
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

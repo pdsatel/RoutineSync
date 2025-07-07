@@ -618,6 +618,17 @@ namespace Tcc
             return tarefas;
         }
 
+        public List<TarefaInfo> ObterTarefasVisiveis()
+        {
+            var tarefas = new List<TarefaInfo>();
+            foreach (ListViewItem item in listViewTarefas.Items)
+            {
+                if (item.Tag is TarefaInfo info)
+                    tarefas.Add(info);
+            }
+            return tarefas;
+        }
+
     }
 }
 
