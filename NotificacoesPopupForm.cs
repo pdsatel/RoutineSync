@@ -16,7 +16,7 @@ namespace Tcc
         private System.Windows.Forms.Timer autoCloseTimer;
 
         // --- Construtor para UMA notificação por vez (string) ---
-        public NotificacoesPopupForm(string notificacao, int segundos = 3)
+        public NotificacoesPopupForm(string notificacao, int segundos = 2)
         {
             InitializeComponent();
             this.TopMost = true;

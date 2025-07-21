@@ -14,7 +14,7 @@ namespace Tcc
         {
             InitializeComponent();
 
-            AdicionarNotificacao("Teste", "Mensagem de teste", DateTime.Now);
+            
         }
 
         // Método para adicionar notificação na lista e exibir
@@ -50,7 +50,7 @@ namespace Tcc
                     count++;
                 }
             }
-            MessageBox.Show($"Notificações criadas: {count}");
+            
         }
 
         // Exibe uma notificação visualmente (simples, pode melhorar depois)

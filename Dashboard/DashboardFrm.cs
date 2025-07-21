@@ -45,6 +45,10 @@ namespace Tcc
             btnRelatorios.ImageAlign = ContentAlignment.MiddleLeft;
             btnRelatorios.TextImageRelation = TextImageRelation.ImageBeforeText;
 
+            btnNotificacao.Image = Properties.Resources.Notificacao_png;
+            btnNotificacao.ImageAlign = ContentAlignment.MiddleLeft;
+            btnNotificacao.TextImageRelation = TextImageRelation.ImageBeforeText;
+
             btnSair.Image = Properties.Resources.Sair_png;
             btnSair.ImageAlign = ContentAlignment.MiddleLeft;
             btnSair.TextImageRelation = TextImageRelation.ImageBeforeText;

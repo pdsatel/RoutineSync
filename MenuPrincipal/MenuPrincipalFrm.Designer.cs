@@ -194,6 +194,12 @@
             textBoxNomecad.Location = new Point(xCampo, yInicio);
             textBoxNomecad.Size = new Size(campoLargura, campoAltura);
 
+            labelNome.Location = new Point(xLabel, yInicio + yStep);
+            labelNome.Size = new Size(labelLargura, campoAltura);
+            labelNome.Text = "Nome:";
+            labelNome.Font = new Font("Segoe UI", 11F);
+
+
             // textBoxNomecad
             textBoxNomecad.Location = new Point(xCampo, yInicio);
             textBoxNomecad.Size = new Size(campoLargura, campoAltura);
