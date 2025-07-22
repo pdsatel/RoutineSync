@@ -20,7 +20,7 @@ namespace Tcc
         private bool senhaCadastroVisivel = true;
         private bool senhaCadastroConfirmVisivel = true;
         private bool senhaLoginVisivel = true;
-
+        
 
 
         public MenuPrincipalFrm()
@@ -47,6 +47,9 @@ namespace Tcc
             pictureBoxOlhoSenhaCadastro.Image = Properties.Resources.eye_close;
             pictureBoxOlhoConfirmarSenha.Image = Properties.Resources.eye_close;
             pictureBoxOlhoLogin.Image = Properties.Resources.eye_close;
+
+           
+        
 
 
             this.StartPosition = FormStartPosition.CenterParent;

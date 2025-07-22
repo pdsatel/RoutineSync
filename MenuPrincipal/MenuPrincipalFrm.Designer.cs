@@ -3,6 +3,8 @@
     partial class MenuPrincipalFrm
     {
         private System.ComponentModel.IContainer components = null;
+        private Panel panelDireita;
+        private PictureBox pictureBoxLogo;
 
         protected override void Dispose(bool disposing)
         {
@@ -386,6 +388,48 @@
             panelCadastro.ResumeLayout(false);
             panelCadastro.PerformLayout();
             ResumeLayout(false);
+
+
+
+
+            // panelDireita (área azul à direita)
+            panelDireita = new Panel();
+            panelDireita.Name = "panelDireita";
+            panelDireita.BackColor = ColorTranslator.FromHtml("#202E39"); // cor azul
+            panelDireita.Dock = DockStyle.Right;
+            panelDireita.Width = this.ClientSize.Width / 2;
+            panelDireita.TabIndex = 100; // um número alto para garantir que fique acima dos outros
+
+            // pictureBoxLogo (logo centralizada no painel azul)
+            pictureBoxLogo = new PictureBox();
+            pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxLogo.BackColor = Color.Transparent;
+            pictureBoxLogo.Size = new Size(220, 220); // ajuste o tamanho conforme quiser
+
+            // Caminho relativo para a logo
+            string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logo.png");
+            if (System.IO.File.Exists(logoPath))
+                pictureBoxLogo.Image = Image.FromFile(logoPath);
+
+            // Centralizar a logo no painelDireita
+            pictureBoxLogo.Location = new Point(
+                (panelDireita.Width - pictureBoxLogo.Width) / 2,
+                (panelDireita.Height - pictureBoxLogo.Height) / 2
+            );
+
+            // Adiciona o PictureBox ao painel azul
+            panelDireita.Controls.Add(pictureBoxLogo);
+
+            // Adiciona o painel azul ao formulário (depois dos outros panels)
+            this.Controls.Add(panelDireita);
+
+            // Garante que a logo fique centralizada mesmo se redimensionar
+            panelDireita.Resize += (s, e) => {
+                pictureBoxLogo.Location = new Point(
+                    (panelDireita.Width - pictureBoxLogo.Width) / 2,
+                    (panelDireita.Height - pictureBoxLogo.Height) / 2
+                );
+            };
         }
 
         #endregion

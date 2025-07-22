@@ -77,11 +77,36 @@ namespace Tcc
                     // Gere os dados do relatório (pegue do seu método de busca)
                     int usuarioId = usuarioID;
                     var tarefas = BuscarTarefasUsuario(this.usuarioID);
-                    MessageBox.Show("Qtd tarefas: " + tarefas.Count);
+                    
 
                     Document doc = new Document(iTextSharp.text.PageSize.A4);
                     PdfWriter.GetInstance(doc, new FileStream(sfd.FileName, FileMode.Create));
                     doc.Open();
+
+                    string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logo.png");
+                    // Após adicionar a logo e o espaço
+                    string nomeUsuario = BuscarNomeDoUsuario(usuarioID); // Você precisa implementar esse método de acordo com seu banco
+                    string nomeProjeto = "RoutineSync";
+                    string dataGeracao = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+
+                    iTextSharp.text.Font fontCabecalho = iTextSharp.text.FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD);
+
+                    Paragraph cabecalho = new Paragraph($"{nomeProjeto} - Usuário: {nomeUsuario} - Gerado em: {dataGeracao}", fontCabecalho);
+                    cabecalho.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
+                    doc.Add(cabecalho);
+
+                    doc.Add(new Paragraph(" ")); // Espaço após o cabeçalho
+                    if (File.Exists(logoPath))
+                    {
+                        iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(logoPath);
+                        logo.ScaleAbsolute(120f, 120f);
+                        // Use o namespace completo:
+                        logo.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        doc.Add(logo);
+
+                        // Espaço após a logo
+                        doc.Add(new Paragraph(" "));
+                    }
 
                     // Título do relatório
                     doc.Add(new Paragraph("Relatório de Tarefas"));
@@ -374,6 +399,22 @@ namespace Tcc
                 Size = new System.Drawing.Size(600, 300)
             };
             this.Controls.Add(plotViewBarras);
+        }
+
+        private string BuscarNomeDoUsuario(int usuarioId)
+        {
+            using (MySqlConnection conn = Conexao.ObterConexao())
+            {
+                string sql = "SELECT nome FROM usuarios WHERE id = @id";
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", usuarioId);
+                    object result = cmd.ExecuteScalar();
+                    if (result != null)
+                        return result.ToString();
+                }
+            }
+            return "Desconhecido";
         }
 
         private void AtualizarGraficoBarras(List<TarefasUserControl.TarefaInfo> tarefas)
