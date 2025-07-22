@@ -95,7 +95,7 @@ namespace Tcc
         private void btnRelatorios_Click(object sender, EventArgs e)
         {
             if (relatorioControl == null)
-                relatorioControl = new RelatorioUserControl();
+                relatorioControl = new RelatorioUserControl(usuarioId);
 
             relatorioControl.AtualizarRelatorioDoBanco(usuarioId);
 
