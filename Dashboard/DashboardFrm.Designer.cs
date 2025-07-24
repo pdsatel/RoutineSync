@@ -12,6 +12,7 @@
         private System.Windows.Forms.Button btnRotina;
         private System.Windows.Forms.Button btnRelatorios;
         private System.Windows.Forms.Button btnNotificacao;
+        private System.Windows.Forms.Button btnPerfil;     // Novo botão de perfil
         private System.Windows.Forms.Button btnSair;
 
         private System.Windows.Forms.Panel panelConteudo;
@@ -32,6 +33,7 @@
             btnRelatorios = new Button();
             btnRotina = new Button();
             btnTarefas = new Button();
+            btnPerfil = new Button();        // Inicialização do botão perfil
             btnSair = new Button();
             panelConteudo = new Panel();
             panelTopo.SuspendLayout();
@@ -68,6 +70,7 @@
             panelMenu.Controls.Add(btnRelatorios);
             panelMenu.Controls.Add(btnRotina);
             panelMenu.Controls.Add(btnTarefas);
+            panelMenu.Controls.Add(btnPerfil);     // Adiciona o botão perfil
             panelMenu.Controls.Add(btnSair);
             panelMenu.Dock = DockStyle.Left;
             panelMenu.Location = new Point(0, 95);
@@ -76,7 +79,7 @@
             panelMenu.Size = new Size(225, 655);
             panelMenu.TabIndex = 1;
             // 
-            // btnIA
+            // btnNotificacao
             // 
             btnNotificacao.BackColor = Color.FromArgb(44, 62, 80);
             btnNotificacao.Dock = DockStyle.Top;
@@ -111,10 +114,6 @@
             btnRelatorios.Text = " Relatórios";
             btnRelatorios.UseVisualStyleBackColor = false;
             btnRelatorios.Click += btnRelatorios_Click;
-            // 
-            // btnSaude
-            // 
-
             // 
             // btnRotina
             // 
@@ -151,6 +150,24 @@
             btnTarefas.Text = "Tarefas";
             btnTarefas.UseVisualStyleBackColor = false;
             btnTarefas.Click += btnTarefas_Click;
+            // 
+            // btnPerfil
+            // 
+            btnPerfil.BackColor = Color.FromArgb(44, 62, 80);
+            btnPerfil.Dock = DockStyle.Top;
+            btnPerfil.FlatAppearance.BorderSize = 0;
+            btnPerfil.FlatStyle = FlatStyle.Flat;
+            btnPerfil.Font = new Font("Microsoft Sans Serif", 12F);
+            btnPerfil.ForeColor = Color.White;
+            btnPerfil.Location = new Point(0, 384); // Ajuste o valor de acordo com a ordem desejada
+            btnPerfil.Margin = new Padding(0, 0, 0, 10);
+            btnPerfil.Name = "btnPerfil";
+            btnPerfil.Size = new Size(225, 77);
+            btnPerfil.TabIndex = 6;
+            btnPerfil.Height = 110;
+            btnPerfil.Text = "Perfil";
+            btnPerfil.UseVisualStyleBackColor = false;
+            btnPerfil.Click += btnPerfil_Click;
             // 
             // btnSair
             // 
@@ -200,6 +217,18 @@
             panelTopo.PerformLayout();
             panelMenu.ResumeLayout(false);
             ResumeLayout(false);
+        }
+
+        // Adicione o evento click do botão perfil
+        private void btnPerfil_Click(object sender, EventArgs e)
+        {
+            int usuarioId = this.usuarioId; // Obtenha o ID do usuário atual
+
+            var perfilUC = new Tcc.Dashboard.PerfilUserControl(usuarioId);
+            perfilUC.Dock = DockStyle.Fill;
+            panelConteudo.Controls.Clear();
+            panelConteudo.Controls.Add(perfilUC);
+
         }
     }
 }

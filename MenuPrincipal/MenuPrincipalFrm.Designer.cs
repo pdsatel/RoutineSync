@@ -19,7 +19,6 @@
 
         private void InitializeComponent()
         {
-            
             labelTitulo = new Label();
             panelLogin = new Panel();
             labelLogin = new Label();
@@ -29,6 +28,8 @@
             textBoxSenha = new TextBox();
             btnEntrar = new Button();
             linkRegistrar = new LinkLabel();
+            linkEsqueciSenha = new LinkLabel();
+            pictureBoxOlhoLogin = new PictureBox();
             panelCadastro = new Panel();
             labelCadastro = new Label();
             labelNome = new Label();
@@ -49,14 +50,23 @@
             dateTimeHoraAcordar = new DateTimePicker();
             btnCadastrar = new Button();
             btnVoltarCad = new Button();
+            pictureBoxOlhoSenhaCadastro = new PictureBox();
+            pictureBoxOlhoConfirmarSenha = new PictureBox();
+            panelDireita = new Panel();
+            pictureBoxLogo = new PictureBox();
             panelLogin.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxOlhoLogin).BeginInit();
             panelCadastro.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxOlhoSenhaCadastro).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxOlhoConfirmarSenha).BeginInit();
+            panelDireita.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
             SuspendLayout();
-
+            // 
             // labelTitulo
             // 
             labelTitulo.AutoSize = true;
-            labelTitulo.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
+            labelTitulo.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point);
             labelTitulo.ForeColor = SystemColors.ActiveCaption;
             labelTitulo.Location = new Point(173, 102);
             labelTitulo.Name = "labelTitulo";
@@ -73,9 +83,12 @@
             panelLogin.Controls.Add(textBoxSenha);
             panelLogin.Controls.Add(btnEntrar);
             panelLogin.Controls.Add(linkRegistrar);
-            panelLogin.Location = new Point(3, 35);
+            panelLogin.Controls.Add(linkEsqueciSenha);
+            panelLogin.Controls.Add(pictureBoxOlhoLogin);
+            panelLogin.Location = new Point(2, 21);
+            panelLogin.Margin = new Padding(2, 2, 2, 2);
             panelLogin.Name = "panelLogin";
-            panelLogin.Size = new Size(701, 878);
+            panelLogin.Size = new Size(491, 527);
             panelLogin.TabIndex = 1;
             panelLogin.Visible = false;
             panelLogin.Paint += panelLogin_Paint;
@@ -83,299 +96,375 @@
             // labelLogin
             // 
             labelLogin.AutoSize = true;
-            labelLogin.Font = new Font("Segoe UI", 24F, FontStyle.Bold);
+            labelLogin.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point);
             labelLogin.ForeColor = SystemColors.ActiveCaption;
-            labelLogin.Location = new Point(601, 45);
+            labelLogin.Location = new Point(421, 27);
+            labelLogin.Margin = new Padding(2, 0, 2, 0);
             labelLogin.Name = "labelLogin";
-            labelLogin.Size = new Size(155, 65);
+            labelLogin.Size = new Size(104, 45);
             labelLogin.TabIndex = 6;
             labelLogin.Text = "Login";
             labelLogin.Click += label1_Click_1;
             // 
             // labelEmail
             // 
-            labelEmail.Location = new Point(601, 140);
+            labelEmail.Location = new Point(421, 84);
+            labelEmail.Margin = new Padding(2, 0, 2, 0);
             labelEmail.Name = "labelEmail";
-            labelEmail.Size = new Size(100, 30);
+            labelEmail.Size = new Size(70, 18);
             labelEmail.TabIndex = 0;
             labelEmail.Text = "Email:";
             // 
             // textBoxEmail
             // 
-            textBoxEmail.Location = new Point(601, 170);
+            textBoxEmail.Location = new Point(421, 102);
+            textBoxEmail.Margin = new Padding(2, 2, 2, 2);
             textBoxEmail.Name = "textBoxEmail";
-            textBoxEmail.Size = new Size(300, 31);
+            textBoxEmail.Size = new Size(211, 23);
             textBoxEmail.TabIndex = 1;
             // 
             // labelSenha
             // 
-            labelSenha.Location = new Point(601, 215);
+            labelSenha.Location = new Point(421, 129);
+            labelSenha.Margin = new Padding(2, 0, 2, 0);
             labelSenha.Name = "labelSenha";
-            labelSenha.Size = new Size(100, 30);
+            labelSenha.Size = new Size(70, 18);
             labelSenha.TabIndex = 2;
             labelSenha.Text = "Senha:";
             // 
             // textBoxSenha
             // 
-            textBoxSenha.Location = new Point(620, 245);
+            textBoxSenha.Location = new Point(434, 147);
+            textBoxSenha.Margin = new Padding(2, 2, 2, 2);
             textBoxSenha.Name = "textBoxSenha";
-           
-            textBoxSenha.Size = new Size(300, 31);
+            textBoxSenha.Size = new Size(187, 23);
             textBoxSenha.TabIndex = 3;
             // 
             // btnEntrar
-
-            btnEntrar.Location = new Point(601, 300);
+            // 
+            btnEntrar.Location = new Point(421, 180);
+            btnEntrar.Margin = new Padding(2, 2, 2, 2);
             btnEntrar.Name = "btnEntrar";
-            btnEntrar.Size = new Size(10, 30);
+            btnEntrar.Size = new Size(7, 18);
             btnEntrar.TabIndex = 4;
             btnEntrar.Text = "Entrar";
             btnEntrar.UseVisualStyleBackColor = false;
             btnEntrar.Click += btnEntrar_Click;
             // 
-
             // linkRegistrar
             // 
             linkRegistrar.AutoSize = true;
-            linkRegistrar.Location = new Point(601, 360);
-            linkRegistrar.Margin = new Padding(4, 0, 4, 0);
+            linkRegistrar.Location = new Point(421, 216);
             linkRegistrar.Name = "linkRegistrar";
-            linkRegistrar.Size = new Size(270, 25);
+            linkRegistrar.Size = new Size(179, 15);
             linkRegistrar.TabIndex = 8;
             linkRegistrar.TabStop = true;
             linkRegistrar.Text = "Não tem uma conta? Registre-se";
             linkRegistrar.Click += linkRegistrar_Click;
-
-            linkEsqueciSenha = new LinkLabel();
+            // 
+            // linkEsqueciSenha
+            // 
             linkEsqueciSenha.AutoSize = true;
-            linkEsqueciSenha.Location = new Point(601, 400); // Ajuste a posição conforme necessário
+            linkEsqueciSenha.Location = new Point(421, 240);
+            linkEsqueciSenha.Margin = new Padding(2, 0, 2, 0);
             linkEsqueciSenha.Name = "linkEsqueciSenha";
-            linkEsqueciSenha.Size = new Size(200, 25);
+            linkEsqueciSenha.Size = new Size(118, 15);
             linkEsqueciSenha.TabIndex = 9;
             linkEsqueciSenha.TabStop = true;
             linkEsqueciSenha.Text = "Esqueci minha senha";
             linkEsqueciSenha.Click += linkEsqueciSenha_Click;
-            panelLogin.Controls.Add(linkEsqueciSenha);
-
+            // 
+            // pictureBoxOlhoLogin
+            // 
+            pictureBoxOlhoLogin.Cursor = Cursors.Hand;
+            pictureBoxOlhoLogin.Image = Properties.Resources.eye_close;
+            pictureBoxOlhoLogin.Location = new Point(434, 147);
+            pictureBoxOlhoLogin.Margin = new Padding(2, 2, 2, 2);
+            pictureBoxOlhoLogin.Name = "pictureBoxOlhoLogin";
+            pictureBoxOlhoLogin.Size = new Size(21, 17);
+            pictureBoxOlhoLogin.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxOlhoLogin.TabIndex = 10;
+            pictureBoxOlhoLogin.TabStop = false;
             // 
             // panelCadastro
             // 
-            panelCadastro.BorderStyle = BorderStyle.FixedSingle;
-            panelCadastro.Size = new Size(700, 540); // Diminuiu: menos largo e mais baixo
-            panelCadastro.Location = new Point((this.ClientSize.Width - panelCadastro.Width) / 2, 60);
             panelCadastro.BackColor = Color.White;
+            panelCadastro.BorderStyle = BorderStyle.FixedSingle;
+            panelCadastro.Controls.Add(pictureBoxOlhoSenhaCadastro);
+            panelCadastro.Controls.Add(pictureBoxOlhoConfirmarSenha);
+            panelCadastro.Controls.Add(labelCadastro);
+            panelCadastro.Controls.Add(labelNome);
+            panelCadastro.Controls.Add(textBoxNomecad);
+            panelCadastro.Controls.Add(labelEmailcad);
+            panelCadastro.Controls.Add(textBoxEmailcad);
+            panelCadastro.Controls.Add(labelSenhacad);
+            panelCadastro.Controls.Add(textBoxSenhacad);
+            panelCadastro.Controls.Add(labelSenha2cad);
+            panelCadastro.Controls.Add(textBoxConfirmarsenha);
+            panelCadastro.Controls.Add(labelAltura);
+            panelCadastro.Controls.Add(textBoxAltura);
+            panelCadastro.Controls.Add(labelPeso);
+            panelCadastro.Controls.Add(textBoxPeso);
+            panelCadastro.Controls.Add(labelHoraDormir);
+            panelCadastro.Controls.Add(dateTimeHoraDormir);
+            panelCadastro.Controls.Add(labelHoraAcordar);
+            panelCadastro.Controls.Add(dateTimeHoraAcordar);
+            panelCadastro.Controls.Add(btnCadastrar);
+            panelCadastro.Controls.Add(btnVoltarCad);
+            panelCadastro.Location = new Point(199, 36);
+            panelCadastro.Margin = new Padding(2, 2, 2, 2);
+            panelCadastro.Name = "panelCadastro";
+            panelCadastro.Size = new Size(491, 325);
+            panelCadastro.TabIndex = 2;
             panelCadastro.Visible = false;
-            panelCadastro.Controls.Clear();
-            panelCadastro.Controls.AddRange(new Control[] {
-            labelCadastro, labelNome, textBoxNomecad, labelEmailcad, textBoxEmailcad,
-            labelSenhacad, textBoxSenhacad, labelSenha2cad, textBoxConfirmarsenha,
-            labelAltura, textBoxAltura, labelPeso, textBoxPeso,
-            labelHoraDormir, dateTimeHoraDormir, labelHoraAcordar, dateTimeHoraAcordar,
-            btnCadastrar, btnVoltarCad });
-
+            // 
             // labelCadastro
+            // 
             labelCadastro.AutoSize = true;
-            labelCadastro.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            labelCadastro.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point);
             labelCadastro.ForeColor = SystemColors.ActiveCaption;
-            labelCadastro.Location = new Point((panelCadastro.Width - 180) / 2, 22);
-            labelCadastro.Size = new Size(180, 50);
+            labelCadastro.Location = new Point(490, 13);
+            labelCadastro.Margin = new Padding(2, 0, 2, 0);
+            labelCadastro.Name = "labelCadastro";
+            labelCadastro.Size = new Size(132, 37);
+            labelCadastro.TabIndex = 0;
             labelCadastro.Text = "Cadastro";
-
-            // Parâmetros para campos menores e espaçamento
-            int campoLargura = 265;
-            int campoAltura = 28;
-            int labelLargura = 120;
-            int xLabel = 55;
-            int xCampo = 360;
-            int yInicio = 90;
-            int yStep = 50;
-
+            // 
             // labelNome
-            labelNome.Location = new Point(xLabel, yInicio);
-            labelNome.Size = new Size(120, campoAltura);
-            textBoxNomecad.Location = new Point(xCampo, yInicio);
-            textBoxNomecad.Size = new Size(campoLargura, campoAltura);
-
-            labelNome.Location = new Point(xLabel, yInicio + yStep);
-            labelNome.Size = new Size(labelLargura, campoAltura);
+            // 
+            labelNome.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            labelNome.Location = new Point(38, 54);
+            labelNome.Margin = new Padding(2, 0, 2, 0);
+            labelNome.Name = "labelNome";
+            labelNome.Size = new Size(84, 17);
+            labelNome.TabIndex = 1;
             labelNome.Text = "Nome:";
-            labelNome.Font = new Font("Segoe UI", 11F);
-
-
+            // 
             // textBoxNomecad
-            textBoxNomecad.Location = new Point(xCampo, yInicio);
-            textBoxNomecad.Size = new Size(campoLargura, campoAltura);
-            textBoxNomecad.Font = new Font("Segoe UI", 11F);
-
+            // 
+            textBoxNomecad.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            textBoxNomecad.Location = new Point(252, 54);
+            textBoxNomecad.Margin = new Padding(2, 2, 2, 2);
+            textBoxNomecad.Name = "textBoxNomecad";
+            textBoxNomecad.Size = new Size(187, 27);
+            textBoxNomecad.TabIndex = 2;
+            // 
             // labelEmailcad
-            labelEmailcad.Location = new Point(xLabel, yInicio + yStep);
-            labelEmailcad.Size = new Size(labelLargura, campoAltura);
+            // 
+            labelEmailcad.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            labelEmailcad.Location = new Point(38, 54);
+            labelEmailcad.Margin = new Padding(2, 0, 2, 0);
+            labelEmailcad.Name = "labelEmailcad";
+            labelEmailcad.Size = new Size(84, 17);
+            labelEmailcad.TabIndex = 3;
             labelEmailcad.Text = "Email:";
-            labelEmailcad.Font = new Font("Segoe UI", 11F);
-
+            // 
             // textBoxEmailcad
-            textBoxEmailcad.Location = new Point(xCampo, yInicio + yStep);
-            textBoxEmailcad.Size = new Size(campoLargura, campoAltura);
-            textBoxEmailcad.Font = new Font("Segoe UI", 11F);
-
+            // 
+            textBoxEmailcad.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            textBoxEmailcad.Location = new Point(252, 54);
+            textBoxEmailcad.Margin = new Padding(2, 2, 2, 2);
+            textBoxEmailcad.Name = "textBoxEmailcad";
+            textBoxEmailcad.Size = new Size(187, 27);
+            textBoxEmailcad.TabIndex = 4;
+            // 
             // labelSenhacad
-            labelSenhacad.Location = new Point(xLabel, yInicio + 2 * yStep);
-            labelSenhacad.Size = new Size(labelLargura, campoAltura);
+            // 
+            labelSenhacad.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            labelSenhacad.Location = new Point(38, 54);
+            labelSenhacad.Margin = new Padding(2, 0, 2, 0);
+            labelSenhacad.Name = "labelSenhacad";
+            labelSenhacad.Size = new Size(84, 17);
+            labelSenhacad.TabIndex = 5;
             labelSenhacad.Text = "Senha:";
-            labelSenhacad.Font = new Font("Segoe UI", 11F);
-
+            // 
             // textBoxSenhacad
-            textBoxSenhacad.Location = new Point(xCampo, yInicio + 2 * yStep);
-            textBoxSenhacad.Size = new Size(campoLargura, campoAltura);
-            textBoxSenhacad.Font = new Font("Segoe UI", 11F);
-
+            // 
+            textBoxSenhacad.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            textBoxSenhacad.Location = new Point(252, 54);
+            textBoxSenhacad.Margin = new Padding(2, 2, 2, 2);
+            textBoxSenhacad.Name = "textBoxSenhacad";
+            textBoxSenhacad.Size = new Size(187, 27);
+            textBoxSenhacad.TabIndex = 6;
+            // 
             // labelSenha2cad
-            labelSenha2cad.Location = new Point(xLabel, yInicio + 3 * yStep);
-            labelSenha2cad.Size = new Size(labelLargura + 15, campoAltura);
+            // 
+            labelSenha2cad.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            labelSenha2cad.Location = new Point(38, 54);
+            labelSenha2cad.Margin = new Padding(2, 0, 2, 0);
+            labelSenha2cad.Name = "labelSenha2cad";
+            labelSenha2cad.Size = new Size(84, 17);
+            labelSenha2cad.TabIndex = 7;
             labelSenha2cad.Text = "Confirmar Senha:";
-            labelSenha2cad.Font = new Font("Segoe UI", 11F);
-
+            // 
             // textBoxConfirmarsenha
-            textBoxConfirmarsenha.Location = new Point(xCampo, yInicio + 3 * yStep);
-            textBoxConfirmarsenha.Size = new Size(campoLargura, campoAltura);
-            textBoxConfirmarsenha.Font = new Font("Segoe UI", 11F);
-
-
+            // 
+            textBoxConfirmarsenha.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            textBoxConfirmarsenha.Location = new Point(252, 54);
+            textBoxConfirmarsenha.Margin = new Padding(2, 2, 2, 2);
+            textBoxConfirmarsenha.Name = "textBoxConfirmarsenha";
+            textBoxConfirmarsenha.Size = new Size(187, 27);
+            textBoxConfirmarsenha.TabIndex = 8;
+            // 
             // labelAltura
-            labelAltura.Location = new Point(xLabel, yInicio + 4 * yStep);
-            labelAltura.Size = new Size(labelLargura, campoAltura);
+            // 
+            labelAltura.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            labelAltura.Location = new Point(38, 54);
+            labelAltura.Margin = new Padding(2, 0, 2, 0);
+            labelAltura.Name = "labelAltura";
+            labelAltura.Size = new Size(84, 17);
+            labelAltura.TabIndex = 9;
             labelAltura.Text = "Altura (cm):";
-            labelAltura.Font = new Font("Segoe UI", 11F);
-
+            // 
             // textBoxAltura
-            textBoxAltura.Location = new Point(xCampo, yInicio + 4 * yStep);
-            textBoxAltura.Size = new Size(80, campoAltura);
-            textBoxAltura.Font = new Font("Segoe UI", 11F);
-
+            // 
+            textBoxAltura.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            textBoxAltura.Location = new Point(252, 54);
+            textBoxAltura.Margin = new Padding(2, 2, 2, 2);
+            textBoxAltura.Name = "textBoxAltura";
+            textBoxAltura.Size = new Size(57, 27);
+            textBoxAltura.TabIndex = 10;
+            // 
             // labelPeso
-            labelPeso.Location = new Point(xLabel, yInicio + 5 * yStep);
-            labelPeso.Size = new Size(labelLargura, campoAltura);
+            // 
+            labelPeso.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            labelPeso.Location = new Point(38, 54);
+            labelPeso.Margin = new Padding(2, 0, 2, 0);
+            labelPeso.Name = "labelPeso";
+            labelPeso.Size = new Size(84, 17);
+            labelPeso.TabIndex = 11;
             labelPeso.Text = "Peso (kg):";
-            labelPeso.Font = new Font("Segoe UI", 11F);
-
+            // 
             // textBoxPeso
-            textBoxPeso.Location = new Point(xCampo, yInicio + 5 * yStep);
-            textBoxPeso.Size = new Size(80, campoAltura);
-            textBoxPeso.Font = new Font("Segoe UI", 11F);
-
+            // 
+            textBoxPeso.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            textBoxPeso.Location = new Point(252, 54);
+            textBoxPeso.Margin = new Padding(2, 2, 2, 2);
+            textBoxPeso.Name = "textBoxPeso";
+            textBoxPeso.Size = new Size(57, 27);
+            textBoxPeso.TabIndex = 12;
+            // 
             // labelHoraDormir
-            labelHoraDormir.Location = new Point(xLabel, yInicio + 6 * yStep);
-            labelHoraDormir.Size = new Size(labelLargura, campoAltura);
+            // 
+            labelHoraDormir.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            labelHoraDormir.Location = new Point(38, 54);
+            labelHoraDormir.Margin = new Padding(2, 0, 2, 0);
+            labelHoraDormir.Name = "labelHoraDormir";
+            labelHoraDormir.Size = new Size(84, 17);
+            labelHoraDormir.TabIndex = 13;
             labelHoraDormir.Text = "Hora de Dormir:";
-            labelHoraDormir.Font = new Font("Segoe UI", 11F);
-
+            // 
             // dateTimeHoraDormir
+            // 
+            dateTimeHoraDormir.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
             dateTimeHoraDormir.Format = DateTimePickerFormat.Time;
-            dateTimeHoraDormir.Location = new Point(xCampo, yInicio + 6 * yStep);
-            dateTimeHoraDormir.Size = new Size(100, campoAltura);
-            dateTimeHoraDormir.Font = new Font("Segoe UI", 11F);
+            dateTimeHoraDormir.Location = new Point(252, 54);
+            dateTimeHoraDormir.Margin = new Padding(2, 2, 2, 2);
+            dateTimeHoraDormir.Name = "dateTimeHoraDormir";
             dateTimeHoraDormir.ShowUpDown = true;
-
+            dateTimeHoraDormir.Size = new Size(71, 27);
+            dateTimeHoraDormir.TabIndex = 14;
+            // 
             // labelHoraAcordar
-            labelHoraAcordar.Location = new Point(xLabel, yInicio + 7 * yStep);
-            labelHoraAcordar.Size = new Size(labelLargura, campoAltura);
+            // 
+            labelHoraAcordar.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
+            labelHoraAcordar.Location = new Point(38, 54);
+            labelHoraAcordar.Margin = new Padding(2, 0, 2, 0);
+            labelHoraAcordar.Name = "labelHoraAcordar";
+            labelHoraAcordar.Size = new Size(84, 17);
+            labelHoraAcordar.TabIndex = 15;
             labelHoraAcordar.Text = "Hora de Acordar:";
-            labelHoraAcordar.Font = new Font("Segoe UI", 11F);
-
+            // 
             // dateTimeHoraAcordar
+            // 
+            dateTimeHoraAcordar.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
             dateTimeHoraAcordar.Format = DateTimePickerFormat.Time;
-            dateTimeHoraAcordar.Location = new Point(xCampo, yInicio + 7 * yStep);
-            dateTimeHoraAcordar.Size = new Size(100, campoAltura);
-            dateTimeHoraAcordar.Font = new Font("Segoe UI", 11F);
+            dateTimeHoraAcordar.Location = new Point(252, 54);
+            dateTimeHoraAcordar.Margin = new Padding(2, 2, 2, 2);
+            dateTimeHoraAcordar.Name = "dateTimeHoraAcordar";
             dateTimeHoraAcordar.ShowUpDown = true;
-
-            // Botões centralizados na parte inferior do painel
-            panelCadastro.BorderStyle = BorderStyle.FixedSingle;
-            panelCadastro.Size = new Size(700, 540);
-            panelCadastro.Location = new Point((this.ClientSize.Width - panelCadastro.Width) / 2, 60);
-            panelCadastro.BackColor = Color.White;
-            panelCadastro.Visible = false;
-
-            textBoxSenhacad.Size = new Size(265, 28);
-            textBoxConfirmarsenha.Size = new Size(265, 28);
-            // (faça isso depois de todos os AddRange e ajustes de layout!)
-
-            // Agora crie os PictureBox e posicione após TODOS os controles já estarem posicionados!
-            this.pictureBoxOlhoSenhaCadastro = new System.Windows.Forms.PictureBox();
-            this.pictureBoxOlhoSenhaCadastro.Image = global::Tcc.Properties.Resources.eye_close;
-            this.pictureBoxOlhoSenhaCadastro.SizeMode = PictureBoxSizeMode.Zoom;
-            this.pictureBoxOlhoSenhaCadastro.Cursor = Cursors.Hand;
-            this.pictureBoxOlhoSenhaCadastro.Size = new Size(26, 26);
-            this.pictureBoxOlhoSenhaCadastro.Location = new Point(
-                textBoxSenhacad.Left + textBoxSenhacad.Width + 8,
-                textBoxSenhacad.Top
-            );
-
-            this.pictureBoxOlhoConfirmarSenha = new System.Windows.Forms.PictureBox();
-            this.pictureBoxOlhoConfirmarSenha.Image = global::Tcc.Properties.Resources.eye_close;
-            this.pictureBoxOlhoConfirmarSenha.SizeMode = PictureBoxSizeMode.Zoom;
-            this.pictureBoxOlhoConfirmarSenha.Cursor = Cursors.Hand;
-            this.pictureBoxOlhoConfirmarSenha.Size = new Size(26, 26);
-            this.pictureBoxOlhoConfirmarSenha.Location = new Point(
-                textBoxConfirmarsenha.Left + textBoxConfirmarsenha.Width + 8,
-                textBoxConfirmarsenha.Top
-            );
-
-            // Faça o mesmo para o login, se quiser fora do campo:
-            textBoxSenha.Size = new Size(265, 28);
-            this.pictureBoxOlhoLogin = new System.Windows.Forms.PictureBox();
-            this.pictureBoxOlhoLogin.Image = global::Tcc.Properties.Resources.eye_close;
-            this.pictureBoxOlhoLogin.SizeMode = PictureBoxSizeMode.Zoom;
-            this.pictureBoxOlhoLogin.Cursor = Cursors.Hand;
-            this.pictureBoxOlhoLogin.Size = new Size(30, 28);
-            this.pictureBoxOlhoLogin.Location = new Point(
-            textBoxSenha.Left + textBoxSenha.Width + 2,textBoxSenha.Top
-            );
-
-            // Adicione os PictureBox DEPOIS do AddRange para garantir que fiquem por cima
-            panelCadastro.Controls.Add(this.pictureBoxOlhoSenhaCadastro);
-            panelCadastro.Controls.Add(this.pictureBoxOlhoConfirmarSenha);
-            panelLogin.Controls.Add(this.pictureBoxOlhoLogin);
-
-
-
-
-
-            // ...[configuração dos outros controles]...
-
-            // Crie e configure os botões antes de adicionar ao painel
-            btnCadastrar = new Button();
-            btnCadastrar.Size = new Size(120, 38);
-            btnCadastrar.Location = new Point(panelCadastro.Width / 2 - btnCadastrar.Width - 14, panelCadastro.Height - 62);
-            btnCadastrar.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            dateTimeHoraAcordar.Size = new Size(71, 27);
+            dateTimeHoraAcordar.TabIndex = 16;
+            // 
+            // btnCadastrar
+            // 
+            btnCadastrar.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            btnCadastrar.Location = new Point(490, 324);
+            btnCadastrar.Margin = new Padding(2, 2, 2, 2);
+            btnCadastrar.Name = "btnCadastrar";
+            btnCadastrar.Size = new Size(84, 23);
+            btnCadastrar.TabIndex = 17;
             btnCadastrar.Text = "Cadastrar";
             btnCadastrar.UseVisualStyleBackColor = true;
-            btnCadastrar.CausesValidation = true;
             btnCadastrar.Click += btnCadastrar_Click;
-
-            btnVoltarCad = new Button();
-            btnVoltarCad.Size = new Size(120, 38);
-            btnVoltarCad.Location = new Point(panelCadastro.Width / 2 + 14, panelCadastro.Height - 62);
-            btnVoltarCad.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            // 
+            // btnVoltarCad
+            // 
+            btnVoltarCad.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
+            btnVoltarCad.Location = new Point(490, 324);
+            btnVoltarCad.Margin = new Padding(2, 2, 2, 2);
+            btnVoltarCad.Name = "btnVoltarCad";
+            btnVoltarCad.Size = new Size(84, 23);
+            btnVoltarCad.TabIndex = 18;
             btnVoltarCad.Text = "Voltar";
             btnVoltarCad.UseVisualStyleBackColor = true;
             btnVoltarCad.Click += btnVoltarCad_Click;
-
-            // Adicione todos os controles depois de configurar
-            panelCadastro.Controls.AddRange(new Control[] {
-            labelCadastro, labelNome, textBoxNomecad, labelEmailcad, textBoxEmailcad,
-            labelSenhacad, textBoxSenhacad, labelSenha2cad, textBoxConfirmarsenha,
-            labelAltura, textBoxAltura, labelPeso, textBoxPeso,
-            labelHoraDormir, dateTimeHoraDormir, labelHoraAcordar, dateTimeHoraAcordar,
-            btnCadastrar, btnVoltarCad
-});
+            // 
+            // pictureBoxOlhoSenhaCadastro
+            // 
+            pictureBoxOlhoSenhaCadastro.Cursor = Cursors.Hand;
+            pictureBoxOlhoSenhaCadastro.Image = Properties.Resources.eye_close;
+            pictureBoxOlhoSenhaCadastro.Location = new Point(252, 54);
+            pictureBoxOlhoSenhaCadastro.Margin = new Padding(2, 2, 2, 2);
+            pictureBoxOlhoSenhaCadastro.Name = "pictureBoxOlhoSenhaCadastro";
+            pictureBoxOlhoSenhaCadastro.Size = new Size(18, 16);
+            pictureBoxOlhoSenhaCadastro.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxOlhoSenhaCadastro.TabIndex = 19;
+            pictureBoxOlhoSenhaCadastro.TabStop = false;
+            // 
+            // pictureBoxOlhoConfirmarSenha
+            // 
+            pictureBoxOlhoConfirmarSenha.Cursor = Cursors.Hand;
+            pictureBoxOlhoConfirmarSenha.Image = Properties.Resources.eye_close;
+            pictureBoxOlhoConfirmarSenha.Location = new Point(252, 54);
+            pictureBoxOlhoConfirmarSenha.Margin = new Padding(2, 2, 2, 2);
+            pictureBoxOlhoConfirmarSenha.Name = "pictureBoxOlhoConfirmarSenha";
+            pictureBoxOlhoConfirmarSenha.Size = new Size(18, 16);
+            pictureBoxOlhoConfirmarSenha.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxOlhoConfirmarSenha.TabIndex = 20;
+            pictureBoxOlhoConfirmarSenha.TabStop = false;
+            // 
+            // panelDireita
+            // 
+            panelDireita.BackColor = Color.FromArgb(32, 46, 57);
+            panelDireita.Controls.Add(pictureBoxLogo);
+            panelDireita.Dock = DockStyle.Right;
+            panelDireita.Location = new Point(646, 0);
+            panelDireita.Margin = new Padding(2, 2, 2, 2);
+            panelDireita.Name = "panelDireita";
+            panelDireita.Size = new Size(199, 449);
+            panelDireita.TabIndex = 100;
+            // 
+            // pictureBoxLogo
+            // 
+            pictureBoxLogo.BackColor = Color.Transparent;
+            pictureBoxLogo.Location = new Point(199, 60);
+            pictureBoxLogo.Margin = new Padding(2, 2, 2, 2);
+            pictureBoxLogo.Name = "pictureBoxLogo";
+            pictureBoxLogo.Size = new Size(154, 132);
+            pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxLogo.TabIndex = 0;
+            pictureBoxLogo.TabStop = false;
+            // 
             // MenuPrincipalFrm
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1207, 775);
+            ClientSize = new Size(845, 449);
             Controls.Add(panelLogin);
             Controls.Add(panelCadastro);
+            Controls.Add(panelDireita);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "MenuPrincipalFrm";
             RightToLeft = RightToLeft.No;
             StartPosition = FormStartPosition.Manual;
@@ -385,56 +474,21 @@
             SizeChanged += MenuPrincipalFrm_SizeChanged;
             panelLogin.ResumeLayout(false);
             panelLogin.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxOlhoLogin).EndInit();
             panelCadastro.ResumeLayout(false);
             panelCadastro.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxOlhoSenhaCadastro).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxOlhoConfirmarSenha).EndInit();
+            panelDireita.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).EndInit();
             ResumeLayout(false);
 
-
-
-
-            // panelDireita (área azul à direita)
-            panelDireita = new Panel();
-            panelDireita.Name = "panelDireita";
-            panelDireita.BackColor = ColorTranslator.FromHtml("#202E39"); // cor azul
-            panelDireita.Dock = DockStyle.Right;
-            panelDireita.Width = this.ClientSize.Width / 2;
-            panelDireita.TabIndex = 100; // um número alto para garantir que fique acima dos outros
-
-            // pictureBoxLogo (logo centralizada no painel azul)
-            pictureBoxLogo = new PictureBox();
-            pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBoxLogo.BackColor = Color.Transparent;
-            pictureBoxLogo.Size = new Size(220, 220); // ajuste o tamanho conforme quiser
-
-            // Caminho relativo para a logo
-            string logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logo.png");
-            if (System.IO.File.Exists(logoPath))
-                pictureBoxLogo.Image = Image.FromFile(logoPath);
-
-            // Centralizar a logo no painelDireita
-            pictureBoxLogo.Location = new Point(
-                (panelDireita.Width - pictureBoxLogo.Width) / 2,
-                (panelDireita.Height - pictureBoxLogo.Height) / 2
-            );
-
-            // Adiciona o PictureBox ao painel azul
-            panelDireita.Controls.Add(pictureBoxLogo);
-
-            // Adiciona o painel azul ao formulário (depois dos outros panels)
-            this.Controls.Add(panelDireita);
-
             // Garante que a logo fique centralizada mesmo se redimensionar
-            panelDireita.Resize += (s, e) => {
-                pictureBoxLogo.Location = new Point(
-                    (panelDireita.Width - pictureBoxLogo.Width) / 2,
-                    (panelDireita.Height - pictureBoxLogo.Height) / 2
-                );
-            };
         }
 
         #endregion
 
-       
+
 
         //Cadastro
         private Panel panelCadastro;

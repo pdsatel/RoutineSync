@@ -147,8 +147,14 @@ namespace Tcc
                         doc.Add(new Paragraph("Gráfico: Prioridade das Tarefas"));
                         iTextSharp.text.Image imgPrioridade = iTextSharp.text.Image.GetInstance(graficoPrioridadePath);
                         imgPrioridade.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
-                        imgPrioridade.ScaleToFit(400f, 300f);
+                        imgPrioridade.ScaleToFit(300f, 200f);
                         doc.Add(imgPrioridade);
+
+
+                        doc.Add(new Paragraph("Legenda:"));
+                        doc.Add(new Paragraph("• Baixa - Verde claro"));
+                        doc.Add(new Paragraph("• Média - Laranja"));
+                        doc.Add(new Paragraph("• Alta - Vermelho"));
                     }
 
                     if (File.Exists(graficoStatusPath))
@@ -157,8 +163,13 @@ namespace Tcc
                         doc.Add(new Paragraph("Gráfico: Status das Tarefas"));
                         iTextSharp.text.Image imgStatus = iTextSharp.text.Image.GetInstance(graficoStatusPath);
                         imgStatus.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
-                        imgStatus.ScaleToFit(400f, 300f);
+                        imgStatus.ScaleToFit(300f, 200f);
                         doc.Add(imgStatus);
+
+
+                        doc.Add(new Paragraph("Legenda:"));
+                        doc.Add(new Paragraph("• Concluídas - Azul claro"));
+                        doc.Add(new Paragraph("• Pendentes - Rosa claro"));
                     }
 
                     if (File.Exists(graficoBarrasPath))
@@ -167,7 +178,7 @@ namespace Tcc
                         doc.Add(new Paragraph("Gráfico: Tarefas concluídas por mês"));
                         iTextSharp.text.Image imgPorMes = iTextSharp.text.Image.GetInstance(graficoBarrasPath);
                         imgPorMes.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
-                        imgPorMes.ScaleToFit(500f, 300f);
+                        imgPorMes.ScaleToFit(400f, 250f);
                         doc.Add(imgPorMes);
                     }
                     doc.Close();
