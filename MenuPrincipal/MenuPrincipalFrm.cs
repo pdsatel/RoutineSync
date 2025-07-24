@@ -106,7 +106,9 @@ namespace Tcc
                             }
                         }
                     }
+                    conn.Close();
                 }
+
             }
             catch (Exception ex)
             {
@@ -471,6 +473,7 @@ namespace Tcc
 
                         cmd.ExecuteNonQuery();
                     }
+                    conn.Close();
                 }
 
                 MessageBox.Show("Cadastro realizado com sucesso!");

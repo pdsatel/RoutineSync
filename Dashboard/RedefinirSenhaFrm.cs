@@ -60,6 +60,7 @@ namespace Tcc
                         {
                             MessageBox.Show("Usuário não encontrado.");
                         }
+                        conn.Close();
                     }
                 }
             }

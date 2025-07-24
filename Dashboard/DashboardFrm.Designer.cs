@@ -130,7 +130,7 @@
             btnRotina.Size = new Size(225, 72);
             btnRotina.TabIndex = 3;
             btnRotina.Height = 110;
-            btnRotina.Text = "Rotina";
+            btnRotina.Text = "Gerênciar";
             btnRotina.UseVisualStyleBackColor = false;
             btnRotina.Click += btnRotina_Click;
             // 

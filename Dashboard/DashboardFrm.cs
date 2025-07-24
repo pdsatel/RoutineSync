@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Windows.Forms;
 
@@ -76,10 +77,13 @@ namespace Tcc
         }
 
         private void btnTarefas_Click(object sender, EventArgs e)
-        {
+        { 
+           
             panelConteudo.Controls.Clear();
             panelConteudo.Controls.Add(tarefasControl);
             tarefasControl.Dock = DockStyle.Fill;
+
+            tarefasControl.CarregarTarefas();
         }
 
         private void btnRotina_Click(object sender, EventArgs e)

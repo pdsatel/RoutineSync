@@ -288,6 +288,8 @@ namespace Tcc
                         });
                     }
                 }
+
+                conn.Close();
             }
             return tarefas;
         }

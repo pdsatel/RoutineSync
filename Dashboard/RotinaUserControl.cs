@@ -30,7 +30,7 @@ namespace Tcc
 
             btnAtualizar.Click += BtnAtualizar_Click;
 
-            listViewRotinas.ItemCheck += listViewRotinas_ItemCheck;
+            
             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
 
             var tarefas = tarefasControl.BuscarTarefasBanco();
@@ -83,13 +83,9 @@ namespace Tcc
                 item.SubItems.Add(tarefa.DataEntrega == DateTime.MinValue ? "Sem data" : tarefa.DataEntrega.ToString("dd/MM/yyyy HH:mm"));
                 item.SubItems.Add(tarefa.Status);                              // Coluna 3: Status
                 item.SubItems.Add(tarefa.Prioridade);                          // Coluna 4: Prioridade
-                item.SubItems.Add(tarefa.Descricao != null && tarefa.Descricao.Length > 50
-                    ? tarefa.Descricao.Substring(0, 50) + "..."
-                    : tarefa.Descricao ?? "");                                 // Coluna 5: Descrição
+                item.SubItems.Add(tarefa.Descricao != null && tarefa.Descricao.Length > 50? tarefa.Descricao.Substring(0, 50) + "...": tarefa.Descricao ?? "");                                 // Coluna 5: Descrição
                 item.Tag = tarefa;
-                item.Checked = tarefa.Status != null &&
-                               (tarefa.Status.Equals("Concluído", StringComparison.OrdinalIgnoreCase) ||
-                                tarefa.Status.Equals("Concluida", StringComparison.OrdinalIgnoreCase));
+                item.Checked = tarefa.Status != null && (tarefa.Status.Equals("Concluído", StringComparison.OrdinalIgnoreCase) ||  tarefa.Status.Equals("Concluida", StringComparison.OrdinalIgnoreCase));
 
                 if (item.Checked)
                 {
@@ -124,10 +120,13 @@ namespace Tcc
                             MySqlCommand cmd = new MySqlCommand(sql, conn);
                             cmd.Parameters.AddWithValue("@id", tarefa.Id);
                             cmd.ExecuteNonQuery();
+                            conn.Close();
                         }
                         // Atualiza no objeto em memória
                         tarefa.Status = "Concluído";
                         item.Tag = tarefa; // (Redundante, mas mantém atualizado)
+
+
                     }
                 }
             }
@@ -135,13 +134,8 @@ namespace Tcc
             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
         }
 
-        private void BtnExportar_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Exportar rotinas - função ainda não implementada.");
-        }
-        private void listViewRotinas_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-        }
+        
+        
         private void excluirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listViewRotinas.SelectedItems.Count > 0)
@@ -194,14 +188,14 @@ namespace Tcc
 
                             // 3. Recarrega o ListView com as rotinas atualizadas
                             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
-                            MessageBox.Show("Rotina atualizada com sucesso!");
+                            MessageBox.Show("Tarefa atualizada com sucesso!");
                         }
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Selecione uma rotina para editar.");
+                MessageBox.Show("Selecione uma Tarefa para editar.");
             }
         }
         private void btnRemover_Click(object sender, EventArgs e)
@@ -211,7 +205,7 @@ namespace Tcc
                 var item = listViewRotinas.SelectedItems[0];
                 TarefaInfo tarefa = item.Tag as TarefaInfo;
                 if (tarefa != null &&
-                    MessageBox.Show("Confirma exclusão desta rotina?", "Excluir", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    MessageBox.Show("Confirma exclusão desta Tarefa?", "Excluir", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     using (MySqlConnection conn = Conexao.ObterConexao())
                     {
@@ -219,9 +213,13 @@ namespace Tcc
                         MySqlCommand cmd = new MySqlCommand(sql, conn);
                         cmd.Parameters.AddWithValue("@id", tarefa.Id);
                         cmd.ExecuteNonQuery();
+
+                        conn.Close();
                     }
                     AtualizarRotinas();
-                    MessageBox.Show("Rotina removida!");
+                    MessageBox.Show("Tarefa removida!");
+
+
                 }
             }
         }

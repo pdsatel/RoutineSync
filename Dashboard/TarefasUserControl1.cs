@@ -54,9 +54,9 @@ namespace Tcc
                 Size = new Size(800, 850)
             };
             listViewTarefas.Columns.Add("Título", 200);
-            listViewTarefas.Columns.Add("Data Entrega", 120);
-            listViewTarefas.Columns.Add("Status", 100);
-            listViewTarefas.Columns.Add("Prioridade", 100);
+            listViewTarefas.Columns.Add("Data Entrega", 150);
+            listViewTarefas.Columns.Add("Status", 110);
+            listViewTarefas.Columns.Add("Prioridade", 110);
             listViewTarefas.Columns.Add("Descrição", 250);
             Controls.Add(listViewTarefas);
 
@@ -239,19 +239,8 @@ namespace Tcc
 
             currentY += 60;
 
-            btnAtualizar = new Button()
-            {
-                Text = "Atualizar",
-                Location = new Point(startX, currentY),
-                Width = 140,
-                Height = 45,
-                Font = new Font("Segoe UI", 11, FontStyle.Bold),
-                ForeColor = Color.White,
-                BackColor = Color.FromArgb(32, 46, 57),
-                FlatStyle = FlatStyle.Flat
-            };
-            btnAtualizar.Click += BtnAtualizar_Click;
-            Controls.Add(btnAtualizar);
+          
+            
 
            
         }
@@ -293,10 +282,19 @@ namespace Tcc
                                 Status = status,
                                 Prioridade = prioridade,
                                 UsuarioId = UsuarioId
+
+
                             };
                             listViewTarefas.Items.Add(item);
+                            if (item.Checked)
+                            {
+                                item.BackColor = System.Drawing.Color.LightGreen;
+                            }
+
+                           
                         }
                     }
+                    conn.Close();
 
 
                 }
@@ -344,10 +342,7 @@ namespace Tcc
 
 
 
-        private void BtnAtualizar_Click(object sender, EventArgs e)
-        {
-            CarregarTarefas();
-        }
+       
         private void BtnSalvar_Click(object sender, EventArgs e)
         {
             string titulo = txtTitulo.Text.Trim();
@@ -393,7 +388,9 @@ namespace Tcc
                     item.Tag = new TarefaInfo { Id = tarefaId, Descricao = descricao };
 
                     listViewTarefas.Items.Add(item);
+                    conn.Close();
                 }
+
                 txtTitulo.Clear();
                 txtDescricao.Clear();
                 dtpDataEntrega.Value = DateTime.Now;
@@ -452,6 +449,7 @@ namespace Tcc
                             listViewTarefas.Items.Remove(itemSelecionado);
                             MessageBox.Show("Tarefa excluída com sucesso!");
                         }
+                        conn.Close();
                     }
                     
                 }
@@ -460,6 +458,7 @@ namespace Tcc
                     MessageBox.Show("Erro ao excluir tarefa: " + ex.Message);
                 }
             }
+
 
         }
         private void ListViewTarefas_MouseMove(object sender, MouseEventArgs e)
@@ -569,7 +568,7 @@ namespace Tcc
             ArredondarControle(cmbStatus, 10);
             ArredondarControle(cmbPrioridade, 10);  
             ArredondarControle(listViewTarefas, 10);
-            ArredondarBotao(btnAtualizar, 10);
+            
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -614,6 +613,7 @@ namespace Tcc
                         });
                     }
                 }
+                conn.Close();
             }
             return tarefas;
         }

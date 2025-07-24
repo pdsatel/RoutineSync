@@ -54,7 +54,7 @@ namespace Tcc
             lblTitulo.Name = "lblTitulo";
             lblTitulo.Size = new Size(844, 70);
             lblTitulo.TabIndex = 0;
-            lblTitulo.Text = "Minhas Rotinas";
+            lblTitulo.Text = "Gerenciar Tarefas";
             lblTitulo.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // listViewRotinas
