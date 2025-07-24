@@ -34,7 +34,7 @@ namespace Tcc
             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
 
             var tarefas = tarefasControl.BuscarTarefasBanco();
-            MessageBox.Show($"Qtde tarefas retornadas: {tarefas.Count}");
+            
             CarregarRotinasDeTarefas(tarefas);
             excluirToolStripMenuItem.Click += excluirToolStripMenuItem_Click;
             btnConcluir.Click += btnConcluir_Click;

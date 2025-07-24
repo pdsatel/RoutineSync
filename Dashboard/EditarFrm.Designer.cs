@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Org.BouncyCastle.Asn1.Cmp;
 
 namespace Tcc
 {
@@ -18,8 +19,10 @@ namespace Tcc
         private Button btnSalvar;
         private Button btnCancelar;
         private Button btnStatusTarefa;
+        private Label lblStatus;
 
-        
+
+
 
         protected override void Dispose(bool disposing)
         {
@@ -138,10 +141,21 @@ namespace Tcc
             btnCancelar.Click += btnCancelar_Click;
 
 
+
+            lblStatus = new Label();
+            lblStatus.AutoSize = true;
+            lblStatus.ForeColor = Color.FromArgb(51, 51, 51);
+            lblStatus.Location = new Point(305, 235);          // mesmo eixo vertical que prioridade
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(60, 28); // opcional
+            lblStatus.TabIndex = 10;
+            lblStatus.Text = "Status:";
+            this.Controls.Add(lblStatus);
+
             btnStatusTarefa = new Button();
             btnStatusTarefa.Text = "Pendente";
             btnStatusTarefa.Click += btnStatusTarefa_Click;
-            btnStatusTarefa.Location = new Point(305, 232); // posição onde quiser
+            btnStatusTarefa.Location = new Point(375, 232); // posição onde quiser
             btnStatusTarefa.Size = new Size(140, 36);
             this.Controls.Add(btnStatusTarefa);
 

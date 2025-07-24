@@ -137,6 +137,39 @@ namespace Tcc
                     }
                     doc.Add(tabela);
 
+                    string graficoPrioridadePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "grafico_prioridade.png");
+                    string graficoStatusPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "grafico_status.png");
+                    string graficoBarrasPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "grafico_barras.png");
+
+                    if (File.Exists(graficoPrioridadePath))
+                    {
+                        doc.Add(new Paragraph(" "));
+                        doc.Add(new Paragraph("Gráfico: Prioridade das Tarefas"));
+                        iTextSharp.text.Image imgPrioridade = iTextSharp.text.Image.GetInstance(graficoPrioridadePath);
+                        imgPrioridade.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        imgPrioridade.ScaleToFit(400f, 300f);
+                        doc.Add(imgPrioridade);
+                    }
+
+                    if (File.Exists(graficoStatusPath))
+                    {
+                        doc.Add(new Paragraph(" "));
+                        doc.Add(new Paragraph("Gráfico: Status das Tarefas"));
+                        iTextSharp.text.Image imgStatus = iTextSharp.text.Image.GetInstance(graficoStatusPath);
+                        imgStatus.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        imgStatus.ScaleToFit(400f, 300f);
+                        doc.Add(imgStatus);
+                    }
+
+                    if (File.Exists(graficoBarrasPath))
+                    {
+                        doc.Add(new Paragraph(" "));
+                        doc.Add(new Paragraph("Gráfico: Tarefas concluídas por mês"));
+                        iTextSharp.text.Image imgPorMes = iTextSharp.text.Image.GetInstance(graficoBarrasPath);
+                        imgPorMes.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        imgPorMes.ScaleToFit(500f, 300f);
+                        doc.Add(imgPorMes);
+                    }
                     doc.Close();
 
                     MessageBox.Show("PDF gerado com sucesso!", "PDF", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -246,53 +279,53 @@ namespace Tcc
             this.Controls.Add(listProximasTarefas);
         }
 
-        private void AtualizarProximasTarefas(List<TarefasUserControl.TarefaInfo> tarefas)
-        {
-            var proximas = tarefas
-                .Where(t => t.Status.Equals("Pendente", StringComparison.OrdinalIgnoreCase) || t.Status.Equals("Em andamento", StringComparison.OrdinalIgnoreCase))
-                .OrderBy(t => t.DataEntrega)
-                .Take(3)
-                .ToList();
-
-            listProximasTarefas.Items.Clear();
-            foreach (var t in proximas)
+            private void AtualizarProximasTarefas(List<TarefasUserControl.TarefaInfo> tarefas)
             {
-                var item = new ListViewItem(t.Titulo);
-                item.SubItems.Add(t.DataEntrega.ToString("dd/MM"));
-                listProximasTarefas.Items.Add(item);
-            }
-        }
+                var proximas = tarefas
+                    .Where(t => t.Status.Equals("Pendente", StringComparison.OrdinalIgnoreCase) || t.Status.Equals("Em andamento", StringComparison.OrdinalIgnoreCase))
+                    .OrderBy(t => t.DataEntrega)
+                    .Take(3)
+                    .ToList();
 
-        private List<TarefasUserControl.TarefaInfo> BuscarTarefasUsuario(int usuarioId)
-        {
-            var tarefas = new List<TarefasUserControl.TarefaInfo>();
-            using (MySqlConnection conn = Conexao.ObterConexao())
-            {
-                string sql = "SELECT id, titulo, descricao, data_entrega, status, prioridade FROM Tarefas WHERE usuario_id = @usuarioId";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@usuarioId", usuarioId);
-
-                using (var reader = cmd.ExecuteReader())
+                listProximasTarefas.Items.Clear();
+                foreach (var t in proximas)
                 {
-                    while (reader.Read())
-                    {
-                        tarefas.Add(new TarefasUserControl.TarefaInfo
-                        {
-                            Id = reader.GetInt64("id"),
-                            Titulo = reader.GetString("titulo"),
-                            Descricao = reader.IsDBNull(reader.GetOrdinal("descricao")) ? "" : reader.GetString("descricao"),
-                            DataEntrega = reader.GetDateTime("data_entrega"),
-                            Status = reader.GetString("status"),
-                            Prioridade = reader.GetString("prioridade"),
-                            UsuarioId = usuarioId
-                        });
-                    }
+                    var item = new ListViewItem(t.Titulo);
+                    item.SubItems.Add(t.DataEntrega.ToString("dd/MM"));
+                    listProximasTarefas.Items.Add(item);
                 }
-
-                conn.Close();
             }
-            return tarefas;
-        }
+
+            private List<TarefasUserControl.TarefaInfo> BuscarTarefasUsuario(int usuarioId)
+            {
+                var tarefas = new List<TarefasUserControl.TarefaInfo>();
+                using (MySqlConnection conn = Conexao.ObterConexao())
+                {
+                    string sql = "SELECT id, titulo, descricao, data_entrega, status, prioridade FROM Tarefas WHERE usuario_id = @usuarioId";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@usuarioId", usuarioId);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            tarefas.Add(new TarefasUserControl.TarefaInfo
+                            {
+                                Id = reader.GetInt64("id"),
+                                Titulo = reader.GetString("titulo"),
+                                Descricao = reader.IsDBNull(reader.GetOrdinal("descricao")) ? "" : reader.GetString("descricao"),
+                                DataEntrega = reader.GetDateTime("data_entrega"),
+                                Status = reader.GetString("status"),
+                                Prioridade = reader.GetString("prioridade"),
+                                UsuarioId = usuarioId
+                            });
+                        }
+                    }
+
+                    conn.Close();
+                }
+                return tarefas;
+            }
 
         // Pie chart de prioridade (título curto)
         private void AtualizarGraficoPrioridade(List<TarefasUserControl.TarefaInfo> tarefas)
@@ -320,6 +353,11 @@ namespace Tcc
             model.Series.Add(pie);
             plotViewPrioridade.Model = model;
 
+            var exporter = new OxyPlot.WindowsForms.PngExporter { Width = 600, Height = 400, Background = OxyColors.White };
+            string caminho = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "grafico_prioridade.png");
+            exporter.ExportToFile(model, caminho);
+
+
             AtualizarLegendaPrioridade(baixa, media, alta);
         }
 
@@ -346,6 +384,10 @@ namespace Tcc
 
             model.Series.Add(pie);
             plotViewStatus.Model = model;
+            var exporter = new OxyPlot.WindowsForms.PngExporter { Width = 600, Height = 400, Background = OxyColors.White };
+            string caminho = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "grafico_status.png");
+            exporter.ExportToFile(model, caminho);
+
         }
 
         private void InicializarResumo()
@@ -446,6 +488,10 @@ namespace Tcc
             model.Axes.Add(categoryAxis);
             model.Series.Add(barSeries);
             plotViewBarras.Model = model;
+            var exporter = new OxyPlot.WindowsForms.PngExporter { Width = 600, Height = 400, Background = OxyColors.White };
+            string caminho = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "grafico_barras.png");
+            exporter.ExportToFile(model, caminho);
+
         }
     }
 }

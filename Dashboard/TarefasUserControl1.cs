@@ -133,6 +133,9 @@ namespace Tcc
             Controls.Add(lblDataEntrega);
 
             currentY += espacamentoVertical;
+            
+
+            // 📅 DateTimePicker principal
             dtpDataEntrega = new DateTimePicker()
             {
                 Location = new Point(startX, currentY),
@@ -148,7 +151,40 @@ namespace Tcc
                 BackColor = Color.White,
                 ForeColor = Color.FromArgb(51, 51, 51)
             };
+
+            // 🖌️ Interações visuais ao focar
+            dtpDataEntrega.Enter += (s, e) =>
+            {
+                dtpDataEntrega.BackColor = Color.LightBlue;
+                dtpDataEntrega.Font = new Font("Segoe UI", 11, FontStyle.Bold);
+            };
+
+            dtpDataEntrega.Leave += (s, e) =>
+            {
+                dtpDataEntrega.BackColor = Color.White;
+                dtpDataEntrega.Font = new Font("Segoe UI", 11, FontStyle.Regular);
+            };
+
+            // 💬 Tooltip para guia de uso
+            ToolTip tooltip = new ToolTip();
+            tooltip.SetToolTip(dtpDataEntrega, "Escolha data e horário da entrega (formato: dd/MM/yyyy HH:mm)");
+
             Controls.Add(dtpDataEntrega);
+
+            // 📆 Botão com ícone de calendário (estático ou imagem personalizada)
+            Button btnAbrirCalendario = new Button()
+            {
+                Location = new Point(startX + dtpDataEntrega.Width + 10, currentY),
+                Size = new Size(32, 32),
+                BackColor = Color.Transparent,
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand,
+                
+            };
+            btnAbrirCalendario.FlatAppearance.BorderSize = 0;
+            btnAbrirCalendario.Click += (s, e) => dtpDataEntrega.Focus();
+
+            Controls.Add(btnAbrirCalendario);
 
             currentY += espacamentoVertical + 10;
 

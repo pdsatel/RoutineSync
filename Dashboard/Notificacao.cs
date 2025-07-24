@@ -35,23 +35,29 @@ namespace Tcc
         public void GerarNotificacoesDasTarefas(List<TarefasUserControl.TarefaInfo> tarefas)
         {
             flowPanelNotificacoes.Controls.Clear();
-            int count = 0;
+            notificacoes.Clear(); // Limpa a lista interna
 
-            foreach (var tarefa in tarefas)
+            DateTime agora = DateTime.Now;
+            DateTime limite = agora.AddHours(24); // tarefas até as próximas 24h
+
+            var recentes = tarefas
+                .Where(t => t.Status != null &&
+                            !t.Status.Equals("Concluído", StringComparison.OrdinalIgnoreCase) &&
+                            t.DataEntrega >= agora &&
+                            t.DataEntrega <= limite)
+                .OrderByDescending(t => t.DataEntrega)
+                .ToList();
+
+            foreach (var tarefa in recentes)
             {
-                // Filtro ajustado (notifica tudo exceto "Concluído")
-                if (tarefa.Status != null && !tarefa.Status.Equals("Concluído", StringComparison.OrdinalIgnoreCase))
-                {
-                    AdicionarNotificacao(
-                        tarefa.Titulo,
-                        $"Entrega: {tarefa.DataEntrega:g}\n{tarefa.Descricao}",
-                        tarefa.DataEntrega
-                    );
-                    count++;
-                }
+                AdicionarNotificacao(
+                    tarefa.Titulo,
+                    $"Entrega: {tarefa.DataEntrega:g}\n{tarefa.Descricao}",
+                    tarefa.DataEntrega
+                );
             }
-            
         }
+
 
         // Exibe uma notificação visualmente (simples, pode melhorar depois)
         private void ExibirNotificacao(NotificacaoInfo info)
