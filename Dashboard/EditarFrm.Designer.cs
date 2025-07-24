@@ -17,6 +17,9 @@ namespace Tcc
         private ComboBox cmbPrioridade;
         private Button btnSalvar;
         private Button btnCancelar;
+        private Button btnStatusTarefa;
+
+        
 
         protected override void Dispose(bool disposing)
         {
@@ -133,6 +136,15 @@ namespace Tcc
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = false;
             btnCancelar.Click += btnCancelar_Click;
+
+
+            btnStatusTarefa = new Button();
+            btnStatusTarefa.Text = "Pendente";
+            btnStatusTarefa.Click += btnStatusTarefa_Click;
+            btnStatusTarefa.Location = new Point(305, 232); // posição onde quiser
+            btnStatusTarefa.Size = new Size(140, 36);
+            this.Controls.Add(btnStatusTarefa);
+
             // EditarRotinaForm
             AcceptButton = btnSalvar;
             BackColor = Color.FromArgb(255, 252, 246);

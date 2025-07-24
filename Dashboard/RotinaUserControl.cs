@@ -153,40 +153,47 @@ namespace Tcc
         }
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            if (listViewRotinas.SelectedItems.Count > 0)
+            ListViewItem itemMarcado = listViewRotinas.Items
+                .Cast<ListViewItem>()
+                .FirstOrDefault(item => item.Checked);
+
+            if (itemMarcado != null)
             {
-                var item = listViewRotinas.SelectedItems[0];
-                TarefasUserControl.TarefaInfo tarefa = item.Tag as TarefasUserControl.TarefaInfo;
+                TarefasUserControl.TarefaInfo tarefa = itemMarcado.Tag as TarefasUserControl.TarefaInfo;
                 if (tarefa != null)
                 {
                     using (var frm = new EditarRotinaForm(
                         tarefa.Titulo,
                         tarefa.Descricao,
                         tarefa.DataEntrega,
-                        tarefa.Prioridade))
+                        tarefa.Prioridade,
+                        tarefa.Status))
                     {
                         if (frm.ShowDialog() == DialogResult.OK)
                         {
-                            // 1. Atualiza o objeto em memória
+                            // Atualiza os dados...
                             tarefa.Titulo = frm.NovoTitulo;
                             tarefa.Descricao = frm.NovaDescricao;
                             tarefa.DataEntrega = frm.NovaDataEntrega;
                             tarefa.Prioridade = frm.NovaPrioridade;
+                            tarefa.Status = frm.NovoStatus;
 
-                            // 2. Atualiza no banco de dados
                             using (MySqlConnection conn = Conexao.ObterConexao())
                             {
-                                string sql = "UPDATE Tarefas SET titulo = @titulo, descricao = @descricao, data_entrega = @data, prioridade = @prioridade WHERE id = @id";
+                                string sql = "UPDATE Tarefas SET titulo = @titulo, descricao = @descricao, data_entrega = @data, prioridade = @prioridade, status = @status WHERE id = @id";
                                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                                 cmd.Parameters.AddWithValue("@id", tarefa.Id);
                                 cmd.Parameters.AddWithValue("@titulo", tarefa.Titulo);
                                 cmd.Parameters.AddWithValue("@descricao", tarefa.Descricao);
                                 cmd.Parameters.AddWithValue("@data", tarefa.DataEntrega);
                                 cmd.Parameters.AddWithValue("@prioridade", tarefa.Prioridade);
+                                cmd.Parameters.Add("@status", MySqlDbType.VarChar).Value = tarefa.Status;
+                                // Define um status padrão se for nulo
+                                Console.WriteLine("Status enviado: " + tarefa.Status); // Ou use MessageBox.Show para ver ao vivo
+
                                 cmd.ExecuteNonQuery();
                             }
 
-                            // 3. Recarrega o ListView com as rotinas atualizadas
                             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
                             MessageBox.Show("Tarefa atualizada com sucesso!");
                         }
@@ -195,17 +202,21 @@ namespace Tcc
             }
             else
             {
-                MessageBox.Show("Selecione uma Tarefa para editar.");
+                MessageBox.Show("Marque uma tarefa para editar.");
             }
         }
+
         private void btnRemover_Click(object sender, EventArgs e)
         {
-            if (listViewRotinas.SelectedItems.Count > 0)
+            ListViewItem itemMarcado = listViewRotinas.Items
+                .Cast<ListViewItem>()
+                .FirstOrDefault(item => item.Checked);
+
+            if (itemMarcado != null)
             {
-                var item = listViewRotinas.SelectedItems[0];
-                TarefaInfo tarefa = item.Tag as TarefaInfo;
+                TarefaInfo tarefa = itemMarcado.Tag as TarefaInfo;
                 if (tarefa != null &&
-                    MessageBox.Show("Confirma exclusão desta Tarefa?", "Excluir", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    MessageBox.Show("Confirma exclusão desta tarefa?", "Excluir", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     using (MySqlConnection conn = Conexao.ObterConexao())
                     {
@@ -213,16 +224,18 @@ namespace Tcc
                         MySqlCommand cmd = new MySqlCommand(sql, conn);
                         cmd.Parameters.AddWithValue("@id", tarefa.Id);
                         cmd.ExecuteNonQuery();
-
-                        conn.Close();
                     }
+
                     AtualizarRotinas();
-                    MessageBox.Show("Tarefa removida!");
-
-
+                    MessageBox.Show("Tarefa removida com sucesso!");
                 }
             }
+            else
+            {
+                MessageBox.Show("Marque uma tarefa para remover.");
+            }
         }
+
         private void ListViewRotinas_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
             int prioridadeColIndex = 3; // 0: Título, 1: Data Entrega, 2: Status, 3: Prioridade, 4: Descrição
