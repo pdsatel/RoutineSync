@@ -38,7 +38,7 @@ namespace Tcc
 
             this.Shown += MenuPrincipalFrm_Shown;
             this.SizeChanged += new EventHandler(MenuPrincipalFrm_SizeChanged);
-           
+
             this.Load += new EventHandler(MenuPrincipalFrm_Load);
             textBoxEmailcad.Validating += textBoxEmailcad_Validating;
             textBoxSenhacad.Validating += textBoxSenhacad_Validating;
@@ -81,12 +81,9 @@ namespace Tcc
 
             this.StartPosition = FormStartPosition.CenterParent;
 
-            
+
 
         }
-
-
-
         private void btnEntrar_Click(object sender, EventArgs e)
         {
             string email = textBoxEmail.Text.Trim();
@@ -116,7 +113,7 @@ namespace Tcc
             {
                 using (var conn = Conexao.ObterConexao())
                 {
-                    string query = "SELECT id, senha FROM usuarios WHERE email = @Email";
+                    string query = "SELECT id, senha FROM usuarios WHERE email = Email";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Email", email);
@@ -133,7 +130,7 @@ namespace Tcc
                             }
                         }
                     }
-                    conn.Close();
+                    
                 }
 
             }
@@ -687,6 +684,13 @@ namespace Tcc
             // NOME
             private void CentralizarCadastro()
             {
+
+            if (labelNascimento == null || dateTimeNascimento == null)
+            {
+                MessageBox.Show("Controles não inicializados corretamente!");
+                return;
+            }
+
             int larguraCampo = 300;
             int alturaCampo = 36;
             int larguraLabel = 160;

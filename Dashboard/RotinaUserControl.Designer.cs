@@ -59,24 +59,27 @@ namespace Tcc
             // 
             // listViewRotinas
             // 
-            listViewRotinas.CheckBoxes = true;
+            // listViewRotinas.CheckBoxes = true;
+            listViewRotinas.CheckBoxes = false; // ✅ Desativa os CheckBoxes
             listViewRotinas.Dock = DockStyle.Fill;
             listViewRotinas.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            listViewRotinas.FullRowSelect = true;
+            listViewRotinas.FullRowSelect = true; // ✅ Seleção por linha inteira
             listViewRotinas.GridLines = true;
             listViewRotinas.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             listViewRotinas.Location = new Point(3, 73);
+            listViewRotinas.MultiSelect = false; // ✅ Apenas um item selecionado por vez
             listViewRotinas.Name = "listViewRotinas";
             listViewRotinas.Size = new Size(844, 454);
             listViewRotinas.TabIndex = 1;
             listViewRotinas.UseCompatibleStateImageBehavior = false;
             listViewRotinas.View = View.Details;
+            listViewRotinas.ContextMenuStrip = contextMenuRotinas;
 
 
             // Defina as colunas do ListView para aparecerem os dados!
             listViewRotinas.Columns.Add("Título", 180, HorizontalAlignment.Left);
-            listViewRotinas.Columns.Add("Data Entrega", 120, HorizontalAlignment.Left);
-            listViewRotinas.Columns.Add("Status", 90, HorizontalAlignment.Left);
+            listViewRotinas.Columns.Add("Data Entrega", 190, HorizontalAlignment.Left);
+            listViewRotinas.Columns.Add("Status", 110, HorizontalAlignment.Left);
             listViewRotinas.Columns.Add("Prioridade", 110, HorizontalAlignment.Left);
             listViewRotinas.Columns.Add("Descrição", 300, HorizontalAlignment.Left);
             // 

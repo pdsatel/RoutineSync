@@ -322,10 +322,7 @@ namespace Tcc
 
                             };
                             listViewTarefas.Items.Add(item);
-                            if (item.Checked)
-                            {
-                                item.BackColor = System.Drawing.Color.LightGreen;
-                            }
+                            
 
                            
                         }
@@ -345,10 +342,29 @@ namespace Tcc
 
         private void ListViewTarefas_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
-            int prioridadeColIndex = 3; // 0: Título, 1: Data Entrega, 2: Status, 3: Prioridade, 4: Descrição
-
-            if (e.ColumnIndex == prioridadeColIndex)
+            // Verifica se a tarefa está concluída
+            bool isConcluida = false;
+            if (e.Item.Tag is TarefaInfo tarefa)
             {
+                isConcluida = tarefa.Status != null &&
+                             (tarefa.Status.Equals("Concluído", StringComparison.OrdinalIgnoreCase) ||
+                              tarefa.Status.Equals("Concluida", StringComparison.OrdinalIgnoreCase));
+            }
+
+            int prioridadeColIndex = 3; // Índice da coluna de prioridade
+
+            if (isConcluida)
+            {
+                // Linha inteira verde claro para tarefas concluídas
+                using (Brush bg = new SolidBrush(Color.LightGreen))
+                    e.Graphics.FillRectangle(bg, e.Bounds);
+
+                TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter;
+                TextRenderer.DrawText(e.Graphics, e.SubItem.Text, e.SubItem.Font, e.Bounds, e.SubItem.ForeColor, flags);
+            }
+            else if (e.ColumnIndex == prioridadeColIndex)
+            {
+                // Colorir apenas a célula de prioridade (para tarefas não concluídas)
                 Color corFundo;
                 string prioridade = e.SubItem.Text.ToLower();
 
@@ -378,7 +394,7 @@ namespace Tcc
 
 
 
-       
+
         private void BtnSalvar_Click(object sender, EventArgs e)
         {
             string titulo = txtTitulo.Text.Trim();
@@ -424,6 +440,11 @@ namespace Tcc
                     item.Tag = new TarefaInfo { Id = tarefaId, Descricao = descricao };
 
                     listViewTarefas.Items.Add(item);
+
+                    if (status.Equals("Concluído", StringComparison.OrdinalIgnoreCase))
+                    {
+                        item.BackColor = Color.LightGreen;
+                    }
                     conn.Close();
                 }
 
@@ -485,14 +506,18 @@ namespace Tcc
                             listViewTarefas.Items.Remove(itemSelecionado);
                             MessageBox.Show("Tarefa excluída com sucesso!");
                         }
-                        conn.Close();
+                        
                     }
                     
                 }
+
+
                 catch (Exception ex)
                 {
                     MessageBox.Show("Erro ao excluir tarefa: " + ex.Message);
                 }
+
+
             }
 
 
