@@ -24,7 +24,7 @@ namespace Tcc
         private Label labelNascimento;
         private DateTimePicker dateTimeNascimento;
         private Label labelNacionalidade;
-        private TextBox textBoxNacionalidade;
+        private ComboBox ComboBoxNacionalidade;
         private Label labelProfissao;
         private TextBox textBoxProfissao;
         private Label labelTelefone;
@@ -60,7 +60,7 @@ namespace Tcc
             labelNascimento = new Label();
             dateTimeNascimento = new DateTimePicker();
             labelNacionalidade = new Label();
-            textBoxNacionalidade = new TextBox();
+           ComboBoxNacionalidade = new ComboBox();
             labelProfissao = new Label();
             textBoxProfissao = new TextBox();
             labelTelefone = new Label();
@@ -69,7 +69,7 @@ namespace Tcc
             panelCadastro.Controls.Add(labelNascimento);
             panelCadastro.Controls.Add(dateTimeNascimento);
             panelCadastro.Controls.Add(labelNacionalidade);
-            panelCadastro.Controls.Add(textBoxNacionalidade);
+            panelCadastro.Controls.Add(ComboBoxNacionalidade);
             panelCadastro.Controls.Add(labelProfissao);
             panelCadastro.Controls.Add(textBoxProfissao);
             panelCadastro.Controls.Add(labelTelefone);
@@ -113,7 +113,7 @@ namespace Tcc
             {
                 using (var conn = Conexao.ObterConexao())
                 {
-                    string query = "SELECT id, senha FROM usuarios WHERE email = Email";
+                    string query = "SELECT id, senha FROM usuarios WHERE email = @Email";
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Email", email);
@@ -253,8 +253,8 @@ namespace Tcc
         private void MenuPrincipalFrm_Load(object sender, EventArgs e)
         {
 
-            
-                // Ajusta cores e posição inicial
+            PreencherListBoxNacionalidade();
+            // Ajusta cores e posição inicial
             this.BackColor = corPrimaria;
 
             panelCadastro.BackColor = corSecundaria;
@@ -451,7 +451,7 @@ namespace Tcc
             string senha = textBoxSenhacad.Text;
             string confirmarsenha = textBoxConfirmarsenha.Text;
             DateTime dataNascimento = dateTimeNascimento.Value.Date;
-            string nacionalidade = textBoxNacionalidade.Text.Trim();
+            string nacionalidade = ComboBoxNacionalidade.Text.Trim();
             string profissao = textBoxProfissao.Text.Trim();
             string telefone = textBoxTelefone.Text.Trim();
 
@@ -560,7 +560,7 @@ namespace Tcc
                 textBoxSenhacad.Clear();
                 textBoxConfirmarsenha.Clear();
                 dateTimeNascimento.Value = DateTime.Now;
-                textBoxNacionalidade.Clear();
+                
                 textBoxProfissao.Clear();
                 textBoxTelefone.Clear();
 
@@ -780,10 +780,10 @@ namespace Tcc
             labelNacionalidade.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
             labelNacionalidade.Text = "Nacionalidade:";
             labelNacionalidade.TextAlign = ContentAlignment.MiddleRight;
-            textBoxNacionalidade.Top = y;
-            textBoxNacionalidade.Left = centralX;
-            textBoxNacionalidade.Width = larguraCampo;
-            textBoxNacionalidade.Height = alturaCampo;
+            ComboBoxNacionalidade.Top = y;
+            ComboBoxNacionalidade.Left = centralX;
+            ComboBoxNacionalidade.Width = larguraCampo;
+            ComboBoxNacionalidade.Height = alturaCampo;
             y += alturaCampo + espacoVertical;
 
             // PROFISSÃO
@@ -823,7 +823,31 @@ namespace Tcc
             btnVoltarCad.Width = 140;
             btnVoltarCad.Height = alturaCampo;
         }
-        
+        private void PreencherListBoxNacionalidade()
+        {
+            ComboBoxNacionalidade.Items.Clear(); // limpa qualquer item anterior
+
+            ComboBoxNacionalidade.Items.Add("Brasil");
+            ComboBoxNacionalidade.Items.Add("Argentina");
+            ComboBoxNacionalidade.Items.Add("Estados Unidos");
+            ComboBoxNacionalidade.Items.Add("Canadá");
+            ComboBoxNacionalidade.Items.Add("México");
+            ComboBoxNacionalidade.Items.Add("Portugal");
+            ComboBoxNacionalidade.Items.Add("Espanha");
+            ComboBoxNacionalidade.Items.Add("França");
+            ComboBoxNacionalidade.Items.Add("Alemanha");
+            ComboBoxNacionalidade.Items.Add("Itália");
+            ComboBoxNacionalidade.Items.Add("Inglaterra");
+            ComboBoxNacionalidade.Items.Add("Japão");
+            ComboBoxNacionalidade.Items.Add("China");
+            ComboBoxNacionalidade.Items.Add("Austrália");
+            ComboBoxNacionalidade.Items.Add("Índia");
+
+
+           
+        }
+
+
 
 
 

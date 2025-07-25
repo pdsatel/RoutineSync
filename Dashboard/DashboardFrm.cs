@@ -46,9 +46,7 @@ namespace Tcc
             btnRelatorios.ImageAlign = ContentAlignment.MiddleLeft;
             btnRelatorios.TextImageRelation = TextImageRelation.ImageBeforeText;
 
-            btnNotificacao.Image = Properties.Resources.Notificacao_png;
-            btnNotificacao.ImageAlign = ContentAlignment.MiddleLeft;
-            btnNotificacao.TextImageRelation = TextImageRelation.ImageBeforeText;
+           
 
             btnPerfil.Image = Properties.Resources.perfil_png;
             btnPerfil.ImageAlign = ContentAlignment.MiddleLeft;
@@ -112,17 +110,7 @@ namespace Tcc
             relatorioControl.Dock = DockStyle.Fill;
         }
 
-        private void btnNotificacao_Click(object sender, EventArgs e)
-        {
-            var tarefas = tarefasControl.BuscarTarefasBanco();
-            notificacaoControl.GerarNotificacoesDasTarefas(tarefas);
-
-            panelConteudo.Controls.Clear();
-            panelConteudo.Controls.Add(notificacaoControl);
-            notificacaoControl.Dock = DockStyle.Fill;
-            notificacaoControl.Visible = true;
-            notificacaoControl.BringToFront();
-        }
+       
 
         private void btnSair_Click(object sender, EventArgs e)
         {

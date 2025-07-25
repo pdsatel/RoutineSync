@@ -29,7 +29,7 @@
             panelTopo = new Panel();
             labelTitulo = new Label();
             panelMenu = new Panel();
-            btnNotificacao = new Button();
+           
             btnRelatorios = new Button();
             btnRotina = new Button();
             btnTarefas = new Button();
@@ -66,7 +66,7 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.FromArgb(44, 62, 80);
-            panelMenu.Controls.Add(btnNotificacao);
+            
             panelMenu.Controls.Add(btnRelatorios);
             panelMenu.Controls.Add(btnRotina);
             panelMenu.Controls.Add(btnTarefas);
@@ -81,21 +81,8 @@
             // 
             // btnNotificacao
             // 
-            btnNotificacao.BackColor = Color.FromArgb(44, 62, 80);
-            btnNotificacao.Dock = DockStyle.Top;
-            btnNotificacao.FlatAppearance.BorderSize = 0;
-            btnNotificacao.FlatStyle = FlatStyle.Flat;
-            btnNotificacao.Font = new Font("Microsoft Sans Serif", 12F);
-            btnNotificacao.ForeColor = Color.White;
-            btnNotificacao.Location = new Point(0, 307);
-            btnNotificacao.Margin = new Padding(0, 0, 0, 10);
-            btnNotificacao.Name = "btnNotificao";
-            btnNotificacao.Size = new Size(225, 77);
-            btnNotificacao.TabIndex = 0;
-            btnNotificacao.Height = 110;
-            btnNotificacao.Text = "Notificações";
-            btnNotificacao.UseVisualStyleBackColor = false;
-            btnNotificacao.Click += btnNotificacao_Click;
+            
+          
             // 
             // btnRelatorios
             // 
