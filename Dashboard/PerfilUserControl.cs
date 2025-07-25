@@ -1,5 +1,4 @@
-﻿// PerfilUserControl.cs
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace Tcc.Dashboard
@@ -20,7 +19,8 @@ namespace Tcc.Dashboard
             using (var conn = Conexao.ObterConexao())
             {
                 // Buscar dados do usuário
-                string sqlUsuario = "SELECT nome, email, data_cadastro FROM usuarios WHERE id = @id";
+                string sqlUsuario = @"SELECT nome, email, data_nascimento, nacionalidade, profissao, telefone, data_cadastro
+                                     FROM usuarios WHERE id = @id";
                 using (var cmd = new MySql.Data.MySqlClient.MySqlCommand(sqlUsuario, conn))
                 {
                     cmd.Parameters.AddWithValue("@id", usuarioId);
@@ -30,7 +30,13 @@ namespace Tcc.Dashboard
                         {
                             lblNome.Text = $"Nome: {reader["nome"]}";
                             lblEmail.Text = $"Email: {reader["email"]}";
-                            lblCadastro.Text = $"Data de Cadastro: {Convert.ToDateTime(reader["data_cadastro"]).ToString("dd/MM/yyyy")}";
+                            lblNascimento.Text = $"Nascimento: {Convert.ToDateTime(reader["data_nascimento"]).ToString("dd/MM/yyyy")}";
+                            lblNacionalidade.Text = $"Nacionalidade: {reader["nacionalidade"]}";
+                            lblProfissao.Text = $"Profissão: {reader["profissao"]}";
+                            lblTelefone.Text = $"Telefone: {reader["telefone"]}";
+                            // Se o campo data_cadastro existir:
+                            if (reader["data_cadastro"] != DBNull.Value)
+                                lblCadastro.Text = $"Data de Cadastro: {Convert.ToDateTime(reader["data_cadastro"]).ToString("dd/MM/yyyy")}";
                         }
                     }
                 }
@@ -54,13 +60,19 @@ namespace Tcc.Dashboard
                             if (status.Contains("concluida")) concluidas++;
                             else if (status.Contains("pendente") || status.Contains("andamento")) pendentes++;
 
-                            if (!prioridades.ContainsKey(prioridade)) prioridades[prioridade] = 0;
-                            prioridades[prioridade]++;
+                            if (!string.IsNullOrEmpty(prioridade))
+                            {
+                                if (!prioridades.ContainsKey(prioridade)) prioridades[prioridade] = 0;
+                                prioridades[prioridade]++;
+                            }
                         }
 
-                        string prioridadeMaisUsada = prioridades.Count > 0
-                            ? System.Linq.Enumerable.FirstOrDefault(System.Linq.Enumerable.OrderByDescending(prioridades, p => p.Value)).Key
-                            : "N/A";
+                        // Pega prioridade mais usada
+                        string prioridadeMaisUsada = "N/A";
+                        if (prioridades.Count > 0)
+                        {
+                            prioridadeMaisUsada = System.Linq.Enumerable.OrderByDescending(prioridades, p => p.Value).First().Key;
+                        }
 
                         lblTarefasTotal.Text = $"Total de Tarefas: {total}";
                         lblTarefasConcluidas.Text = $"Concluídas: {concluidas}";

@@ -38,7 +38,7 @@ namespace Tcc
             btnTarefas.ImageAlign = ContentAlignment.MiddleLeft;
             btnTarefas.TextImageRelation = TextImageRelation.ImageBeforeText;
 
-            btnRotina.Image = Properties.Resources.Calendario_png;
+            btnRotina.Image = Properties.Resources.gerenciar;
             btnRotina.ImageAlign = ContentAlignment.MiddleLeft;
             btnRotina.TextImageRelation = TextImageRelation.ImageBeforeText;
 
@@ -49,6 +49,10 @@ namespace Tcc
             btnNotificacao.Image = Properties.Resources.Notificacao_png;
             btnNotificacao.ImageAlign = ContentAlignment.MiddleLeft;
             btnNotificacao.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnPerfil.Image = Properties.Resources.perfil_png;
+            btnPerfil.ImageAlign = ContentAlignment.MiddleLeft;
+            btnPerfil.TextImageRelation = TextImageRelation.ImageBeforeText;
 
             btnSair.Image = Properties.Resources.Sair_png;
             btnSair.ImageAlign = ContentAlignment.MiddleLeft;

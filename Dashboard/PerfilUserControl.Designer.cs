@@ -15,13 +15,16 @@
         private System.Windows.Forms.Label lblTarefasConcluidas;
         private System.Windows.Forms.Label lblTarefasPendentes;
         private System.Windows.Forms.Label lblPrioridadeMaisUsada;
+        private System.Windows.Forms.Label lblNascimento;
+        private System.Windows.Forms.Label lblNacionalidade;
+        private System.Windows.Forms.Label lblProfissao;
+        private System.Windows.Forms.Label lblTelefone;
 
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
+
             base.Dispose(disposing);
         }
 
@@ -29,10 +32,16 @@
         {
             this.panelHeader = new System.Windows.Forms.Panel();
             this.panelResumo = new System.Windows.Forms.Panel();
+
             this.lblTitulo = new System.Windows.Forms.Label();
             this.lblNome = new System.Windows.Forms.Label();
             this.lblEmail = new System.Windows.Forms.Label();
+            this.lblTelefone = new System.Windows.Forms.Label();
+            this.lblNascimento = new System.Windows.Forms.Label();
+            this.lblNacionalidade = new System.Windows.Forms.Label();
+            this.lblProfissao = new System.Windows.Forms.Label();
             this.lblCadastro = new System.Windows.Forms.Label();
+
             this.lblResumo = new System.Windows.Forms.Label();
             this.lblTarefasTotal = new System.Windows.Forms.Label();
             this.lblTarefasConcluidas = new System.Windows.Forms.Label();
@@ -44,40 +53,63 @@
             this.BackColor = System.Drawing.Color.White;
 
             // panelHeader
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(32, 46, 57); // topo escuro
-            this.panelHeader.Size = new System.Drawing.Size(800, 90);
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(32, 46, 57);
+            this.panelHeader.Size = new System.Drawing.Size(800, 160);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
 
             // lblTitulo
             this.lblTitulo.Text = "Perfil do Usuário";
             this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
-            this.lblTitulo.Location = new System.Drawing.Point(30, 18); // subiu de 25 para 18
+            this.lblTitulo.Location = new System.Drawing.Point(30, 10);
             this.lblTitulo.AutoSize = true;
 
             // lblNome
             this.lblNome.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lblNome.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblNome.Location = new System.Drawing.Point(550, 15); // subiu de 32 para 15
+            this.lblNome.Location = new System.Drawing.Point(30, 50);
             this.lblNome.AutoSize = true;
 
             // lblEmail
             this.lblEmail.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lblEmail.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblEmail.Location = new System.Drawing.Point(550, 38); // subiu de 55 para 38
+            this.lblEmail.Location = new System.Drawing.Point(30, 75);
             this.lblEmail.AutoSize = true;
+
+            // lblTelefone
+            this.lblTelefone.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lblTelefone.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblTelefone.Location = new System.Drawing.Point(30, 100);
+            this.lblTelefone.AutoSize = true;
 
             // lblCadastro
             this.lblCadastro.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.lblCadastro.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblCadastro.Location = new System.Drawing.Point(550, 61); // subiu de 78 para 61
+            this.lblCadastro.Location = new System.Drawing.Point(30, 125);
             this.lblCadastro.AutoSize = true;
 
+            // lblNascimento
+            this.lblNascimento.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lblNascimento.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblNascimento.Location = new System.Drawing.Point(400, 50);
+            this.lblNascimento.AutoSize = true;
+
+            // lblNacionalidade
+            this.lblNacionalidade.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lblNacionalidade.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblNacionalidade.Location = new System.Drawing.Point(400, 75);
+            this.lblNacionalidade.AutoSize = true;
+
+            // lblProfissao
+            this.lblProfissao.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lblProfissao.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblProfissao.Location = new System.Drawing.Point(400, 100);
+            this.lblProfissao.AutoSize = true;
+
             // panelResumo
-            this.panelResumo.BackColor = System.Drawing.Color.FromArgb(44, 62, 80); // menu escuro
+            this.panelResumo.BackColor = System.Drawing.Color.FromArgb(44, 62, 80);
             this.panelResumo.Size = new System.Drawing.Size(760, 350);
-            this.panelResumo.Location = new System.Drawing.Point(20, 110);
+            this.panelResumo.Location = new System.Drawing.Point(20, 180);
             this.panelResumo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 
             // lblResumo
@@ -111,11 +143,15 @@
             this.lblPrioridadeMaisUsada.Location = new System.Drawing.Point(30, 190);
             this.lblPrioridadeMaisUsada.AutoSize = true;
 
-            // Add controls
+            // Adicionando ao painel
             this.panelHeader.Controls.Add(this.lblTitulo);
             this.panelHeader.Controls.Add(this.lblNome);
             this.panelHeader.Controls.Add(this.lblEmail);
+            this.panelHeader.Controls.Add(this.lblTelefone);
             this.panelHeader.Controls.Add(this.lblCadastro);
+            this.panelHeader.Controls.Add(this.lblNascimento);
+            this.panelHeader.Controls.Add(this.lblNacionalidade);
+            this.panelHeader.Controls.Add(this.lblProfissao);
 
             this.panelResumo.Controls.Add(this.lblResumo);
             this.panelResumo.Controls.Add(this.lblTarefasTotal);

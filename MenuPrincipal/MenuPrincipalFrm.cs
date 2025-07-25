@@ -20,7 +20,16 @@ namespace Tcc
         private bool senhaCadastroVisivel = true;
         private bool senhaCadastroConfirmVisivel = true;
         private bool senhaLoginVisivel = true;
-        
+
+        private Label labelNascimento;
+        private DateTimePicker dateTimeNascimento;
+        private Label labelNacionalidade;
+        private TextBox textBoxNacionalidade;
+        private Label labelProfissao;
+        private TextBox textBoxProfissao;
+        private Label labelTelefone;
+        private TextBox textBoxTelefone;
+
 
 
         public MenuPrincipalFrm()
@@ -48,8 +57,26 @@ namespace Tcc
             pictureBoxOlhoConfirmarSenha.Image = Properties.Resources.eye_close;
             pictureBoxOlhoLogin.Image = Properties.Resources.eye_close;
 
-           
-        
+            labelNascimento = new Label();
+            dateTimeNascimento = new DateTimePicker();
+            labelNacionalidade = new Label();
+            textBoxNacionalidade = new TextBox();
+            labelProfissao = new Label();
+            textBoxProfissao = new TextBox();
+            labelTelefone = new Label();
+            textBoxTelefone = new TextBox();
+
+            panelCadastro.Controls.Add(labelNascimento);
+            panelCadastro.Controls.Add(dateTimeNascimento);
+            panelCadastro.Controls.Add(labelNacionalidade);
+            panelCadastro.Controls.Add(textBoxNacionalidade);
+            panelCadastro.Controls.Add(labelProfissao);
+            panelCadastro.Controls.Add(textBoxProfissao);
+            panelCadastro.Controls.Add(labelTelefone);
+            panelCadastro.Controls.Add(textBoxTelefone);
+
+
+
 
 
             this.StartPosition = FormStartPosition.CenterParent;
@@ -308,7 +335,7 @@ namespace Tcc
 
 
 
-           CentralizarLogin ();
+            CentralizarLogin ();
             CentralizarCadastro();
             Enter(panelCadastro);
             Enter(panelLogin);
@@ -419,84 +446,136 @@ namespace Tcc
         }
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
-            
-
-            if(!ValidateChildren())
+            if (!ValidateChildren())
                 return;
-            string nome = textBoxNomecad.Text;
-            string email = textBoxEmailcad.Text;
+
+            string nome = textBoxNomecad.Text.Trim();
+            string email = textBoxEmailcad.Text.Trim();
             string senha = textBoxSenhacad.Text;
             string confirmarsenha = textBoxConfirmarsenha.Text;
-            string altura = textBoxAltura.Text;
-            string peso = textBoxPeso.Text;
+            DateTime dataNascimento = dateTimeNascimento.Value.Date;
+            string nacionalidade = textBoxNacionalidade.Text.Trim();
+            string profissao = textBoxProfissao.Text.Trim();
+            string telefone = textBoxTelefone.Text.Trim();
 
-            
-
-            if (string.IsNullOrEmpty(nome) || string.IsNullOrEmpty(email) ||
-                string.IsNullOrEmpty(senha) || string.IsNullOrEmpty(confirmarsenha))
+            // Data válida
+            DateTime dataMinima = new DateTime(1900, 1, 1);
+            if (dataNascimento < dataMinima || dataNascimento > DateTime.Now)
             {
-                MessageBox.Show("Por favor, preencha todos os campos");
+                MessageBox.Show("Selecione uma data de nascimento válida (entre 01/01/1900 e hoje).");
                 return;
             }
 
+            // Campos obrigatórios
+            if (string.IsNullOrEmpty(nome) || string.IsNullOrEmpty(email) ||
+                string.IsNullOrEmpty(senha) || string.IsNullOrEmpty(confirmarsenha) ||
+                string.IsNullOrEmpty(nacionalidade) || string.IsNullOrEmpty(profissao))
+            {
+                MessageBox.Show("Por favor, preencha todos os campos obrigatórios.");
+                return;
+            }
+
+            // Nome, nacionalidade e profissão - tamanho
+            if (nome.Length < 2 || nome.Length > 100)
+            {
+                MessageBox.Show("O nome deve ter entre 2 e 100 caracteres.");
+                return;
+            }
+
+            if (nacionalidade.Length < 2 || nacionalidade.Length > 50 ||
+                profissao.Length < 2 || profissao.Length > 50)
+            {
+                MessageBox.Show("Nacionalidade e profissão devem ter entre 2 e 50 caracteres.");
+                return;
+            }
+
+            // Senhas iguais
             if (senha != confirmarsenha)
             {
                 MessageBox.Show("As senhas não coincidem.");
                 return;
             }
 
-            if (!decimal.TryParse(altura, out decimal alturaDecimal) || !decimal.TryParse(peso, out decimal pesoDecimal))
+            // Senha forte
+            if (senha.Length < 8 || !senha.Any(char.IsLetter) || !senha.Any(char.IsDigit))
             {
-                MessageBox.Show("Altura e peso devem ser números válidos.");
+                MessageBox.Show("A senha deve conter pelo menos 8 caracteres, incluindo letras e números.");
                 return;
             }
 
-            TimeSpan horaDormir = dateTimeHoraDormir.Value.TimeOfDay;
-            TimeSpan horaAcordar = dateTimeHoraAcordar.Value.TimeOfDay;
+            // E-mail válido
+            if (!System.Text.RegularExpressions.Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                MessageBox.Show("Por favor, informe um e-mail válido.");
+                return;
+            }
+
+            // Telefone: somente números e 10 a 15 dígitos
+            if (!System.Text.RegularExpressions.Regex.IsMatch(telefone, @"^\d{10,15}$"))
+            {
+                MessageBox.Show("O telefone deve conter apenas números e ter entre 10 e 15 dígitos.");
+                return;
+            }
 
             try
             {
                 using (var conn = Conexao.ObterConexao())
                 {
-                    string query = "INSERT INTO usuarios (nome, email, senha, altura, peso, hora_dormir, hora_acordar) " +
-                                   "VALUES (@nome, @email, @senha, @altura, @peso, @hora_dormir, @hora_acordar)";
+                    // Verifica duplicidade de e-mail
+                    string verificarEmail = "SELECT COUNT(*) FROM usuarios WHERE email = @email";
+                    using (var checkCmd = new MySqlCommand(verificarEmail, conn))
+                    {
+                        checkCmd.Parameters.AddWithValue("@email", email);
+                        int count = Convert.ToInt32(checkCmd.ExecuteScalar());
+                        if (count > 0)
+                        {
+                            MessageBox.Show("Este e-mail já está cadastrado.");
+                            return;
+                        }
+                    }
+
+                    // Cadastro
+                    string query = @"INSERT INTO usuarios 
+                (nome, email, senha, data_nascimento, nacionalidade, profissao, telefone) 
+                VALUES (@nome, @email, @senha, @data_nascimento, @nacionalidade, @profissao, @telefone)";
 
                     using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@nome", nome);
                         cmd.Parameters.AddWithValue("@email", email);
-                        cmd.Parameters.AddWithValue("@senha", GerarHashSenha(senha));
-                        cmd.Parameters.AddWithValue("@altura", alturaDecimal);
-                        cmd.Parameters.AddWithValue("@peso", pesoDecimal);
-                        cmd.Parameters.AddWithValue("@hora_dormir", horaDormir);
-                        cmd.Parameters.AddWithValue("@hora_acordar", horaAcordar);
+                        cmd.Parameters.AddWithValue("@senha", GerarHashSenha(senha)); // segurança
+                        cmd.Parameters.AddWithValue("@data_nascimento", dataNascimento);
+                        cmd.Parameters.AddWithValue("@nacionalidade", nacionalidade);
+                        cmd.Parameters.AddWithValue("@profissao", profissao);
+                        cmd.Parameters.AddWithValue("@telefone", telefone);
 
                         cmd.ExecuteNonQuery();
                     }
+
                     conn.Close();
                 }
 
                 MessageBox.Show("Cadastro realizado com sucesso!");
 
-                // Limpar os campos
+                // Limpar campos
                 textBoxNomecad.Clear();
                 textBoxEmailcad.Clear();
                 textBoxSenhacad.Clear();
                 textBoxConfirmarsenha.Clear();
-                textBoxAltura.Clear();
-                textBoxPeso.Clear();
-                dateTimeHoraDormir.Value = DateTime.Now;
-                dateTimeHoraAcordar.Value = DateTime.Now;
+                dateTimeNascimento.Value = DateTime.Now;
+                textBoxNacionalidade.Clear();
+                textBoxProfissao.Clear();
+                textBoxTelefone.Clear();
 
                 panelCadastro.Visible = false;
-                
+                panelLogin.Visible = true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro ao cadastrar: " + ex.Message);
             }
-            panelLogin.Visible = true; 
         }
+
         private void btnVoltarCad_Click(object sender, EventArgs e)
         {
             panelCadastro.Visible = false;
@@ -603,15 +682,18 @@ namespace Tcc
 
         }
 
-        private void CentralizarCadastro()
-        {
+      
+
+            // NOME
+            private void CentralizarCadastro()
+            {
             int larguraCampo = 300;
             int alturaCampo = 36;
-            int larguraLabel = 160;      // aumente para caber "Confirmar Senha:"
+            int larguraLabel = 160;
             int espacoVertical = 13;
             int panelWidth = panelCadastro.Width;
             int centralX = (panelWidth - larguraCampo) / 2;
-            int labelX = centralX - larguraLabel - 12; // ajuste fino entre label e campo
+            int labelX = centralX - larguraLabel - 12;
             int y = 40;
 
             // Título
@@ -653,7 +735,6 @@ namespace Tcc
             textBoxSenhacad.Left = centralX;
             textBoxSenhacad.Width = larguraCampo;
             textBoxSenhacad.Height = alturaCampo;
-            // Olho menor e centralizado verticalmente
             int olhoTamanho = 22;
             pictureBoxOlhoSenhaCadastro.Top = textBoxSenhacad.Top + (alturaCampo - olhoTamanho) / 2;
             pictureBoxOlhoSenhaCadastro.Left = textBoxSenhacad.Right + 4;
@@ -675,52 +756,52 @@ namespace Tcc
             pictureBoxOlhoConfirmarSenha.Size = new Size(olhoTamanho, olhoTamanho);
             y += alturaCampo + espacoVertical;
 
-            // ALTURA
-            labelAltura.Top = y;
-            labelAltura.Left = labelX;
-            labelAltura.Width = larguraLabel;
-            labelAltura.Text = "Altura (cm):";
-            labelAltura.TextAlign = ContentAlignment.MiddleRight;
-            textBoxAltura.Top = y;
-            textBoxAltura.Left = centralX;
-            textBoxAltura.Width = 80;
-            textBoxAltura.Height = alturaCampo;
+            // DATA DE NASCIMENTO
+            labelNascimento.Top = y;
+            labelNascimento.Left = labelX;
+            labelNascimento.Width = larguraLabel;
+            labelNascimento.Text = "Data de nascimento:";
+            labelNascimento.TextAlign = ContentAlignment.MiddleRight;
+            dateTimeNascimento.Top = y;
+            dateTimeNascimento.Left = centralX;
+            dateTimeNascimento.Width = larguraCampo;
+            dateTimeNascimento.Height = alturaCampo;
             y += alturaCampo + espacoVertical;
 
-            // PESO
-            labelPeso.Top = y;
-            labelPeso.Left = labelX;
-            labelPeso.Width = larguraLabel;
-            labelPeso.Text = "Peso (kg):";
-            labelPeso.TextAlign = ContentAlignment.MiddleRight;
-            textBoxPeso.Top = y;
-            textBoxPeso.Left = centralX;
-            textBoxPeso.Width = 80;
-            textBoxPeso.Height = alturaCampo;
+            // NACIONALIDADE
+            labelNacionalidade.Top = y;
+            labelNacionalidade.Left = labelX;
+            labelNacionalidade.Width = larguraLabel;
+            labelNacionalidade.Text = "Nacionalidade:";
+            labelNacionalidade.TextAlign = ContentAlignment.MiddleRight;
+            textBoxNacionalidade.Top = y;
+            textBoxNacionalidade.Left = centralX;
+            textBoxNacionalidade.Width = larguraCampo;
+            textBoxNacionalidade.Height = alturaCampo;
             y += alturaCampo + espacoVertical;
 
-            // HORA DORMIR
-            labelHoraDormir.Top = y;
-            labelHoraDormir.Left = labelX;
-            labelHoraDormir.Width = larguraLabel;
-            labelHoraDormir.Text = "Hora de Dormir:";
-            labelHoraDormir.TextAlign = ContentAlignment.MiddleRight;
-            dateTimeHoraDormir.Top = y;
-            dateTimeHoraDormir.Left = centralX;
-            dateTimeHoraDormir.Width = 120;
-            dateTimeHoraDormir.Height = alturaCampo;
+            // PROFISSÃO
+            labelProfissao.Top = y;
+            labelProfissao.Left = labelX;
+            labelProfissao.Width = larguraLabel;
+            labelProfissao.Text = "Profissão:";
+            labelProfissao.TextAlign = ContentAlignment.MiddleRight;
+            textBoxProfissao.Top = y;
+            textBoxProfissao.Left = centralX;
+            textBoxProfissao.Width = larguraCampo;
+            textBoxProfissao.Height = alturaCampo;
             y += alturaCampo + espacoVertical;
 
-            // HORA ACORDAR
-            labelHoraAcordar.Top = y;
-            labelHoraAcordar.Left = labelX;
-            labelHoraAcordar.Width = larguraLabel;
-            labelHoraAcordar.Text = "Hora de Acordar:";
-            labelHoraAcordar.TextAlign = ContentAlignment.MiddleRight;
-            dateTimeHoraAcordar.Top = y;
-            dateTimeHoraAcordar.Left = centralX;
-            dateTimeHoraAcordar.Width = 120;
-            dateTimeHoraAcordar.Height = alturaCampo;
+            // TELEFONE (opcional)
+            labelTelefone.Top = y;
+            labelTelefone.Left = labelX;
+            labelTelefone.Width = larguraLabel;
+            labelTelefone.Text = "Telefone:";
+            labelTelefone.TextAlign = ContentAlignment.MiddleRight;
+            textBoxTelefone.Top = y;
+            textBoxTelefone.Left = centralX;
+            textBoxTelefone.Width = larguraCampo;
+            textBoxTelefone.Height = alturaCampo;
             y += alturaCampo + 2 * espacoVertical;
 
             // BOTÕES
@@ -734,6 +815,7 @@ namespace Tcc
             btnVoltarCad.Width = 140;
             btnVoltarCad.Height = alturaCampo;
         }
+        
 
 
 

@@ -308,83 +308,7 @@
             // 
             // labelAltura
             // 
-            labelAltura.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            labelAltura.Location = new Point(38, 54);
-            labelAltura.Margin = new Padding(2, 0, 2, 0);
-            labelAltura.Name = "labelAltura";
-            labelAltura.Size = new Size(84, 17);
-            labelAltura.TabIndex = 9;
-            labelAltura.Text = "Altura (cm):";
-            // 
-            // textBoxAltura
-            // 
-            textBoxAltura.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            textBoxAltura.Location = new Point(252, 54);
-            textBoxAltura.Margin = new Padding(2, 2, 2, 2);
-            textBoxAltura.Name = "textBoxAltura";
-            textBoxAltura.Size = new Size(57, 27);
-            textBoxAltura.TabIndex = 10;
-            // 
-            // labelPeso
-            // 
-            labelPeso.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            labelPeso.Location = new Point(38, 54);
-            labelPeso.Margin = new Padding(2, 0, 2, 0);
-            labelPeso.Name = "labelPeso";
-            labelPeso.Size = new Size(84, 17);
-            labelPeso.TabIndex = 11;
-            labelPeso.Text = "Peso (kg):";
-            // 
-            // textBoxPeso
-            // 
-            textBoxPeso.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            textBoxPeso.Location = new Point(252, 54);
-            textBoxPeso.Margin = new Padding(2, 2, 2, 2);
-            textBoxPeso.Name = "textBoxPeso";
-            textBoxPeso.Size = new Size(57, 27);
-            textBoxPeso.TabIndex = 12;
-            // 
-            // labelHoraDormir
-            // 
-            labelHoraDormir.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            labelHoraDormir.Location = new Point(38, 54);
-            labelHoraDormir.Margin = new Padding(2, 0, 2, 0);
-            labelHoraDormir.Name = "labelHoraDormir";
-            labelHoraDormir.Size = new Size(84, 17);
-            labelHoraDormir.TabIndex = 13;
-            labelHoraDormir.Text = "Hora de Dormir:";
-            // 
-            // dateTimeHoraDormir
-            // 
-            dateTimeHoraDormir.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            dateTimeHoraDormir.Format = DateTimePickerFormat.Time;
-            dateTimeHoraDormir.Location = new Point(252, 54);
-            dateTimeHoraDormir.Margin = new Padding(2, 2, 2, 2);
-            dateTimeHoraDormir.Name = "dateTimeHoraDormir";
-            dateTimeHoraDormir.ShowUpDown = true;
-            dateTimeHoraDormir.Size = new Size(71, 27);
-            dateTimeHoraDormir.TabIndex = 14;
-            // 
-            // labelHoraAcordar
-            // 
-            labelHoraAcordar.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            labelHoraAcordar.Location = new Point(38, 54);
-            labelHoraAcordar.Margin = new Padding(2, 0, 2, 0);
-            labelHoraAcordar.Name = "labelHoraAcordar";
-            labelHoraAcordar.Size = new Size(84, 17);
-            labelHoraAcordar.TabIndex = 15;
-            labelHoraAcordar.Text = "Hora de Acordar:";
-            // 
-            // dateTimeHoraAcordar
-            // 
-            dateTimeHoraAcordar.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
-            dateTimeHoraAcordar.Format = DateTimePickerFormat.Time;
-            dateTimeHoraAcordar.Location = new Point(252, 54);
-            dateTimeHoraAcordar.Margin = new Padding(2, 2, 2, 2);
-            dateTimeHoraAcordar.Name = "dateTimeHoraAcordar";
-            dateTimeHoraAcordar.ShowUpDown = true;
-            dateTimeHoraAcordar.Size = new Size(71, 27);
-            dateTimeHoraAcordar.TabIndex = 16;
+            
             // 
             // btnCadastrar
             // 
@@ -523,6 +447,8 @@
         private Label labelTitulo;
         private LinkLabel linkRegistrar;
         private LinkLabel linkEsqueciSenha;
+
+
 
 
 
