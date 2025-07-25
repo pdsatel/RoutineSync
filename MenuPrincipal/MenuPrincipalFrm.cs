@@ -760,6 +760,7 @@ namespace Tcc
             labelNascimento.Top = y;
             labelNascimento.Left = labelX;
             labelNascimento.Width = larguraLabel;
+            labelNascimento.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
             labelNascimento.Text = "Data de nascimento:";
             labelNascimento.TextAlign = ContentAlignment.MiddleRight;
             dateTimeNascimento.Top = y;
@@ -772,6 +773,7 @@ namespace Tcc
             labelNacionalidade.Top = y;
             labelNacionalidade.Left = labelX;
             labelNacionalidade.Width = larguraLabel;
+            labelNacionalidade.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
             labelNacionalidade.Text = "Nacionalidade:";
             labelNacionalidade.TextAlign = ContentAlignment.MiddleRight;
             textBoxNacionalidade.Top = y;
@@ -784,6 +786,7 @@ namespace Tcc
             labelProfissao.Top = y;
             labelProfissao.Left = labelX;
             labelProfissao.Width = larguraLabel;
+            labelProfissao.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
             labelProfissao.Text = "Profissão:";
             labelProfissao.TextAlign = ContentAlignment.MiddleRight;
             textBoxProfissao.Top = y;
@@ -796,6 +799,7 @@ namespace Tcc
             labelTelefone.Top = y;
             labelTelefone.Left = labelX;
             labelTelefone.Width = larguraLabel;
+            labelTelefone.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point);
             labelTelefone.Text = "Telefone:";
             labelTelefone.TextAlign = ContentAlignment.MiddleRight;
             textBoxTelefone.Top = y;
