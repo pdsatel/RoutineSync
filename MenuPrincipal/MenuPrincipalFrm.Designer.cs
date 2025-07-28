@@ -6,6 +6,29 @@
         private Panel panelDireita;
         private PictureBox pictureBoxLogo;
 
+
+        private Panel panelCadastro;
+        private Label labelCadastro;
+        private Button btnCadastrar;
+        private DateTimePicker dateTimeHoraAcordar;
+        private DateTimePicker dateTimeHoraDormir;
+        private TextBox textBoxAltura;
+        private TextBox textBoxConfirmarsenha;
+        private TextBox textBoxSenhacad;
+        private TextBox textBoxNomecad;
+        private TextBox textBoxEmailcad;
+        private TextBox textBoxPeso;
+        private Button btnVoltarCad;
+        private Label labelNome;
+        private Label labelEmailcad;
+        private Label labelSenhacad;
+        private Label labelSenha2cad;
+        private Label labelAltura;
+        private Label labelPeso;
+        private Label labelHoraDormir;
+        private Label labelHoraAcordar;
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -415,27 +438,7 @@
 
 
         //Cadastro
-        private Panel panelCadastro;
-        private Label labelCadastro;
-        private Button btnCadastrar;
-        private DateTimePicker dateTimeHoraAcordar;
-        private DateTimePicker dateTimeHoraDormir;
-        private TextBox textBoxAltura;
-        private TextBox textBoxConfirmarsenha;
-        private TextBox textBoxSenhacad;
-        private TextBox textBoxNomecad;
-        private TextBox textBoxEmailcad;
-        private TextBox textBoxPeso;
-        private Button btnVoltarCad;
-        private Label labelNome;
-        private Label labelEmailcad;
-        private Label labelSenhacad;
-        private Label labelSenha2cad;
-        private Label labelAltura;
-        private Label labelPeso;
-        private Label labelHoraDormir;
-        private Label labelHoraAcordar;
-
+    
         //login
         private Panel panelLogin;
         private TextBox textBoxEmail;

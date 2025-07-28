@@ -150,10 +150,14 @@ namespace Tcc
             var pbkdf2 = new Rfc2898DeriveBytes(senha, salt, 10000);
             byte[] hash = pbkdf2.GetBytes(20);
 
+            // Comparação de tempo constante
+            uint diff = (uint)hashBytes.Length ^ (uint)(hash.Length + 16);
             for (int i = 0; i < 20; i++)
-                if (hashBytes[i + 16] != hash[i])
-                    return false;
-            return true;
+            {
+                diff |= (uint)(hashBytes[i + 16] ^ hash[i]);
+            }
+
+            return diff == 0;
         }
         private void textBoxEmailcad_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -687,7 +691,7 @@ namespace Tcc
 
             if (labelNascimento == null || dateTimeNascimento == null)
             {
-                MessageBox.Show("Controles não inicializados corretamente!");
+                MessageBox.Show("Bem Vindo a RoutineSync!");
                 return;
             }
 
