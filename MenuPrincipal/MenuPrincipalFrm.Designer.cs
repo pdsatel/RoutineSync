@@ -4,14 +4,13 @@
     {
         private System.ComponentModel.IContainer components = null;
         private Panel panelDireita;
-        private PictureBox pictureBoxLogo;
+        private System.Windows.Forms.PictureBox pictureBoxLogoLogin;
 
 
         private Panel panelCadastro;
         private Label labelCadastro;
         private Button btnCadastrar;
-        private DateTimePicker dateTimeHoraAcordar;
-        private DateTimePicker dateTimeHoraDormir;
+    
         private TextBox textBoxAltura;
         private TextBox textBoxConfirmarsenha;
         private TextBox textBoxSenhacad;
@@ -63,28 +62,26 @@
             textBoxSenhacad = new TextBox();
             labelSenha2cad = new Label();
             textBoxConfirmarsenha = new TextBox();
-            labelAltura = new Label();
-            textBoxAltura = new TextBox();
-            labelPeso = new Label();
-            textBoxPeso = new TextBox();
-            labelHoraDormir = new Label();
-            dateTimeHoraDormir = new DateTimePicker();
-            labelHoraAcordar = new Label();
-            dateTimeHoraAcordar = new DateTimePicker();
+            
+       
+            
             btnCadastrar = new Button();
             btnVoltarCad = new Button();
             pictureBoxOlhoSenhaCadastro = new PictureBox();
             pictureBoxOlhoConfirmarSenha = new PictureBox();
             panelDireita = new Panel();
-            pictureBoxLogo = new PictureBox();
+            this.pictureBoxLogoLogin = new System.Windows.Forms.PictureBox();
             panelLogin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxOlhoLogin).BeginInit();
             panelCadastro.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxOlhoSenhaCadastro).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxOlhoConfirmarSenha).BeginInit();
             panelDireita.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
-            SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogoLogin)).BeginInit();
+            this.panelLogin.SuspendLayout();
+
+
+            this.panelLogin.Controls.Add(this.pictureBoxLogoLogin);
             // 
             // labelTitulo
             // 
@@ -115,6 +112,7 @@
             panelLogin.TabIndex = 1;
             panelLogin.Visible = false;
             panelLogin.Paint += panelLogin_Paint;
+
             // 
             // labelLogin
             // 
@@ -224,14 +222,12 @@
             panelCadastro.Controls.Add(textBoxSenhacad);
             panelCadastro.Controls.Add(labelSenha2cad);
             panelCadastro.Controls.Add(textBoxConfirmarsenha);
-            panelCadastro.Controls.Add(labelAltura);
-            panelCadastro.Controls.Add(textBoxAltura);
-            panelCadastro.Controls.Add(labelPeso);
-            panelCadastro.Controls.Add(textBoxPeso);
+            
+            
             panelCadastro.Controls.Add(labelHoraDormir);
-            panelCadastro.Controls.Add(dateTimeHoraDormir);
+         
             panelCadastro.Controls.Add(labelHoraAcordar);
-            panelCadastro.Controls.Add(dateTimeHoraAcordar);
+           
             panelCadastro.Controls.Add(btnCadastrar);
             panelCadastro.Controls.Add(btnVoltarCad);
             panelCadastro.Location = new Point(199, 36);
@@ -384,7 +380,7 @@
             // panelDireita
             // 
             panelDireita.BackColor = Color.FromArgb(32, 46, 57);
-            panelDireita.Controls.Add(pictureBoxLogo);
+           
             panelDireita.Dock = DockStyle.Right;
             panelDireita.Location = new Point(646, 0);
             panelDireita.Margin = new Padding(2, 2, 2, 2);
@@ -394,14 +390,7 @@
             // 
             // pictureBoxLogo
             // 
-            pictureBoxLogo.BackColor = Color.Transparent;
-            pictureBoxLogo.Location = new Point(199, 60);
-            pictureBoxLogo.Margin = new Padding(2, 2, 2, 2);
-            pictureBoxLogo.Name = "pictureBoxLogo";
-            pictureBoxLogo.Size = new Size(154, 132);
-            pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBoxLogo.TabIndex = 0;
-            pictureBoxLogo.TabStop = false;
+           
             // 
             // MenuPrincipalFrm
             // 
@@ -427,7 +416,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBoxOlhoSenhaCadastro).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxOlhoConfirmarSenha).EndInit();
             panelDireita.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).EndInit();
             ResumeLayout(false);
 
             // Garante que a logo fique centralizada mesmo se redimensionar

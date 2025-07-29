@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Windows.Forms;
+using Tcc.Dashboard;
 
 namespace Tcc
 {
@@ -12,6 +13,7 @@ namespace Tcc
         private TarefasUserControl tarefasControl;
         private RelatorioUserControl relatorioControl;
         private Notificacao notificacaoControl;
+        private PerfilUserControl perfilControl;
 
         public DashboardFrm(int idUsuario)
         {
@@ -28,6 +30,8 @@ namespace Tcc
 
             notificacaoControl = new Notificacao();
             notificacaoControl.Dock = DockStyle.Fill;
+
+            perfilControl = new PerfilUserControl(usuarioId);
         }
 
         private void DashboardFrm_Load(object sender, EventArgs e)
@@ -55,6 +59,8 @@ namespace Tcc
             btnSair.Image = Properties.Resources.Sair_png;
             btnSair.ImageAlign = ContentAlignment.MiddleLeft;
             btnSair.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            CarregarUserControl(perfilControl);
         }
 
         private void DashboardFrm_Shown(object sender, EventArgs e)
@@ -78,24 +84,30 @@ namespace Tcc
             }
         }
 
-        private void btnTarefas_Click(object sender, EventArgs e)
-        { 
-           
+        private void CarregarUserControl(UserControl userControl)
+        {
+            userControl.Dock = DockStyle.Fill;
             panelConteudo.Controls.Clear();
-            panelConteudo.Controls.Add(tarefasControl);
-            tarefasControl.Dock = DockStyle.Fill;
+            panelConteudo.Controls.Add(userControl);
+        }
+
+        private void btnTarefas_Click(object sender, EventArgs e)
+        {
 
             tarefasControl.CarregarTarefas();
+            CarregarUserControl(tarefasControl);
+        }
+        private void btnPerfil_Click(object sender, EventArgs e)
+        {
+
+            CarregarUserControl(perfilControl);
+
         }
 
         private void btnRotina_Click(object sender, EventArgs e)
         {
-            var tarefas = tarefasControl.BuscarTarefasBanco();
-            rotinasControl.CarregarRotinasDeTarefas(tarefas);
-
-            panelConteudo.Controls.Clear();
-            panelConteudo.Controls.Add(rotinasControl);
-            rotinasControl.Dock = DockStyle.Fill;
+            rotinasControl.AtualizarRotinas();
+            CarregarUserControl(rotinasControl);
         }
 
         private void btnRelatorios_Click(object sender, EventArgs e)
@@ -104,10 +116,7 @@ namespace Tcc
                 relatorioControl = new RelatorioUserControl(usuarioId);
 
             relatorioControl.AtualizarRelatorioDoBanco(usuarioId);
-
-            panelConteudo.Controls.Clear();
-            panelConteudo.Controls.Add(relatorioControl);
-            relatorioControl.Dock = DockStyle.Fill;
+            CarregarUserControl(relatorioControl);
         }
 
        

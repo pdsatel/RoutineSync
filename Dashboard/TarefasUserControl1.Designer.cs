@@ -46,7 +46,7 @@
 
         #endregion
         private Button btnSalvar;
-        private Button btnAtualizar;
+       
         private Button btnExcluir;
     }
 }

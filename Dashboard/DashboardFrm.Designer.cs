@@ -207,15 +207,6 @@
         }
 
         // Adicione o evento click do botão perfil
-        private void btnPerfil_Click(object sender, EventArgs e)
-        {
-            int usuarioId = this.usuarioId; // Obtenha o ID do usuário atual
-
-            var perfilUC = new Tcc.Dashboard.PerfilUserControl(usuarioId);
-            perfilUC.Dock = DockStyle.Fill;
-            panelConteudo.Controls.Clear();
-            panelConteudo.Controls.Add(perfilUC);
-
-        }
+        
     }
 }

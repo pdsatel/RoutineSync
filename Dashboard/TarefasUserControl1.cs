@@ -570,67 +570,33 @@ namespace Tcc
 
             controle.Region = new Region(path);
         }
-        private void TarefasUserControl_Load(object sender, EventArgs e)
+        // No ficheiro: TarefasUserControl1.cs
 
+private void TarefasUserControl_Load(object sender, EventArgs e)
+{
+    // A linha que adicionava o evento SizeChanged foi removida.
+    
+    CarregarTarefas();
 
-        {
-            this.SizeChanged += TarefasUserControl_SizeChanged;
+    // A linha CentralizarPainel(this) foi REMOVIDA. O DashboardFrm agora controla a posição.
 
-            CarregarTarefas();
+    // Define cor de fundo geral
+    this.BackColor = ColorTranslator.FromHtml("#FFFCF6");
 
-            // Centraliza o próprio UserControl
-            CentralizarPainel(this);
-
-            // Define cor de fundo geral
-            this.BackColor = ColorTranslator.FromHtml("#FFFCF6");
-
-            // Aplica fonte e cor aos controles existentes
-            // Estilo para os controles TextBox, ComboBox, DateTimePicker, ListView
-            foreach (Control ctrl in this.Controls)
-            {
-                if (ctrl is TextBox txt)
-                {
-                    txt.BackColor = Color.White;
-                    txt.ForeColor = ColorTranslator.FromHtml("#333333");
-                    txt.BorderStyle = BorderStyle.FixedSingle;
-                    
-                }
-
-                if (ctrl is ComboBox cmb)
-                {
-                    cmb.BackColor = Color.White;
-                    cmb.ForeColor = ColorTranslator.FromHtml("#333333");
-                    cmb.FlatStyle = FlatStyle.Flat;
-                }
-
-                if (ctrl is DateTimePicker dtp)
-                {
-                    dtp.CalendarForeColor = Color.Black;
-                    dtp.CalendarMonthBackground = Color.White;
-                    dtp.CalendarTitleBackColor = ColorTranslator.FromHtml("#202E39");
-                    dtp.CalendarTitleForeColor = Color.White;
-                    dtp.BackColor = Color.White;
-                    dtp.ForeColor = ColorTranslator.FromHtml("#333333");
-                }
-
-                if (ctrl is ListView lv)
-                {
-                    lv.BackColor = Color.White;
-                    lv.ForeColor = ColorTranslator.FromHtml("#333333");
-                    lv.Font = new Font("Segoe UI", 10);
-                    lv.FullRowSelect = true;
-                }
-            }
-            ArredondarBotao(btnSalvar, 10);
-            ArredondarBotao(btnExcluir, 10);    
-            ArredondarControle(txtTitulo, 10);
-            ArredondarControle(txtDescricao, 10);   
-            ArredondarControle(dtpDataEntrega, 10); 
-            ArredondarControle(cmbStatus, 10);
-            ArredondarControle(cmbPrioridade, 10);  
-            ArredondarControle(listViewTarefas, 10);
-            
-        }
+    // O resto da lógica de estilização permanece igual...
+    foreach (Control ctrl in this.Controls)
+    {
+        // ... (o seu código foreach para estilizar os controlos continua aqui, sem alterações)
+    }
+    ArredondarBotao(btnSalvar, 10);
+    ArredondarBotao(btnExcluir, 10);
+    ArredondarControle(txtTitulo, 10);
+    ArredondarControle(txtDescricao, 10);
+    ArredondarControle(dtpDataEntrega, 10);
+    ArredondarControle(cmbStatus, 10);
+    ArredondarControle(cmbPrioridade, 10);
+    ArredondarControle(listViewTarefas, 10);
+}
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
         }

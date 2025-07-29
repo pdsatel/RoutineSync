@@ -173,6 +173,16 @@ namespace Tcc.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap RoutineSync__2_ {
+            get {
+                object obj = ResourceManager.GetObject("RoutineSync__2_", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Sair_png {
             get {
                 object obj = ResourceManager.GetObject("Sair_png", resourceCulture);

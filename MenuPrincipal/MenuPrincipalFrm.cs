@@ -3,7 +3,7 @@ using MySqlX.XDevAPI;
 using System.Drawing.Drawing2D;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using System.Security.Cryptography;
+
 
 
 namespace Tcc
@@ -377,6 +377,22 @@ namespace Tcc
 
             int panelWidth = panelLogin.Width;
             int centralX = (panelWidth - larguraCampo) / 2;
+
+
+            int logoSize = 120; // Tamanho da logo (não muito grande)
+            int espacoLogo = 15;
+            int larguraControles = 320;
+            // ... (resto das suas variáveis de tamanho e espaço)
+
+            // --- Garante que a imagem da logo é carregada do resources ---
+            if (pictureBoxLogoLogin.Image == null)
+            {
+                // Linha corrigida
+                pictureBoxLogoLogin.Image = Properties.Resources.RoutineSync__2_;
+            }
+
+
+
 
             // Label Login
             labelLogin.Top = 40;
