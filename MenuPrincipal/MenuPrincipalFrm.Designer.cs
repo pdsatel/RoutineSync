@@ -111,7 +111,7 @@
             panelLogin.Size = new Size(491, 527);
             panelLogin.TabIndex = 1;
             panelLogin.Visible = false;
-            panelLogin.Paint += panelLogin_Paint;
+           
 
             // 
             // labelLogin
@@ -125,7 +125,7 @@
             labelLogin.Size = new Size(104, 45);
             labelLogin.TabIndex = 6;
             labelLogin.Text = "Login";
-            labelLogin.Click += label1_Click_1;
+            
             // 
             // labelEmail
             // 
