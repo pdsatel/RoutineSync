@@ -47,7 +47,9 @@ namespace Tcc
             this.Shown += MenuPrincipalFrm_Shown; // Executa quando o formulário é exibido pela primeira vez.
             this.SizeChanged += new EventHandler(MenuPrincipalFrm_SizeChanged); // Executa sempre que o formulário é redimensionado.
             this.Load += new EventHandler(MenuPrincipalFrm_Load); // Executa antes do formulário ser exibido.
-
+                                                                  // Permite a validação, mas não impede a mudança de foco para controlos
+                                                                  // que não exigem validação (como o botão de fechar).
+            this.AutoValidate = AutoValidate.EnableAllowFocusChange;
             // Eventos de validação para os campos de cadastro.
             textBoxEmailcad.Validating += textBoxEmailcad_Validating;
             textBoxSenhacad.Validating += textBoxSenhacad_Validating;
@@ -196,7 +198,7 @@ namespace Tcc
             if (!SenhaForte(textBoxSenhacad.Text)) // Verifica se a senha atende aos critérios de segurança.
             {
                 errorProvider.SetError(textBoxSenhacad, "Senha fraca. Use letras maiúsculas, minúsculas, número e especial.");
-                e.Cancel = false;
+                e.Cancel = true;
             }
             else
             {
@@ -288,6 +290,8 @@ namespace Tcc
             this.BackColor = corPrimaria;
             panelCadastro.BackColor = corSecundaria;
             panelLogin.BackColor = corSecundaria;
+
+           
 
             // Define a visibilidade inicial dos painéis: login visível, cadastro oculto.
             panelLogin.Visible = true;
