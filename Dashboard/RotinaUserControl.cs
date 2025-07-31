@@ -102,6 +102,44 @@ namespace Tcc
             CarregarRotinasDeTarefas(tarefasControl.BuscarTarefasBanco());
         }
 
+        private void btnRemover_Click(object sender, EventArgs e)
+        {
+            // Esta lógica é idêntica à do menu de contexto.
+            if (listViewRotinas.SelectedItems.Count > 0)
+            {
+                var item = listViewRotinas.SelectedItems[0];
+                TarefaInfo tarefa = item.Tag as TarefaInfo;
+
+                if (tarefa != null &&
+                    MessageBox.Show($"Confirma exclusão da tarefa '{tarefa.Titulo}'?",
+                                  "Excluir",
+                                  MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    try
+                    {
+                        using (MySqlConnection conn = Conexao.ObterConexao())
+                        {
+                            string sql = "DELETE FROM Tarefas WHERE id = @id";
+                            MySqlCommand cmd = new MySqlCommand(sql, conn);
+                            cmd.Parameters.AddWithValue("@id", tarefa.Id);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        listViewRotinas.Items.Remove(item);
+                        MessageBox.Show("Tarefa removida com sucesso!");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Erro ao remover: {ex.Message}");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Selecione uma tarefa para remover.");
+            }
+        }
+
         // Evento de clique do botão "Concluir".
         private void btnConcluir_Click(object sender, EventArgs e)
         {

@@ -1,0 +1,61 @@
+﻿-- Criação do banco de dados se ele não existir
+CREATE DATABASE IF NOT EXISTS RoutineSync;
+USE RoutineSync;
+
+-- -----------------------------------------------------
+-- Tabela: Usuarios
+-- Armazena os dados de login e perfil de cada utilizador.
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS Usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(100) NOT NULL, -- Armazenará o hash PBKDF2
+    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_nascimento DATE NOT NULL,
+    nacionalidade VARCHAR(100) NOT NULL,
+    profissao VARCHAR(100) NOT NULL,
+    telefone VARCHAR(20) DEFAULT NULL
+);
+
+-- -----------------------------------------------------
+-- Tabela: Tarefas
+-- Armazena todas as tarefas criadas pelos utilizadores.
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS Tarefas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    titulo VARCHAR(100),
+    descricao TEXT,
+    data_entrega DATETIME,
+    -- O tipo ENUM foi corrigido para corresponder exatamente aos valores usados na aplicação C#
+    status ENUM('Pendente', 'Em andamento', 'Concluída') DEFAULT 'Pendente',
+    prioridade ENUM('Baixa', 'Média', 'Alta') DEFAULT 'Média',
+    -- A cláusula ON DELETE CASCADE garante que, se um utilizador for apagado, todas as suas tarefas também são.
+    FOREIGN KEY (usuario_id) REFERENCES Usuarios(id) ON DELETE CASCADE
+);
+
+-- -----------------------------------------------------
+-- Tabela: Notificacoes (Estrutura para funcionalidades futuras)
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS Notificacoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    mensagem TEXT NOT NULL,
+    lida BOOLEAN DEFAULT FALSE,
+    data_hora DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES Usuarios(id) ON DELETE CASCADE
+);
+
+-- -----------------------------------------------------
+-- Tabela: Relatorios (Estrutura para funcionalidades futuras)
+-- Poderia armazenar relatórios gerados ou logs.
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS Relatorios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    data_geracao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    tipo VARCHAR(50),
+    descricao TEXT,
+    FOREIGN KEY (usuario_id) REFERENCES Usuarios(id) ON DELETE CASCADE
+);
