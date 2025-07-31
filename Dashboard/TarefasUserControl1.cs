@@ -196,7 +196,8 @@ namespace Tcc
                             item.SubItems.Add(dataEntrega.ToString("dd/MM/yyyy HH:mm"));
                             item.SubItems.Add(status);
                             item.SubItems.Add(prioridade);
-                            item.SubItems.Add(descricao); // Adiciona a descrição completa na coluna.
+                            string resumo = descricao.Length > 50 ? descricao.Substring(0, 50) + "..." : descricao;
+                            item.SubItems.Add(resumo); // Adiciona a descrição completa na coluna.
 
                             // Armazena o objeto de dados completo na propriedade Tag do item.
                             // Isso facilita o acesso a todos os dados da tarefa posteriormente.
