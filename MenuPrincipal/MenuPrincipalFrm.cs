@@ -36,7 +36,7 @@ namespace Tcc
         private Label labelProfissao;
         private TextBox textBoxProfissao;
         private Label labelTelefone;
-        private TextBox textBoxTelefone;
+        private MaskedTextBox textBoxTelefone;
 
         // Construtor do formulário. É executado quando o formulário é criado.
         public MenuPrincipalFrm()
@@ -78,8 +78,9 @@ namespace Tcc
             labelProfissao = new Label();
             textBoxProfissao = new TextBox();
             labelTelefone = new Label();
-            textBoxTelefone = new TextBox();
-
+            // Linhas Corrigidas no Construtor
+            textBoxTelefone = new MaskedTextBox(); // <-- ALTERADO AQUI
+            textBoxTelefone.Mask = "(99) 99999-9999"; // <-- MÁSCARA ADICIONADA
             // Adiciona os controles recém-criados ao painel de cadastro.
             panelCadastro.Controls.Add(labelNascimento);
             panelCadastro.Controls.Add(dateTimeNascimento);
@@ -517,9 +518,14 @@ namespace Tcc
             }
 
             // Formato do telefone.
-            if (!System.Text.RegularExpressions.Regex.IsMatch(telefone, @"^\d{10,15}$"))
+            // Bloco Corrigido
+            // Pega apenas os números do telefone, sem a formatação da máscara.
+            string telefoneApenasNumeros = new string(textBoxTelefone.Text.Where(char.IsDigit).ToArray());
+
+            // Validação do telefone.
+            if (!string.IsNullOrEmpty(telefoneApenasNumeros) && telefoneApenasNumeros.Length < 10)
             {
-                MessageBox.Show("O telefone deve conter apenas números e ter entre 10 e 15 dígitos.");
+                MessageBox.Show("O telefone deve ser preenchido completamente.");
                 return;
             }
 
@@ -555,7 +561,8 @@ namespace Tcc
                         cmd.Parameters.AddWithValue("@data_nascimento", dataNascimento);
                         cmd.Parameters.AddWithValue("@nacionalidade", nacionalidade);
                         cmd.Parameters.AddWithValue("@profissao", profissao);
-                        cmd.Parameters.AddWithValue("@telefone", telefone);
+                        // Linha Corrigida
+                        cmd.Parameters.AddWithValue("@telefone", telefoneApenasNumeros);
 
                         cmd.ExecuteNonQuery(); // Executa a inserção.
                     }
