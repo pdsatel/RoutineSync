@@ -817,11 +817,48 @@ namespace Tcc
         {
             ComboBoxNacionalidade.Items.Clear(); // Limpa itens existentes.
 
-            // Adiciona uma lista de países.
-            ComboBoxNacionalidade.Items.Add("Brasil");
+            // Adiciona uma lista mais completa de países em ordem alfabética.
+            ComboBoxNacionalidade.Items.Add("África do Sul");
+            ComboBoxNacionalidade.Items.Add("Alemanha");
+            ComboBoxNacionalidade.Items.Add("Angola");
             ComboBoxNacionalidade.Items.Add("Argentina");
+            ComboBoxNacionalidade.Items.Add("Austrália");
+            ComboBoxNacionalidade.Items.Add("Bélgica");
+            ComboBoxNacionalidade.Items.Add("Brasil");
+            ComboBoxNacionalidade.Items.Add("Canadá");
+            ComboBoxNacionalidade.Items.Add("Chile");
+            ComboBoxNacionalidade.Items.Add("China");
+            ComboBoxNacionalidade.Items.Add("Colômbia");
+            ComboBoxNacionalidade.Items.Add("Coreia do Sul");
+            ComboBoxNacionalidade.Items.Add("Egito");
+            ComboBoxNacionalidade.Items.Add("Emirados Árabes Unidos");
+            ComboBoxNacionalidade.Items.Add("Espanha");
             ComboBoxNacionalidade.Items.Add("Estados Unidos");
-            // ... (restante da lista)
+            ComboBoxNacionalidade.Items.Add("França");
+            ComboBoxNacionalidade.Items.Add("Grécia");
+            ComboBoxNacionalidade.Items.Add("Holanda (Países Baixos)");
+            ComboBoxNacionalidade.Items.Add("Índia");
+            ComboBoxNacionalidade.Items.Add("Inglaterra");
+            ComboBoxNacionalidade.Items.Add("Irlanda");
+            ComboBoxNacionalidade.Items.Add("Israel");
+            ComboBoxNacionalidade.Items.Add("Itália");
+            ComboBoxNacionalidade.Items.Add("Japão");
+            ComboBoxNacionalidade.Items.Add("México");
+            ComboBoxNacionalidade.Items.Add("Moçambique");
+            ComboBoxNacionalidade.Items.Add("Nigéria");
+            ComboBoxNacionalidade.Items.Add("Noruega");
+            ComboBoxNacionalidade.Items.Add("Nova Zelândia");
+            ComboBoxNacionalidade.Items.Add("Paraguai");
+            ComboBoxNacionalidade.Items.Add("Peru");
+            ComboBoxNacionalidade.Items.Add("Polônia");
+            ComboBoxNacionalidade.Items.Add("Portugal");
+            ComboBoxNacionalidade.Items.Add("Reino Unido");
+            ComboBoxNacionalidade.Items.Add("Rússia");
+            ComboBoxNacionalidade.Items.Add("Suécia");
+            ComboBoxNacionalidade.Items.Add("Suíça");
+            ComboBoxNacionalidade.Items.Add("Turquia");
+            ComboBoxNacionalidade.Items.Add("Uruguai");
+            ComboBoxNacionalidade.Items.Add("Venezuela");
         }
 
         // Método estático para gerar um hash seguro de senha usando o algoritmo PBKDF2.
