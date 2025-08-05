@@ -267,65 +267,40 @@ namespace Tcc
         }
 
         // Evento de clique do botão "Salvar" para adicionar uma nova tarefa.
+        // No ficheiro: TarefasUserControl1.cs
         private void BtnSalvar_Click(object sender, EventArgs e)
         {
-            // Coleta os dados dos campos de entrada.
             string titulo = txtTitulo.Text.Trim();
             string descricao = txtDescricao.Text.Trim();
             DateTime dataEntrega = dtpDataEntrega.Value;
             string status = cmbStatus.SelectedItem.ToString();
             string prioridade = cmbPrioridade.SelectedItem.ToString();
-            string resumo = descricao.Length > 50 ? descricao.Substring(0, 50) + "..." : descricao;
 
-            // Validação simples.
             if (string.IsNullOrEmpty(titulo))
             {
                 MessageBox.Show("O Titulo da tarefa não pode estar vazio.");
                 return;
             }
 
-            long tarefaId = 0;
-
             try
             {
                 using (MySqlConnection conn = Conexao.ObterConexao())
                 {
-                    // Query SQL para inserir a nova tarefa.
                     string sql = @"INSERT INTO Tarefas (usuario_id, titulo, descricao, data_entrega, status, prioridade)
-                                   VALUES (@usuarioId, @titulo, @descricao, @data_entrega, @status, @prioridade)";
+                           VALUES (@usuarioId, @titulo, @descricao, @data_entrega, @status, @prioridade)";
 
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
-                    // Adiciona parâmetros para evitar SQL Injection.
                     cmd.Parameters.AddWithValue("@usuarioId", UsuarioId);
                     cmd.Parameters.AddWithValue("@titulo", titulo);
                     cmd.Parameters.AddWithValue("@descricao", descricao);
                     cmd.Parameters.AddWithValue("@data_entrega", dataEntrega);
-                    cmd.Parameters.AddWithValue("@status", status.ToLower());
+                    // --- CORREÇÃO AQUI: Removido o .ToLower() para guardar o valor exato ("Concluída") ---
+                    cmd.Parameters.AddWithValue("@status", status);
                     cmd.Parameters.AddWithValue("@prioridade", prioridade);
                     cmd.ExecuteNonQuery();
-
-                    // Recupera o ID da tarefa recém-inserida.
-                    tarefaId = cmd.LastInsertedId;
-
-                    // Adiciona a nova tarefa diretamente ao ListView para uma atualização instantânea da UI.
-                    var item = new ListViewItem(titulo);
-                    item.SubItems.Add(dataEntrega.ToShortDateString());
-                    item.SubItems.Add(status);
-                    item.SubItems.Add(prioridade);
-                    item.SubItems.Add(resumo);
-                    item.Tag = new TarefaInfo { Id = tarefaId, Descricao = descricao };
-
-                    listViewTarefas.Items.Add(item);
-
-                    // Aplica a cor se a tarefa já for criada como "Concluída".
-                    if (status.Equals("Concluído", StringComparison.OrdinalIgnoreCase))
-                    {
-                        item.BackColor = Color.LightGreen;
-                    }
-                    conn.Close();
                 }
 
-                // Limpa os campos do formulário após o salvamento.
+                // Limpa os campos
                 txtTitulo.Clear();
                 txtDescricao.Clear();
                 dtpDataEntrega.Value = DateTime.Now;
@@ -333,6 +308,9 @@ namespace Tcc
                 cmbPrioridade.SelectedIndex = 1;
 
                 MessageBox.Show("Tarefa salva com sucesso!");
+
+                // Recarrega a lista para mostrar a nova tarefa
+                CarregarTarefas();
             }
             catch (Exception ex)
             {

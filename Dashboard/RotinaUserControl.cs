@@ -163,7 +163,7 @@ namespace Tcc
                         // Atualiza o status da tarefa no banco de dados.
                         using (MySqlConnection conn = Conexao.ObterConexao())
                         {
-                            string sql = "UPDATE Tarefas SET status = 'concluida' WHERE id = @id";
+                            string sql = "UPDATE Tarefas SET status = 'Concluída' WHERE id = @id";
                             MySqlCommand cmd = new MySqlCommand(sql, conn);
                             cmd.Parameters.AddWithValue("@id", tarefa.Id);
                             cmd.ExecuteNonQuery();
@@ -284,47 +284,48 @@ namespace Tcc
         }
 
         // Método para desenhar as células do ListView, permitindo a colorização customizada.
+        // No ficheiro: RotinasUserControl.cs
         private void ListViewRotinas_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
-            int prioridadeColIndex = 3; // Coluna da Prioridade.
-
             bool isConcluida = false;
-            if (e.Item.Tag is TarefasUserControl.TarefaInfo tarefa)
+            if (e.Item.Tag is TarefaInfo tarefa)
             {
-                isConcluida = tarefa.Status != null && (tarefa.Status.Equals("Concluído", StringComparison.OrdinalIgnoreCase) || tarefa.Status.Equals("Concluida", StringComparison.OrdinalIgnoreCase));
+                // --- CORREÇÃO AQUI: A verificação foi simplificada para ser mais precisa ---
+                isConcluida = tarefa.Status.Equals("Concluída", StringComparison.OrdinalIgnoreCase);
             }
 
+            // Pinta a linha inteira se a tarefa estiver concluída
             if (isConcluida)
             {
-                // Pinta a linha inteira de verde claro para tarefas concluídas.
-                using (Brush bg = new SolidBrush(Color.LightGreen))
-                    e.Graphics.FillRectangle(bg, e.Bounds);
-
-                TextRenderer.DrawText(e.Graphics, e.SubItem.Text, e.SubItem.Font, e.Bounds, e.Item.Selected ? SystemColors.HighlightText : e.SubItem.ForeColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+                e.Graphics.FillRectangle(Brushes.LightGreen, e.Bounds);
             }
-            else if (e.ColumnIndex == prioridadeColIndex)
+            // Pinta a célula de prioridade se a tarefa NÃO estiver concluída
+            else if (e.ColumnIndex == 3) // Coluna de Prioridade
             {
-                // Pinta apenas a célula de prioridade com base no seu valor.
                 Color corFundo;
                 string prioridade = e.SubItem.Text.ToLower();
 
                 if (prioridade.Contains("baixa")) corFundo = Color.FromArgb(200, 255, 255, 200); // Verde claro
-                else if (prioridade.Contains("média") || prioridade.Contains("media")) corFundo = Color.FromArgb(255, 255, 220, 180); // Laranja claro
+                else if (prioridade.Contains("média")) corFundo = Color.FromArgb(255, 255, 220, 180); // Laranja claro
                 else if (prioridade.Contains("alta")) corFundo = Color.FromArgb(255, 220, 120, 120); // Vermelho claro
-                else corFundo = e.Item.Selected ? SystemColors.Highlight : e.SubItem.BackColor;
+                else corFundo = e.SubItem.BackColor;
 
                 using (Brush bg = new SolidBrush(corFundo))
                     e.Graphics.FillRectangle(bg, e.Bounds);
-
-                TextRenderer.DrawText(e.Graphics, e.SubItem.Text, e.SubItem.Font, e.Bounds, e.Item.Selected ? SystemColors.HighlightText : e.SubItem.ForeColor, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
             }
             else
             {
-                // Para todas as outras células, usa o desenho padrão.
+                // Para todas as outras células, usa o desenho padrão
                 e.DrawDefault = true;
+                return; // Retorna para não desenhar o texto duas vezes
             }
+
+            // Desenha o texto manualmente para todas as células coloridas
+            TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter;
+            Color textColor = e.Item.Selected ? SystemColors.HighlightText : e.SubItem.ForeColor;
+            TextRenderer.DrawText(e.Graphics, e.SubItem.Text, e.SubItem.Font, e.Bounds, textColor, flags);
         }
-        
+
 
         // Método público que permite a atualização do controle de rotinas a partir de fora (ex: do Dashboard).
         public void AtualizarRotinas()
